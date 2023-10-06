@@ -1,0 +1,11 @@
+Al pulsar el boton (Etiqueta, Etiqueta A4 o Etiqueta reducida) nada mas sale la vista ya cuenta como etiquetado y para volver a etiquetarlo tienes que desmarcarlo en ver todo.
+Para añadir un usuario y permitirle acceder:
+	En  \\192.168.20.208\html\inventario\app\Providers\AuthServiceProvider.php
+
+	 Gate::define('solo-admins', function (User $user) {
+	 return ($user->name == 'Practicas' or $user->name == 'Jmmonge') ?
+	 Response::allow() :
+	 Response::deny('Sólo el administrador puede entrar.');
+	 });
+ 
+	Añadir a esto un nuevo or con el nombre del usuario que quieres admitir.
