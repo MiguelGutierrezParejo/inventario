@@ -161,6 +161,19 @@ class EquiposController extends Controller
                 ->where('NInventario', 'LIKE', '%'.request('NInventario').'%')
                 ->where('Denominación', 'LIKE', '%'.request('IdTipo').'%')
                 ->where('Etiquetado', 0);
+
+                $objeto3 = DB::table("lineas")
+                ->select("usuarios.Nombre", "lineas.Id","lineas.NInventario", "tipos.Denominación", "lineas.Etiquetar", "Numero as NombreOrdenador")
+                ->leftJoin('relacionlineas', 'lineas.id', '=','relacionlineas.IdLinea')
+                ->leftJoin('usuarios', 'relacionlineas.IdUsuario', '=', 'usuarios.id')
+                ->leftJoin('tipos', 'lineas.IdTipo', '=', 'tipos.id')
+                ->whereNull('lineas.FechaBaja')
+                ->whereNull('relacionlineas.FechaBaja')
+                ->where('Nombre', 'LIKE', '%'.request('Nombre').'%')
+                ->where('Numero', 'LIKE', '%'.request('NombreOrdenador').'%')
+                ->where('NInventario', 'LIKE', '%'.request('NInventario').'%')
+                ->where('Denominación', 'LIKE', '%'.request('IdTipo').'%')
+                ->where('Etiquetado', 0);
         
                 $objeto = DB::table("equipos")
                 ->select("usuarios.Nombre","equipos.Id", "equipos.NombreOrdenador","equipos.NInventario", "tipoequipos.Denominacion", "equipos.Etiquetar")
@@ -176,6 +189,7 @@ class EquiposController extends Controller
                 ->where('Etiquetado', 0)
                 ->union($objeto1)
                 ->union($objeto2)
+                ->union($objeto3)
                 ->OrderByDesc($orden)
                 ->get();
 
@@ -205,6 +219,20 @@ class EquiposController extends Controller
                 ->where('Denominación', 'LIKE', '%'.request('IdTipo').'%')
                 ->where('Etiquetado', 0)
                 ->OrderBy($orden);
+
+                $objeto3 = DB::table("lineas")
+                ->select("usuarios.Nombre", "lineas.Id","lineas.NInventario", "tipos.Denominación", "lineas.Etiquetar", "Numero as NombreOrdenador")
+                ->leftJoin('relacionlineas', 'lineas.id', '=','relacionlineas.IdLinea')
+                ->leftJoin('usuarios', 'relacionlineas.IdUsuario', '=', 'usuarios.id')
+                ->leftJoin('tipos', 'lineas.IdTipo', '=', 'tipos.id')
+                ->whereNull('lineas.FechaBaja')
+                ->whereNull('relacionlineas.FechaBaja')
+                ->where('Nombre', 'LIKE', '%'.request('Nombre').'%')
+                ->where('Numero', 'LIKE', '%'.request('NombreOrdenador').'%')
+                ->where('NInventario', 'LIKE', '%'.request('NInventario').'%')
+                ->where('Denominación', 'LIKE', '%'.request('IdTipo').'%')
+                ->where('Etiquetado', 0)
+                ->OrderBy($orden);
   
                 $objeto = DB::table("equipos")
                 ->select("usuarios.Nombre","equipos.Id", "equipos.NombreOrdenador","equipos.NInventario", "tipoequipos.Denominacion", "equipos.Etiquetar")
@@ -221,6 +249,7 @@ class EquiposController extends Controller
                 ->OrderBy($orden)
                 ->union($objeto1)
                 ->union($objeto2)
+                ->union($objeto3)
                 ->get();
 
             }
@@ -244,6 +273,16 @@ class EquiposController extends Controller
                 ->where('NumSerie', 'LIKE', '%'.request('NombreOrdenador').'%')
                 ->where('NInventario', 'LIKE', '%'.request('NInventario').'%')
                 ->where('Denominación', 'LIKE', '%'.request('IdTipo').'%');
+
+                $objeto3 = DB::table("lineas")
+                ->select("usuarios.Nombre", "lineas.Id","lineas.NInventario", "tipos.Denominación", "lineas.Etiquetar", "Numero as NombreOrdenador")
+                ->leftJoin('relacionlineas', 'lineas.id', '=','relacionlineas.IdLinea')
+                ->leftJoin('usuarios', 'relacionlineas.IdUsuario', '=', 'usuarios.id')
+                ->leftJoin('tipos', 'lineas.IdTipo', '=', 'tipos.id')
+                ->where('Nombre', 'LIKE', '%'.request('Nombre').'%')
+                ->where('Numero', 'LIKE', '%'.request('NombreOrdenador').'%')
+                ->where('NInventario', 'LIKE', '%'.request('NInventario').'%')
+                ->where('Denominación', 'LIKE', '%'.request('IdTipo').'%');
         
                 $objeto = DB::table("equipos")
                 ->select("usuarios.Nombre","equipos.Id", "equipos.NombreOrdenador","equipos.NInventario", "tipoequipos.Denominacion", "equipos.Etiquetar")
@@ -256,6 +295,7 @@ class EquiposController extends Controller
                 ->where('Denominacion', 'LIKE', '%'.request('IdTipo').'%')
                 ->union($objeto1)
                 ->union($objeto2)
+                ->union($objeto3)
                 ->OrderByDesc($orden)
                 ->get();
 
@@ -280,6 +320,16 @@ class EquiposController extends Controller
                 ->where('NInventario', 'LIKE', '%'.request('NInventario').'%')
                 ->where('Denominación', 'LIKE', '%'.request('IdTipo').'%')
                 ->OrderBy($orden);
+
+                $objeto3 = DB::table("lineas")
+                ->select("usuarios.Nombre", "lineas.Id","lineas.NInventario", "tipos.Denominación", "lineas.Etiquetar", "Numero as NombreOrdenador")
+                ->leftJoin('relacionlineas', 'lineas.id', '=','relacionlineas.IdLinea')
+                ->leftJoin('usuarios', 'relacionlineas.IdUsuario', '=', 'usuarios.id')
+                ->leftJoin('tipos', 'lineas.IdTipo', '=', 'tipos.id')
+                ->where('Nombre', 'LIKE', '%'.request('Nombre').'%')
+                ->where('Numero', 'LIKE', '%'.request('NombreOrdenador').'%')
+                ->where('NInventario', 'LIKE', '%'.request('NInventario').'%')
+                ->where('Denominación', 'LIKE', '%'.request('IdTipo').'%');
         
                 $objeto = DB::table("equipos")
                 ->select("usuarios.Nombre","equipos.Id", "equipos.NombreOrdenador","equipos.NInventario", "tipoequipos.Denominacion", "equipos.Etiquetar")
@@ -293,6 +343,7 @@ class EquiposController extends Controller
                 ->OrderBy($orden)
                 ->union($objeto1)
                 ->union($objeto2)
+                ->union($objeto3)
                 ->get();
             }
         }
