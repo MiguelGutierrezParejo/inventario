@@ -135,14 +135,14 @@ class EquiposController extends Controller
         ->union($tipos)
         ->get();
 
-        //union de terminales, impresoras y equipos
+        //union de terminales, impresoras, lineas y equipos
         if ($Tipo == 'Simple') {
             if (request('dir') == 'desc') {
                 $objeto1 = DB::table("terminales")
                 ->select("usuarios.Nombre", "terminales.Id", "Imei as NombreOrdenador", "terminales.NInventario", "tipos.Denominación", "terminales.Etiquetar")
                 ->leftJoin('relacionterminales', 'terminales.id', '=', 'relacionterminales.IdTerminal')
                 ->leftJoin('usuarios', 'relacionterminales.IdUsuario', '=', 'usuarios.id')
-                ->leftJoin('tipos', 'terminales.IdTipo', '=', 'tipos.id')
+                ->leftJoin('tipos', 'terminales.IdTipo', '=', 'tipos.Id')
                 ->whereNull('terminales.FechaBaja')
                 ->whereNull('relacionterminales.FechaBaja')
                 ->where('Nombre', 'LIKE', '%'.request('Nombre').'%')
@@ -154,7 +154,7 @@ class EquiposController extends Controller
                 $objeto2 = DB::table("i_impresoras")
                 ->select("usuarios.Nombre", "i_impresoras.Id", "NumSerie as NombreOrdenador", "i_impresoras.NInventario", "tipos.Denominación", "i_impresoras.Etiquetar")
                 ->leftJoin('usuarios', 'i_impresoras.IdUsuario', '=', 'usuarios.id')
-                ->leftJoin('tipos', 'i_impresoras.IdTipo', '=', 'tipos.id')
+                ->leftJoin('tipos', 'i_impresoras.IdTipo', '=', 'tipos.Id')
                 ->whereNull('i_impresoras.FechaBaja')
                 ->where('Nombre', 'LIKE', '%'.request('Nombre').'%')
                 ->where('NumSerie', 'LIKE', '%'.request('NombreOrdenador').'%')
@@ -163,12 +163,12 @@ class EquiposController extends Controller
                 ->where('Etiquetado', 0);
 
                 $objeto3 = DB::table("lineas")
-                ->select("usuarios.Nombre", "lineas.Id","lineas.NInventario", "tipos.Denominación", "lineas.Etiquetar", "Numero as NombreOrdenador")
-                ->leftJoin('relacionlineas', 'lineas.id', '=','relacionlineas.IdLinea')
+                ->select("usuarios.Nombre", "lineas.Id","Numero as NombreOrdenador", "lineas.NInventario", "tipos.Denominación", "lineas.Etiquetar")
+                ->leftJoin('relacionlineas', 'lineas.Id', '=','relacionlineas.IdLinea')
                 ->leftJoin('usuarios', 'relacionlineas.IdUsuario', '=', 'usuarios.id')
-                ->leftJoin('tipos', 'lineas.IdTipo', '=', 'tipos.id')
-                ->whereNull('lineas.FechaBaja')
+                ->leftJoin('tipos', 'lineas.IdTipo', '=', 'tipos.Id')
                 ->whereNull('relacionlineas.FechaBaja')
+                ->whereNull('lineas.FechaBaja')
                 ->where('Nombre', 'LIKE', '%'.request('Nombre').'%')
                 ->where('Numero', 'LIKE', '%'.request('NombreOrdenador').'%')
                 ->where('NInventario', 'LIKE', '%'.request('NInventario').'%')
@@ -198,7 +198,7 @@ class EquiposController extends Controller
                 ->select("usuarios.Nombre", "terminales.Id", "Imei as NombreOrdenador", "terminales.NInventario", "tipos.Denominación", "terminales.Etiquetar")
                 ->leftJoin('relacionterminales', 'terminales.id', '=', 'relacionterminales.IdTerminal')
                 ->leftJoin('usuarios', 'relacionterminales.IdUsuario', '=', 'usuarios.id')
-                ->leftJoin('tipos', 'terminales.IdTipo', '=', 'tipos.id')
+                ->leftJoin('tipos', 'terminales.IdTipo', '=', 'tipos.Id')
                 ->whereNull('terminales.FechaBaja')
                 ->whereNull('relacionterminales.FechaBaja')
                 ->where('Nombre', 'LIKE', '%'.request('Nombre').'%')
@@ -211,7 +211,7 @@ class EquiposController extends Controller
                 $objeto2 = DB::table("i_impresoras")
                 ->select("usuarios.Nombre", "i_impresoras.Id", "NumSerie as NombreOrdenador", "i_impresoras.NInventario", "tipos.Denominación", "i_impresoras.Etiquetar")
                 ->leftJoin('usuarios', 'i_impresoras.IdUsuario', '=', 'usuarios.id')
-                ->leftJoin('tipos', 'i_impresoras.IdTipo', '=', 'tipos.id')
+                ->leftJoin('tipos', 'i_impresoras.IdTipo', '=', 'tipos.Id')
                 ->whereNull('i_impresoras.FechaBaja')
                 ->where('Nombre', 'LIKE', '%'.request('Nombre').'%')
                 ->where('NumSerie', 'LIKE', '%'.request('NombreOrdenador').'%')
@@ -221,10 +221,10 @@ class EquiposController extends Controller
                 ->OrderBy($orden);
 
                 $objeto3 = DB::table("lineas")
-                ->select("usuarios.Nombre", "lineas.Id","lineas.NInventario", "tipos.Denominación", "lineas.Etiquetar", "Numero as NombreOrdenador")
-                ->leftJoin('relacionlineas', 'lineas.id', '=','relacionlineas.IdLinea')
+                ->select("usuarios.Nombre", "lineas.Id","Numero as NombreOrdenador", "lineas.NInventario", "tipos.Denominación", "lineas.Etiquetar")
+                ->leftJoin('relacionlineas', 'lineas.Id', '=','relacionlineas.IdLinea')
                 ->leftJoin('usuarios', 'relacionlineas.IdUsuario', '=', 'usuarios.id')
-                ->leftJoin('tipos', 'lineas.IdTipo', '=', 'tipos.id')
+                ->leftJoin('tipos', 'lineas.IdTipo', '=', 'tipos.Id')
                 ->whereNull('lineas.FechaBaja')
                 ->whereNull('relacionlineas.FechaBaja')
                 ->where('Nombre', 'LIKE', '%'.request('Nombre').'%')
@@ -259,7 +259,7 @@ class EquiposController extends Controller
                 ->select("usuarios.Nombre", "terminales.Id", "Imei as NombreOrdenador", "terminales.NInventario", "tipos.Denominación", "terminales.Etiquetar")
                 ->leftJoin('relacionterminales', 'terminales.id', '=', 'relacionterminales.IdTerminal')
                 ->leftJoin('usuarios', 'relacionterminales.IdUsuario', '=', 'usuarios.id')
-                ->leftJoin('tipos', 'terminales.IdTipo', '=', 'tipos.id')
+                ->leftJoin('tipos', 'terminales.IdTipo', '=', 'tipos.Id')
                 ->where('Nombre', 'LIKE', '%'.request('Nombre').'%')
                 ->where('Imei', 'LIKE', '%'.request('NombreOrdenador').'%')
                 ->where('NInventario', 'LIKE', '%'.request('NInventario').'%')
@@ -268,17 +268,17 @@ class EquiposController extends Controller
                 $objeto2 = DB::table("i_impresoras")
                 ->select("usuarios.Nombre", "i_impresoras.Id", "NumSerie as NombreOrdenador", "i_impresoras.NInventario", "tipos.Denominación", "i_impresoras.Etiquetar")
                 ->leftJoin('usuarios', 'i_impresoras.IdUsuario', '=', 'usuarios.id')
-                ->leftJoin('tipos', 'i_impresoras.IdTipo', '=', 'tipos.id')
+                ->leftJoin('tipos', 'i_impresoras.IdTipo', '=', 'tipos.Id')
                 ->where('Nombre', 'LIKE', '%'.request('Nombre').'%')
                 ->where('NumSerie', 'LIKE', '%'.request('NombreOrdenador').'%')
                 ->where('NInventario', 'LIKE', '%'.request('NInventario').'%')
                 ->where('Denominación', 'LIKE', '%'.request('IdTipo').'%');
 
                 $objeto3 = DB::table("lineas")
-                ->select("usuarios.Nombre", "lineas.Id","lineas.NInventario", "tipos.Denominación", "lineas.Etiquetar", "Numero as NombreOrdenador")
-                ->leftJoin('relacionlineas', 'lineas.id', '=','relacionlineas.IdLinea')
+                ->select("usuarios.Nombre", "lineas.Id","Numero as NombreOrdenador", "lineas.NInventario", "tipos.Denominación", "lineas.Etiquetar")
+                ->leftJoin('relacionlineas', 'lineas.Id', '=','relacionlineas.IdLinea')
                 ->leftJoin('usuarios', 'relacionlineas.IdUsuario', '=', 'usuarios.id')
-                ->leftJoin('tipos', 'lineas.IdTipo', '=', 'tipos.id')
+                ->leftJoin('tipos', 'lineas.IdTipo', '=', 'tipos.Id')
                 ->where('Nombre', 'LIKE', '%'.request('Nombre').'%')
                 ->where('Numero', 'LIKE', '%'.request('NombreOrdenador').'%')
                 ->where('NInventario', 'LIKE', '%'.request('NInventario').'%')
@@ -304,7 +304,7 @@ class EquiposController extends Controller
                 ->select("usuarios.Nombre", "terminales.Id", "Imei as NombreOrdenador", "terminales.NInventario", "tipos.Denominación", "terminales.Etiquetar")
                 ->leftJoin('relacionterminales', 'terminales.id', '=', 'relacionterminales.IdTerminal')
                 ->leftJoin('usuarios', 'relacionterminales.IdUsuario', '=', 'usuarios.id')
-                ->leftJoin('tipos', 'terminales.IdTipo', '=', 'tipos.id')
+                ->leftJoin('tipos', 'terminales.IdTipo', '=', 'tipos.Id')
                 ->where('Nombre', 'LIKE', '%'.request('Nombre').'%')
                 ->where('Imei', 'LIKE', '%'.request('NombreOrdenador').'%')
                 ->where('NInventario', 'LIKE', '%'.request('NInventario').'%')
@@ -314,7 +314,7 @@ class EquiposController extends Controller
                 $objeto2 = DB::table("i_impresoras")
                 ->select("usuarios.Nombre", "i_impresoras.Id", "NumSerie as NombreOrdenador", "i_impresoras.NInventario", "tipos.Denominación", "i_impresoras.Etiquetar")
                 ->leftJoin('usuarios', 'i_impresoras.IdUsuario', '=', 'usuarios.id')
-                ->leftJoin('tipos', 'i_impresoras.IdTipo', '=', 'tipos.id')
+                ->leftJoin('tipos', 'i_impresoras.IdTipo', '=', 'tipos.Id')
                 ->where('Nombre', 'LIKE', '%'.request('Nombre').'%')
                 ->where('NumSerie', 'LIKE', '%'.request('NombreOrdenador').'%')
                 ->where('NInventario', 'LIKE', '%'.request('NInventario').'%')
@@ -322,14 +322,15 @@ class EquiposController extends Controller
                 ->OrderBy($orden);
 
                 $objeto3 = DB::table("lineas")
-                ->select("usuarios.Nombre", "lineas.Id","lineas.NInventario", "tipos.Denominación", "lineas.Etiquetar", "Numero as NombreOrdenador")
-                ->leftJoin('relacionlineas', 'lineas.id', '=','relacionlineas.IdLinea')
+                ->select("usuarios.Nombre", "lineas.Id","Numero as NombreOrdenador", "lineas.NInventario", "tipos.Denominación", "lineas.Etiquetar")
+                ->leftJoin('relacionlineas', 'lineas.Id', '=','relacionlineas.IdLinea')
                 ->leftJoin('usuarios', 'relacionlineas.IdUsuario', '=', 'usuarios.id')
-                ->leftJoin('tipos', 'lineas.IdTipo', '=', 'tipos.id')
+                ->leftJoin('tipos', 'lineas.IdTipo', '=', 'tipos.Id')
                 ->where('Nombre', 'LIKE', '%'.request('Nombre').'%')
                 ->where('Numero', 'LIKE', '%'.request('NombreOrdenador').'%')
                 ->where('NInventario', 'LIKE', '%'.request('NInventario').'%')
-                ->where('Denominación', 'LIKE', '%'.request('IdTipo').'%');
+                ->where('Denominación', 'LIKE', '%'.request('IdTipo').'%')
+                ->orderBy($orden);
         
                 $objeto = DB::table("equipos")
                 ->select("usuarios.Nombre","equipos.Id", "equipos.NombreOrdenador","equipos.NInventario", "tipoequipos.Denominacion", "equipos.Etiquetar")

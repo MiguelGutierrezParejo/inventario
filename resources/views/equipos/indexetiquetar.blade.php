@@ -104,7 +104,6 @@ use App\Models\I_impresora;
                     <?php $contador = 0; ?>
                     @foreach ($objeto as $object)
                     <?php $contador += 1; ?> 
-            
                         <tr class=" border border-slate-400">
                             <td class="border border-slate-300 px-6 py-4">
                                 <div class="text-sm text-gray-900">
@@ -114,12 +113,12 @@ use App\Models\I_impresora;
                                         <a href="/inventario/public/terminales/{{$object->Id}}">{{ $object->NInventario }}</a>
                                     @elseif ($object->Denominacion == 'Impresora')
                                         <a href="/inventario/public/impresoras/{{$object->Id}}">{{ $object->NInventario }}</a>
+                                    @elseif ($object->Denominacion == 'Linea')
+                                        <a href="/inventario/public/lineas/{{$object->Id}}">{{ $object->NInventario }}</a>
                                     @elseif ($object->Denominacion == 'Escaner')
                                         <a href="">{{ $object->NInventario }}</a>
                                     @elseif ($object->Denominacion == 'Tablet')
                                         <a href="">{{ $object->NInventario }}</a>
-                                    @elseif ($object->Denominacion == 'Linea')
-                                        <a href="/inventario/public/lineas/{{$object->Id}}">{{ $object->NInventario }}</a>
                                     @endif
                                 </div>
                             </td>
@@ -131,12 +130,12 @@ use App\Models\I_impresora;
                                         <a href="/inventario/public/terminales/{{$object->Id}}">{{ $object->Nombre }}</a>
                                     @elseif ($object->Denominacion == 'Impresora')
                                         <a href="/inventario/public/impresoras/{{$object->Id}}">{{ $object->Nombre }}</a>
+                                    @elseif ($object->Denominacion == 'Linea')
+                                        <a href="/inventario/public/lineas/{{$object->Id}}">{{ $object->Nombre }}</a>
                                     @elseif ($object->Denominacion == 'Escaner')
                                         <a href="">{{ $object->Nombre }}</a>
                                     @elseif ($object->Denominacion == 'Tablet')
                                         <a href="">{{ $object->Nombre }}</a>
-                                    @elseif ($object->Denominacion == 'Linea')
-                                        <a href="/inventario/public/lineas/{{$object->Id}}">{{ $object->Nombre }}</a>
                                     @endif
                                 </div>
                             </td>
@@ -146,14 +145,14 @@ use App\Models\I_impresora;
                                         <a href="/inventario/public/equipos/{{$object->Id}}">{{ $object->NombreOrdenador }}</a>
                                     @elseif ($object->Denominacion == 'Terminal')
                                         <a href="/inventario/public/terminales/{{$object->Id}}">{{ $object->NombreOrdenador }}</a>
+                                    @elseif ($object->Denominacion == 'Linea')
+                                        <a href="/inventario/public/lineas/{{$object->Id}}">{{ $object->NombreOrdenador }}</a>
                                     @elseif ($object->Denominacion == 'Escaner')
                                         <a href="">{{ $object->NombreOrdenador }}</a>
                                     @elseif ($object->Denominacion == 'Tablet')
                                         <a href="">{{ $object->NombreOrdenador }}</a>
                                     @elseif ($object->Denominacion == 'Impresora')
                                         <a href="/inventario/public/impresoras/{{$object->Id}}">{{ $object->NombreOrdenador }}</a>
-                                    @elseif ($object->Denominacion == 'Linea')
-                                        <a href="/inventario/public/lineas/{{$object->Id}}">{{ $object->NombreOrdenador }}</a>
                                         <?php 
                                         $impresora = I_impresora::where('NInventario', $object->NInventario)->first();
                                         ?>
