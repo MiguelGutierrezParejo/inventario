@@ -724,10 +724,31 @@ class EquiposController extends Controller
     public function quitaretiquetar($Tipo)
     {
         $equipos = Equipo::where('Etiquetar', 1)->get();
+        $lineas = Linea::where('Etiquetar', 1)->get();
+        $impresoras = I_impresora::where('Etiquetar', 1)->get();
+        $terminales = Terminal::where('Etiquetar', 1)->get();
 
         foreach ($equipos as $equipo) {
             DB::table('equipos')
             ->where('Id', $equipo->Id)
+            ->update(['Etiquetar' => 0, 'Etiquetado' => 0]);
+        }
+
+        foreach ($lineas as $linea) {
+            DB::table('lineas')
+            ->where('Id', $linea->Id)
+            ->update(['Etiquetar' => 0, 'Etiquetado' => 0]);
+        }
+
+        foreach ($terminales as $terminal) {
+            DB::table('terminales')
+            ->where('Id', $terminal->Id)
+            ->update(['Etiquetar' => 0, 'Etiquetado' => 0]);
+        }
+
+        foreach ($impresoras as $impresora) {
+            DB::table('i_impresoras')
+            ->where('Id', $impresora->Id)
             ->update(['Etiquetar' => 0, 'Etiquetado' => 0]);
         }
 
