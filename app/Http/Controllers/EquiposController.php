@@ -617,6 +617,10 @@ class EquiposController extends Controller
                 DB::table('i_impresoras')
                 ->where('Id', $stringSeparado[1])
                 ->update(['Etiquetar' => 1]);
+            } else if (($stringSeparado[0] == 'L')) {
+                DB::table('lineas')
+                ->where('Id', $stringSeparado[1])
+                ->update(['Etiquetar' => 1]);
             }
 
         } else if (isset($_COOKIE['idaquitar'])) {
@@ -635,7 +639,11 @@ class EquiposController extends Controller
                 DB::table('i_impresoras')
                 ->where('Id', $stringSeparado[1])
                 ->update(['Etiquetar' => 0, 'Etiquetado' => 0]);
-            }        
+            } else if (($stringSeparado[0] == 'L')) {
+                DB::table('lineas')
+                ->where('Id', $stringSeparado[1])
+                ->update(['Etiquetar' => 0, 'Etiquetado' => 0]);
+            }
         }
 
         return redirect(route('etiquetar', $Tipo));

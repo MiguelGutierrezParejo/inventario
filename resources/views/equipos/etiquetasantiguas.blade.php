@@ -107,6 +107,9 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode; ?>
                                                     @elseif ($stringSeparado[0] == 'I')
                                                         <?php $qrcode = QrCode::size(80)->generate("http://localhost/inventario/public/terminales/$equipo->Id"); ?>
                                                         <p>{{$qrcode}}</p>
+                                                    @elseif ($stringSeparado[0] == 'L')
+                                                        <?php $qrcode = QrCode::size(80)->generate("http://localhost/inventario/public/lineas/$equipo->Id"); ?>
+                                                        <p>{{$qrcode}}</p>
                                                     @endif
                                                 </td>
                                             </tr> 

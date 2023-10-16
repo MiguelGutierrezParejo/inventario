@@ -53,6 +53,9 @@
                                     @elseif ($stringSeparado[0] == 'I')
                                         <?php $qrcode = QrCode::size(75)->generate("http://localhost/inventario/public/impresoras/$equipo->Id"); ?>
                                         <p>{{$qrcode}}</p>
+                                    @elseif ($stringSeparado[0] == 'L')
+                                        <?php $qrcode = QrCode::size(75)->generate("http://localhost/inventario/public/lineas/$equipo->Id"); ?>
+                                        <p>{{$qrcode}}</p>
                                     @endif
                                 </td>
                             </tr>

@@ -174,7 +174,7 @@ use App\Models\I_impresora;
                                 @endif
                                 <script>
                                     //Detecta cambia checkbox 
-                                    var y = document.getElementById("{{ $contador }}").addEventListener("change", function(event) {
+                                    var y = document.getElementById("{{ $contador }}").addEventListener("change", function(event) {       
                                     if($("#{{$contador}}"). prop("checked") == true){
                                         var idaetiquetar = document.getElementById("{{ $contador }}").value
                                         
