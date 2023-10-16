@@ -8,6 +8,7 @@ use App\Models\I_impresora;
 use App\Models\Mantenimientoequipo;
 use App\Models\Relacionequipo;
 use App\Models\Terminal;
+use App\Models\Linea;
 use App\Models\Tipoequipo;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
@@ -655,6 +656,7 @@ class EquiposController extends Controller
         $equiposaetiquetar = Equipo::where('Etiquetar', 1)->where('Etiquetado', 0)->get();
         $terminalesaetiquetar = Terminal::where('Etiquetar', 1)->where('Etiquetado', 0)->get();
         $impresorasaetiquetar = I_impresora::where('Etiquetar', 1)->where('Etiquetado', 0)->get();
+        $lineasaetiquetar = Linea::where('Etiquetar', 1)->where('Etiquetado', 0)->get();
 
         $terminales = DB::table("terminales")
         ->select("terminales.Id", "terminales.FechaAlta","terminales.NInventario")
@@ -666,12 +668,18 @@ class EquiposController extends Controller
         ->where('Etiquetar', 1)
         ->where('Etiquetado', 0);
 
+        $lineas = DB::table("lineas")
+        ->select("lineas.Id", "lineas.FechaAlta","lineas.NInventario")
+        ->where('Etiquetar', 1)
+        ->where('Etiquetado', 0);
+
         $equipos = DB::table("equipos")
         ->select("equipos.Id", "equipos.FechaAlta","equipos.NInventario")
         ->where('Etiquetar', 1)
         ->where('Etiquetado', 0)
         ->union($terminales)
         ->union($impresoras)
+        ->union($lineas)
         ->get();
 
         foreach ($equiposaetiquetar as $equipo) {
@@ -689,6 +697,12 @@ class EquiposController extends Controller
         foreach ($terminalesaetiquetar as $terminal) {
             DB::table('terminales')
             ->where('Id', $terminal->Id)
+            ->update(['Etiquetado' => 1]);
+        } 
+
+        foreach ($lineasaetiquetar as $linea) {
+            DB::table('lineas')
+            ->where('Id', $linea->Id)
             ->update(['Etiquetado' => 1]);
         } 
 
