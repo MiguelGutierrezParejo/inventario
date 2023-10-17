@@ -2,7 +2,6 @@
 
 use App\Models\RelacionLinea;
 use App\Models\RelacionTerminal;
-use App\Models\Terminal;
 use SimpleSoftwareIO\QrCode\Facades\QrCode; ?>
 <head>
     <meta charset="utf-8">
@@ -56,6 +55,15 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode; ?>
                                                 ?>
                                                 <p style="font-size: 0.7em;" class="mt-2">{{ $relacionlineas->linea->Numero}}</p>
                                             @endif
+                                            @if ($stringSeparado[0] == 'L')
+                                                <?php
+                                                $relacionterminal = RelacionTerminal::where('IdTerminal', $equipo->Id)->first();
+                                                $relacionlineas = RelacionLinea::where('IdUsuario', $relacionterminal->IdUsuario)->first();
+                                                dd($relacionlineas->linea->Numero);
+
+                                                ?>
+                                                <p style="font-size: 0.7em;" class="mt-2">{{ $relacionlineas->linea->Numero}}</p>
+                                            @endif
                                             <p style="font-size: 0.8em;" class="mt-2">{{date('d-m-Y' , strtotime($equipo->FechaAlta))}}</p>
                                         </td>
                                     </tr> 
@@ -85,144 +93,93 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode; ?>
                         @if ($equipos->count() < 3)
                             <?php $contadormenorque3o8 += 1; ?>
                             <!-- Etiqueta grande para menor que 3 -->
-                                @if($equipos->count() == 1 )
-                                    <td>
-                                        <table cellspacing="2" cellpadding="2">
-                                            <tr class="border border-slate-400"> 
-                                                <td class="w-4/12">
-                                                    <img src='http://localhost/inventario/public/logoinformaticac.png'/>
-                                                </td>
-                                                <td class="w-4/12" style="text-align: center">
-                                                    <strong >{{ $equipo->NInventario}}</strong>
-                                                    <p style="font-size: 0.5em;" class="mt-2">{{date('d-m-Y' , strtotime($equipo->FechaAlta))}}</p>
-                                                </td>
-                                                <td class="w-4/12">
-                                                    <?php  $stringSeparado = explode('-', $equipo->NInventario); ?>
-                                                    @if ($stringSeparado[0] == 'E')
-                                                        <?php $qrcode = QrCode::size(80)->generate("http://localhost/inventario/public/equipos/$equipo->Id"); ?>
-                                                        <p>{{$qrcode}}</p>
-                                                    @elseif ($stringSeparado[0] == 'T')
-                                                        <?php $qrcode = QrCode::size(80)->generate("http://localhost/inventario/public/terminales/$equipo->Id"); ?>
-                                                        <p>{{$qrcode}}</p>
-                                                    @elseif ($stringSeparado[0] == 'I')
-                                                        <?php $qrcode = QrCode::size(80)->generate("http://localhost/inventario/public/terminales/$equipo->Id"); ?>
-                                                        <p>{{$qrcode}}</p>
-                                                    @elseif ($stringSeparado[0] == 'L')
-                                                        <?php $qrcode = QrCode::size(80)->generate("http://localhost/inventario/public/lineas/$equipo->Id"); ?>
-                                                        <p>{{$qrcode}}</p>
-                                                    @endif
-                                                </td>
-                                            </tr> 
-                                        </table>
-                                    </td>
-                                    <td>
-                                        <table cellspacing="2" cellpadding="2">
-                                            <tr class="border border-slate-400"> 
-                                                <td class="w-4/12">
-                                                    <img src='http://localhost/inventario/public/logoinformaticac.png'/>
-                                                </td>
-                                                <td class="w-4/12" style="text-align: center">
-                                                    <strong >Relleno</strong>
-                                                    <p style="font-size: 0.5em;" class="mt-2">Relleno</p>
-                                                </td>
-                                                <td class="w-4/12">
-                                                    <?php $qrcode = QrCode::size(80)->generate("Dato de relleno"); ?>
+                            @if($equipos->count() == 1 )
+                                <td>
+                                    <table cellspacing="2" cellpadding="2">
+                                        <tr class="border border-slate-400"> 
+                                            <td class="w-4/12">
+                                                <img src='http://localhost/inventario/public/logoinformaticac.png'/>
+                                            </td>
+                                            <td class="w-4/12" style="text-align: center">
+                                                <strong >{{ $equipo->NInventario}}</strong>
+                                                <p style="font-size: 0.5em;" class="mt-2">{{date('d-m-Y' , strtotime($equipo->FechaAlta))}}</p>
+                                            </td>
+                                            <td class="w-4/12">
+                                                <?php  $stringSeparado = explode('-', $equipo->NInventario); ?>
+                                                @if ($stringSeparado[0] == 'E')
+                                                    <?php $qrcode = QrCode::size(80)->generate("http://localhost/inventario/public/equipos/$equipo->Id"); ?>
                                                     <p>{{$qrcode}}</p>
-                                                </td>
-                                            </tr> 
-                                        </table>
-                                    </td>
-                                    <td>
-                                        <table cellspacing="2" cellpadding="2">
-                                            <tr class="border border-slate-400"> 
-                                                <td class="w-4/12">
-                                                    <img src='http://localhost/inventario/public/logoinformaticac.png'/>
-                                                </td>
-                                                <td class="w-4/12" style="text-align: center">
-                                                    <strong >Relleno</strong>
-                                                    <p style="font-size: 0.5em;" class="mt-2">Relleno</p>
-                                                </td>
-                                                <td class="w-4/12">
-                                                    <?php $qrcode = QrCode::size(80)->generate("Dato de relleno"); ?>
+                                                @elseif ($stringSeparado[0] == 'T')
+                                                    <?php $qrcode = QrCode::size(80)->generate("http://localhost/inventario/public/terminales/$equipo->Id"); ?>
                                                     <p>{{$qrcode}}</p>
-                                                </td>
-                                            </tr> 
-                                        </table>
-                                    </td>                                          
-                                @else 
-                                    @if ($contadormenorque3o8 == 1)
-                                    <td>
-                                        <table cellspacing="2" cellpadding="2">
-                                            <tr class="border border-slate-400"> 
-                                                <td class="w-4/12">
-                                                    <img src='http://localhost/inventario/public/logoinformaticac.png'/>
-                                                </td>
-                                                <td class="w-4/12" style="text-align: center">
-                                                    <strong >{{ $equipo->NInventario}}</strong>
-                                                    <p style="font-size: 0.5em;" class="mt-2">{{date('d-m-Y' , strtotime($equipo->FechaAlta))}}</p>
-                                                </td>
-                                                <td class="w-4/12">
-                                                    <?php  $stringSeparado = explode('-', $equipo->NInventario); ?>
-                                                    @if ($stringSeparado[0] == 'E')
-                                                        <?php $qrcode = QrCode::size(80)->generate("http://localhost/inventario/public/equipos/$equipo->Id"); ?>
-                                                        <p>{{$qrcode}}</p>
-                                                    @elseif ($stringSeparado[0] == 'T')
-                                                        <?php $qrcode = QrCode::size(80)->generate("http://localhost/inventario/public/terminales/$equipo->Id"); ?>
-                                                        <p>{{$qrcode}}</p>
-                                                    @elseif ($stringSeparado[0] == 'I')
-                                                        <?php $qrcode = QrCode::size(80)->generate("http://localhost/inventario/public/terminales/$equipo->Id"); ?>
-                                                        <p>{{$qrcode}}</p>
-                                                    @endif
-                                                </td>
-                                            </tr> 
-                                        </table>
-                                    </td>
-                                    @elseif ($contadormenorque3o8 == 2)
-                                    <td>
-                                        <table cellspacing="2" cellpadding="2">
-                                            <tr class="border border-slate-400"> 
-                                                <td class="w-4/12">
-                                                    <img src='http://localhost/inventario/public/logoinformaticac.png'/>
-                                                </td>
-                                                <td class="w-4/12" style="text-align: center">
-                                                    <strong >{{ $equipo->NInventario}}</strong>
-                                                    <p style="font-size: 0.5em;" class="mt-2">{{date('d-m-Y' , strtotime($equipo->FechaAlta))}}</p>
-                                                </td>
-                                                <td class="w-4/12">
-                                                    <?php  $stringSeparado = explode('-', $equipo->NInventario); ?>
-                                                    @if ($stringSeparado[0] == 'E')
-                                                        <?php $qrcode = QrCode::size(80)->generate("http://localhost/inventario/public/equipos/$equipo->Id"); ?>
-                                                        <p>{{$qrcode}}</p>
-                                                    @elseif ($stringSeparado[0] == 'T')
-                                                        <?php $qrcode = QrCode::size(80)->generate("http://localhost/inventario/public/terminales/$equipo->Id"); ?>
-                                                        <p>{{$qrcode}}</p>
-                                                    @elseif ($stringSeparado[0] == 'I')
-                                                        <?php $qrcode = QrCode::size(80)->generate("http://localhost/inventario/public/terminales/$equipo->Id"); ?>
-                                                        <p>{{$qrcode}}</p>
-                                                    @endif
-                                                </td>
-                                            </tr> 
-                                        </table>
-                                    </td>
-                                    <td>
-                                        <table cellspacing="2" cellpadding="2">
-                                            <tr class="border border-slate-400"> 
-                                                <td class="w-4/12">
-                                                    <img src='http://localhost/inventario/public/logoinformaticac.png'/>
-                                                </td>
-                                                <td class="w-4/12" style="text-align: center">
-                                                    <strong >Relleno</strong>
-                                                    <p style="font-size: 0.5em;" class="mt-2">Relleno</p>
-                                                </td>
-                                                <td class="w-4/12">
-                                                    <?php $qrcode = QrCode::size(80)->generate("Dato de relleno"); ?>
+                                                @elseif ($stringSeparado[0] == 'I')
+                                                    <?php $qrcode = QrCode::size(80)->generate("http://localhost/inventario/public/terminales/$equipo->Id"); ?>
                                                     <p>{{$qrcode}}</p>
-                                                </td>
-                                            </tr> 
-                                        </table>
-                                    </td>  
-                                    @endif
+                                                @elseif ($stringSeparado[0] == 'L')
+                                                    <?php $qrcode = QrCode::size(80)->generate("http://localhost/inventario/public/lineas/$equipo->Id"); ?>
+                                                    <p>{{$qrcode}}</p>
+                                                @endif
+                                            </td>
+                                        </tr> 
+                                    </table>
+                                </td>                             
+                            @else 
+                                @if ($contadormenorque3o8 == 1)
+                                <td>
+                                    <table cellspacing="2" cellpadding="2">
+                                        <tr class="border border-slate-400"> 
+                                            <td class="w-4/12">
+                                                <img src='http://localhost/inventario/public/logoinformaticac.png'/>
+                                            </td>
+                                            <td class="w-4/12" style="text-align: center">
+                                                <strong >{{ $equipo->NInventario}}</strong>
+                                                <p style="font-size: 0.5em;" class="mt-2">{{date('d-m-Y' , strtotime($equipo->FechaAlta))}}</p>
+                                            </td>
+                                            <td class="w-4/12">
+                                                <?php  $stringSeparado = explode('-', $equipo->NInventario); ?>
+                                                @if ($stringSeparado[0] == 'E')
+                                                    <?php $qrcode = QrCode::size(80)->generate("http://localhost/inventario/public/equipos/$equipo->Id"); ?>
+                                                    <p>{{$qrcode}}</p>
+                                                @elseif ($stringSeparado[0] == 'T')
+                                                    <?php $qrcode = QrCode::size(80)->generate("http://localhost/inventario/public/terminales/$equipo->Id"); ?>
+                                                    <p>{{$qrcode}}</p>
+                                                @elseif ($stringSeparado[0] == 'I')
+                                                    <?php $qrcode = QrCode::size(80)->generate("http://localhost/inventario/public/terminales/$equipo->Id"); ?>
+                                                    <p>{{$qrcode}}</p>
+                                                @endif
+                                            </td>
+                                        </tr> 
+                                    </table>
+                                </td>
+                                @elseif ($contadormenorque3o8 == 2)
+                                <td>
+                                    <table cellspacing="2" cellpadding="2">
+                                        <tr class="border border-slate-400"> 
+                                            <td class="w-4/12">
+                                                <img src='http://localhost/inventario/public/logoinformaticac.png'/>
+                                            </td>
+                                            <td class="w-4/12" style="text-align: center">
+                                                <strong >{{ $equipo->NInventario}}</strong>
+                                                <p style="font-size: 0.5em;" class="mt-2">{{date('d-m-Y' , strtotime($equipo->FechaAlta))}}</p>
+                                            </td>
+                                            <td class="w-4/12">
+                                                <?php  $stringSeparado = explode('-', $equipo->NInventario); ?>
+                                                @if ($stringSeparado[0] == 'E')
+                                                    <?php $qrcode = QrCode::size(80)->generate("http://localhost/inventario/public/equipos/$equipo->Id"); ?>
+                                                    <p>{{$qrcode}}</p>
+                                                @elseif ($stringSeparado[0] == 'T')
+                                                    <?php $qrcode = QrCode::size(80)->generate("http://localhost/inventario/public/terminales/$equipo->Id"); ?>
+                                                    <p>{{$qrcode}}</p>
+                                                @elseif ($stringSeparado[0] == 'I')
+                                                    <?php $qrcode = QrCode::size(80)->generate("http://localhost/inventario/public/terminales/$equipo->Id"); ?>
+                                                    <p>{{$qrcode}}</p>
+                                                @endif
+                                            </td>
+                                        </tr> 
+                                    </table>
+                                </td>
                                 @endif
+                            @endif
                         @else
                             <?php $contador += 1; ?>
                             @if($contador <= 3 )
