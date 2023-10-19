@@ -51,16 +51,22 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode; ?>
                                                 <?php
                                                 $relacionterminal = RelacionTerminal::where('IdTerminal', $equipo->Id)->first();
                                                 $relacionlineas = RelacionLinea::where('IdUsuario', $relacionterminal->IdUsuario)->first();
-                                                dd($relacionlineas->linea->Numero);
+                                                $numeroext = Linea::where('Id', $equipo->Id)->first();
+                                                dump($relacionlineas->linea->Numero);
+                                                dd($numeroext->Extension);
 
                                                 ?>
-                                                <p style="font-size: 0.7em;" class="mt-2">{{ $relacionlineas->linea->Numero}}</p>
+                                                <p class="mt-2">{{ $relacionlineas->linea->Numero}}</p>
                                             @elseif ($stringSeparado[0] == 'L')
                                                 <?php
                                                 $numerolinea = Linea::where('Id', $equipo->Id)->first();
-                                                dd($numerolinea->Numero);
+                                                $numerolinea2 = Linea::where('Id', $equipo->Id)->first();
+                                                dump($numerolinea->Numero);
+                                                dd($numerolinea2->Extension);
                                                 ?>
-                                                <p style="font-size: 0.7em;" class="mt-2">{{ $numerolinea }}</p>
+                                                <p class="mt-2">{{ $numerolinea }}</p>
+                                                <p class="mt-2">{{ $numerolinea2 }}</p>
+
                                             @endif
                                             <p style="font-size: 0.8em;" class="mt-2">{{date('d-m-Y' , strtotime($equipo->FechaAlta))}}</p>
                                         </td>
