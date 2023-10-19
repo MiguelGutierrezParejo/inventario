@@ -2,6 +2,7 @@
 
 use App\Models\RelacionLinea;
 use App\Models\RelacionTerminal;
+use App\Models\Linea;
 use SimpleSoftwareIO\QrCode\Facades\QrCode; ?>
 <head>
     <meta charset="utf-8">
@@ -54,15 +55,12 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode; ?>
 
                                                 ?>
                                                 <p style="font-size: 0.7em;" class="mt-2">{{ $relacionlineas->linea->Numero}}</p>
-                                            @endif
-                                            @if ($stringSeparado[0] == 'L')
+                                            @elseif ($stringSeparado[0] == 'L')
                                                 <?php
-                                                $relacionterminal = RelacionTerminal::where('IdTerminal', $equipo->Id)->first();
-                                                $relacionlineas = RelacionLinea::where('IdUsuario', $relacionterminal->IdUsuario)->first();
-                                                dd($relacionlineas->linea->Numero);
-
+                                                $numerolinea = Linea::where('Id', $equipo->Id)->first();
+                                                dd($numerolinea->Numero);
                                                 ?>
-                                                <p style="font-size: 0.7em;" class="mt-2">{{ $relacionlineas->linea->Numero}}</p>
+                                                <p style="font-size: 0.7em;" class="mt-2">{{ $numerolinea }}</p>
                                             @endif
                                             <p style="font-size: 0.8em;" class="mt-2">{{date('d-m-Y' , strtotime($equipo->FechaAlta))}}</p>
                                         </td>
