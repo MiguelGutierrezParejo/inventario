@@ -4,7 +4,7 @@
              @if ($foto->IdEquipo == $equipo->Id)
                 <tr>
                     <td>
-                        <img src="{{ asset($foto->Foto) }}" class="d-block w-100" alt="..." width="275px" height="275px">
+                        <img src="{{ asset('storage/fotoequipos/' . basename($foto->Foto)) }}" class="d-block w-100" alt="..." width="280px" style="padding-bottom: 15px;">
                     </td>
                 </tr>
             @endif

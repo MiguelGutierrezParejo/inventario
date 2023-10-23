@@ -22,20 +22,27 @@ class FotosController extends Controller
         ]);
     }
 
-    public function store($id)
+    public function store(Request $request, $id)
     {
         $equipo = Equipo::findOrFail($id);
-        // $validados = $this->validar();
-        $foto = new Foto();
 
-        $foto->IdEquipo = $equipo->Id;
-        $foto->Foto = request('Foto');
-        //$foto->Foto = $validados['Foto'];
+        // Verificar si se ha enviado un archivo
+        if ($request->hasFile('Foto')) {
+            $fotoFile = $request->file('Foto');
 
-        $foto->save();
-        
-        return redirect('equipos/' . $foto->IdEquipo)->with('success', 'Foto añadida con éxito.');
+            // Generar una ruta única para almacenar la imagen
+            $rutaImagen = $fotoFile->store('fotoequipos', 'custom');
+
+            // Almacenar la ruta en la base de datos
+            $foto = new Foto();
+            $foto->IdEquipo = $equipo->Id;
+            $foto->Foto = $rutaImagen;
+            $foto->save();
+        }
+
+        return redirect('equipos/' . $equipo->Id)->with('success', 'Foto añadida con éxito.');
     }
+
 
     /*
     private function validar()
