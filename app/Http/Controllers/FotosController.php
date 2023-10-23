@@ -40,18 +40,14 @@ class FotosController extends Controller
             $foto->save();
         }
 
-        return redirect('equipos/' . $equipo->Id)->with('success', 'Foto añadida con éxito.');
+        return redirect("/equipos/$equipo->Id")->with('success', 'Foto añadida con éxito.');
     }
 
-
-    /*
-    private function validar()
+    public function destroy($fotoId)
     {
-        $validados = request()->validate([
-            'Foto' => 'mimes:jpg,jpeg,png,bmp',
-        ]);
+        $foto = Foto::findOrFail($fotoId);
+        $foto->delete();
 
-        return $validados;
+        return redirect("/equipos/{$foto->IdEquipo}")->with('success', 'Imagen eliminada con éxito.');
     }
-    */
 }

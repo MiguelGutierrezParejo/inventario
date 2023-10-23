@@ -85,9 +85,15 @@ Route::delete('/mantequip/{id}', [MantenimientoequiposController::class, 'destro
 
 ///////////////////////////////////////////////////FOTOS//////////////////////////////////////////////////////////////////////////////
 
-Route::get('/fotoequip/create/{id}', [FotosController::class, 'create']);
-Route::post('/fotoequip/{id}', [FotosController::class, 'store'])
-    ->name('fotoequip.store');
+// Ruta para mostrar la vista de creación de fotos
+Route::get('/equipos/{id}/fotos/create', [FotosController::class, 'create'])->name('fotoequipos.create');
+
+// Ruta para almacenar una foto en el servidor
+Route::post('/equipos/{id}/fotos', [FotosController::class, 'store'])->name('fotoequipos.store');
+
+// Ruta para eliminar una foto
+Route::delete('/equipos/{equipoId}/fotos/{fotoId}', [FotosController::class, 'destroy'])->name('fotoequipos.destroy');
+
 
 ///////////////////////////////////////////////////RELACIÓN TERMINALES////////////////////////////////////////////////////////////////
 
@@ -142,7 +148,7 @@ Route::get('/terminales/edit/{id}', [TerminalesController::class, 'edit']);
 Route::put('/terminales/{id}', [TerminalesController::class, 'update']);
 Route::get('/terminales/recabar', [TerminalesController::class, 'recabar']);
 Route::post('/terminales/generar', [TerminalesController::class, 'generar']);
-Route::get('/terminales/{id}', [TerminalesController::class, 'show']); 
+Route::get('/terminales/{id}', [TerminalesController::class, 'show']);
 
 ///////////////////////////////////////////////////DOCUMENTOS/////////////////////////////////////////////////////////////////////////
 
@@ -218,7 +224,7 @@ Route::get('/detallespedidos/editar', [I_detallespedidosController::class, 'edit
     ->name('detallespedidos');
 
 ///////////////////////////////////////////////////RECEPCIÓN DE PEDIDOS///////////////////////////////////////////////////////////////
-    
+
 Route::get('/recepcion/create/{IdPedido}', [I_recepcionpedidosController::class, 'create'])
     ->name('recepcion.create');
 Route::post('/recepcion', [I_recepcionpedidosController::class, 'store'])

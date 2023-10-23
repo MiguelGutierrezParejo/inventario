@@ -1,10 +1,22 @@
 <x-layout>
+    <script>
+        function confirmDelete(fotoId) {
+            if (confirm("¿Seguro que deseas eliminar esta imagen?")) {
+                // Si el usuario confirma, redirecciona a la ruta de eliminación
+                window.location.href = `/equipos/{{ $equipo->Id }}/fotos/${fotoId}`;
+            }
+        }
+    </script>
     <table style="float: left">
         @foreach ($fotos as $foto)
              @if ($foto->IdEquipo == $equipo->Id)
                 <tr>
                     <td>
-                        <img src="{{ asset('storage/fotoequipos/' . basename($foto->Foto)) }}" class="d-block w-100" alt="..." width="280px" style="padding-bottom: 15px;">
+                        <img src="{{ asset('storage/fotoequipos/' . basename($foto->Foto)) }}"
+                            alt="..."
+                            width="280px"
+                            style= "padding-bottom: 15px"
+                            ondblclick="confirmDelete({{ $foto->Id }})">
                     </td>
                 </tr>
             @endif
@@ -13,7 +25,7 @@
     <div class="bg-white rounded-md max-w-4xl mx-auto p-4 space-y-4 shadow-lg">
         <div class="flex justify-between">
             <strong class="text-2xl">Datos del equipo</strong>
-            <a href="/inventario/public/fotoequip/create/{{ $equipo->Id }}" class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-semibold rounded-lg text-sm px-5 py-1">Añadir foto</a>
+            <a href="{{ route('fotoequipos.create', ['id' => $equipo->Id]) }}" class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-semibold rounded-lg text-sm px-5 py-1">Añadir foto</a>
             <a href="/inventario/public/equipos/edit/{{ $equipo->Id }}" style="background-color: #0053D0" class="text-white focus:ring-4 font-semibold rounded-lg text-sm px-5 py-1">Editar</a>
         </div>
 
