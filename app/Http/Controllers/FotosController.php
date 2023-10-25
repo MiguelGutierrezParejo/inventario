@@ -4,10 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Equipo;
 use App\Models\Foto;
-use DateTime;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
 
 class FotosController extends Controller
 {
@@ -36,7 +34,7 @@ class FotosController extends Controller
             // Almacenar la ruta en la base de datos
             $foto = new Foto();
             $foto->IdEquipo = $equipo->Id;
-            $foto->Foto = $rutaImagen;
+            $foto->Foto = substr($rutaImagen, 12);
             $foto->save();
         }
 
@@ -46,8 +44,12 @@ class FotosController extends Controller
     public function destroy($fotoId)
     {
         $foto = Foto::findOrFail($fotoId);
+        $fotoFilePath = public_path('storage/fotoequipos/' . basename($foto->Foto));
+        if (file_exists($fotoFilePath)) {
+            unlink($fotoFilePath); // Elimina el archivo del sistema de archivos
+        }
         $foto->delete();
-
-        return redirect("/equipos/{$foto->IdEquipo}")->with('success', 'Imagen eliminada con éxito.');
+        
+        return redirect()->back()->with('success', 'Imagen eliminada con éxito.');
     }
 }

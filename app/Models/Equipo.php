@@ -62,25 +62,25 @@ class Equipo extends Model
     public function mantenimientos(){
 
         return $this->hasMany(Mantenimientoequipo::class, 'IdEquipo', 'Id');
-        
+
     }
 
     public function relaciones(){
 
         return $this->hasMany(Relacionequipo::class, 'IdEquipo', 'Id');
-        
+
     }
 
     public function relacionesequipos(){
 
         return $this->hasMany(S_relacionequipossoftware::class, 'IdEquipo', 'Id');
-        
+
     }
 
     public function fotos(){
 
-        return $this->hasMany(Fotos::class, 'IdEquipo', 'Id');
-        
+        return $this->hasMany(Foto::class, 'IdEquipo', 'Id');
+
     }
 }
-    
+

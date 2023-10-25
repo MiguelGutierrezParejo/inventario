@@ -1,22 +1,17 @@
 <x-layout>
-    <script>
-        function confirmDelete(fotoId) {
-            if (confirm("¿Seguro que deseas eliminar esta imagen?")) {
-                // Si el usuario confirma, redirecciona a la ruta de eliminación
-                window.location.href = `/equipos/{{ $equipo->Id }}/fotos/${fotoId}`;
-            }
-        }
-    </script>
     <table style="float: left">
         @foreach ($fotos as $foto)
-             @if ($foto->IdEquipo == $equipo->Id)
+            @if ($foto->IdEquipo == $equipo->Id)
                 <tr>
                     <td>
                         <img src="{{ asset('storage/fotoequipos/' . basename($foto->Foto)) }}"
-                            alt="..."
                             width="280px"
-                            style= "padding-bottom: 15px"
-                            ondblclick="confirmDelete({{ $foto->Id }})">
+                            style="padding-bottom: 10px">
+                        <form action="{{ route('fotoequipos.destroy', ['fotoId' => $foto->Id]) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-semibold rounded-lg text-sm px-5 py-1" onclick="return confirm('¿Seguro que deseas eliminar esta imagen?')">Borrar</button>
+                        </form>
                     </td>
                 </tr>
             @endif

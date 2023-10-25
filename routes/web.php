@@ -92,8 +92,7 @@ Route::get('/equipos/{id}/fotos/create', [FotosController::class, 'create'])->na
 Route::post('/equipos/{id}/fotos', [FotosController::class, 'store'])->name('fotoequipos.store');
 
 // Ruta para eliminar una foto
-Route::delete('/equipos/{equipoId}/fotos/{fotoId}', [FotosController::class, 'destroy'])->name('fotoequipos.destroy');
-
+Route::delete('/fotos/{fotoId}', [FotosController::class, 'destroy'])->name('fotoequipos.destroy');
 
 ///////////////////////////////////////////////////RELACIÓN TERMINALES////////////////////////////////////////////////////////////////
 
