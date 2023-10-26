@@ -10,88 +10,70 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode; ?>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <title>Inventario</title>
 </head>
+<script defer>
+    var enlaceconfig = document.getElementById("enlaceconfig");
+    var config = document.getElementById("config");
+
+    enlaceconfig.addEventListener("click", function(event) {
+        config.classList.toggle("hidden");
+    });
+</script>
 <body class="flex justify-center">
     <table class="border-separate border-spacing-2 border border-slate-400">
+        <thead>
+            <td class="oculto-impresion">
+                <a href="{{ route('etiquetar', 'Simple') }}"
+                    style="background-color: #0053D0" class="transition-colors rounded-[8px] px-[15px] py-[4px] text-white focus:ring-2">Volver</a>
+            </td>
+            <td class="oculto-impresion">
+                <a id="enlaceconfig" style="background-color: #229954" class="transition-colors rounded-[8px] px-[15px] py-[4px] text-white focus:ring-2">
+                Ver ajustes de impresión</a>
+                <div id="config" class="hidden">
+                    <img src='http://localhost/inventario/public/configuracionimpresora.png' width="300px" height="1000px"/>
+                </div>
+            </td>
+        </thead>
         <tbody>
             <tr>
-                <td class="oculto-impresion">
-                    <a href="{{ route('etiquetar', 'Simple') }}"
-                        style="background-color: #0053D0" class="transition-colors rounded-[8px] px-[15px] py-[4px] text-white focus:ring-2">Volver</a>
-                </td>
-                <td class="oculto-impresion">
-                    <a id="enlaceconfig" style="background-color: #229954" class="transition-colors rounded-[8px] px-[15px] py-[4px] text-white focus:ring-2">
-                    Ver ajustes de impresión</a>
-                    <div id="config" class="hidden">
-                        <img src='http://localhost/inventario/public/configuracionimpresora.png' width="300px" height="1000px"/>
-                    </div>
-                </td>
-                
-                <script>
-                    var enlaceconfig = document.getElementById("enlaceconfig");
-                    var config = document.getElementById("config");
-
-                    enlaceconfig.addEventListener("click", function(event) {
-                        config.classList.toggle("hidden");
-                    });
-                </script>
-                <tr></tr>
                 <?php $contador = 0; ?>
                 <?php $contadormenorque3o8 = 0; ?>
                 @foreach ($equipos as $equipo )
                     @if ($tipo == 'Reducido') <!-- Tipo de etiqueta reducida -->
-                        <?php $contador += 1; ?>
-                        @if($contador <= 3 )
-                            <td>
-                                <table cellspacing="2" cellpadding="2">
-                                    <tr class="border border-slate-400"> 
-                                        <td class="border border-slate-400" style="text-align: center">
-                                            <strong >{{ $equipo->NInventario}}</strong>
-                                            <?php  $stringSeparado = explode('-', $equipo->NInventario); ?>
-                                            @if ($stringSeparado[0] == 'T')
-                                                <?php
-                                                $relacionterminal = RelacionTerminal::where('IdTerminal', $equipo->Id)->first();
-                                                $relacionlineas = RelacionLinea::where('IdUsuario', $relacionterminal->IdUsuario)->first();
-                                                $numeroext = Linea::where('Id', $equipo->Id)->first();
-                                                dump($relacionlineas->linea->Numero);
-                                                dd($numeroext->Extension);
-
-                                                ?>
-                                                <p class="mt-2">{{ $relacionlineas->linea->Numero}}</p>
-                                            @elseif ($stringSeparado[0] == 'L')
-                                                <?php
-                                                $numerolinea = Linea::where('Id', $equipo->Id)->first();
-                                                $numerolinea2 = Linea::where('Id', $equipo->Id)->first();
-                                                dump($numerolinea->Numero);
-                                                dd($numerolinea2->Extension);
-                                                ?>
-                                                <p class="mt-2">{{ $numerolinea }}</p>
-                                                <p class="mt-2">{{ $numerolinea2 }}</p>
-
-                                            @endif
-                                            <p style="font-size: 0.8em;" class="mt-2">{{date('d-m-Y' , strtotime($equipo->FechaAlta))}}</p>
-                                        </td>
-                                    </tr> 
-                                </table>
-                            </td>                              
-                        @else 
-                            <tr class="border border-slate-400">
-                                <td style="height: 1em;"></td>
-                            </tr>
-
-                            <?php $contador = 1;  ?>
-                            
-                            <td>
-                                <table cellspacing="2" cellpadding="2">
-                                    <tr class="border border-slate-400">
-                                        <td style="text-align: center">
-                                            <strong >{{ $equipo->NInventario}}</strong>
-                                            <p style="font-size: 8px;" class="mt-2">{{date('d-m-Y' , strtotime($equipo->FechaAlta))}}</p>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td> 
-                        @endif
-                        
+                        <td>
+                            <table cellspacing="2" cellpadding="2">
+                                <tr class="border border-slate-400">
+                                    <td class="border border-slate-400" style="text-align: center">
+                                        <strong >{{ $equipo->NInventario}}</strong>
+                                        <?php  $stringSeparado = explode('-', $equipo->NInventario); ?>
+                                        @if ($stringSeparado[0] == 'T')
+                                            <?php
+                                            $relacionterminal = RelacionTerminal::where('IdTerminal', $equipo->Id)->first();
+                                            $relacionlineas = RelacionLinea::where('IdUsuario', $relacionterminal->IdUsuario)->first();
+                                            ?>
+                                            <p class="mt-2">{{ $relacionlineas->linea->Numero }}</p>
+                                            <p class="mt-2">{{ $relacionlineas->linea->Extension }}</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        @elseif ($stringSeparado[0] == 'L')
+                                            <?php
+                                            $numerolinea = Linea::where('Id', $equipo->Id)->first();
+                                            ?>
+                                            <p class="mt-2">{{ $numerolinea->Numero }}</p>
+                                            <p class="mt-2">{{ $numerolinea->Extension }}</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        @else
+                                        <strong >{{ $equipo->NInventario}}</strong>
+                                        <p style="font-size: 8px;" class="mt-2">{{date('d-m-Y' , strtotime($equipo->FechaAlta))}}</p>
+                                        @endif
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
                     @else <!-- Tipo de etiqueta completa -->
                         <!-- Para el fallo de ser menos de 3 -->
                         @if ($equipos->count() < 3)
@@ -100,7 +82,7 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode; ?>
                             @if($equipos->count() == 1 )
                                 <td>
                                     <table cellspacing="2" cellpadding="2">
-                                        <tr class="border border-slate-400"> 
+                                        <tr class="border border-slate-400">
                                             <td class="w-4/12">
                                                 <img src='http://localhost/inventario/public/logoinformaticac.png'/>
                                             </td>
@@ -124,14 +106,14 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode; ?>
                                                     <p>{{$qrcode}}</p>
                                                 @endif
                                             </td>
-                                        </tr> 
+                                        </tr>
                                     </table>
-                                </td>                             
-                            @else 
+                                </td>
+                            @else
                                 @if ($contadormenorque3o8 == 1)
                                 <td>
                                     <table cellspacing="2" cellpadding="2">
-                                        <tr class="border border-slate-400"> 
+                                        <tr class="border border-slate-400">
                                             <td class="w-4/12">
                                                 <img src='http://localhost/inventario/public/logoinformaticac.png'/>
                                             </td>
@@ -152,13 +134,13 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode; ?>
                                                     <p>{{$qrcode}}</p>
                                                 @endif
                                             </td>
-                                        </tr> 
+                                        </tr>
                                     </table>
                                 </td>
                                 @elseif ($contadormenorque3o8 == 2)
                                 <td>
                                     <table cellspacing="2" cellpadding="2">
-                                        <tr class="border border-slate-400"> 
+                                        <tr class="border border-slate-400">
                                             <td class="w-4/12">
                                                 <img src='http://localhost/inventario/public/logoinformaticac.png'/>
                                             </td>
@@ -179,7 +161,7 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode; ?>
                                                     <p>{{$qrcode}}</p>
                                                 @endif
                                             </td>
-                                        </tr> 
+                                        </tr>
                                     </table>
                                 </td>
                                 @endif
@@ -189,7 +171,7 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode; ?>
                             @if($contador <= 3 )
                                 <td>
                                     <table cellspacing="2" cellpadding="2">
-                                        <tr class="border border-slate-400"> 
+                                        <tr class="border border-slate-400">
                                             <td class="w-4/12">
                                                 <img src='http://localhost/inventario/public/logoinformaticac.png'/>
                                             </td>
@@ -210,19 +192,19 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode; ?>
                                                     <p>{{$qrcode}}</p>
                                                 @endif
                                         </td>
-                                        </tr> 
+                                        </tr>
                                     </table>
-                                </td>                          
-                            @else 
+                                </td>
+                            @else
                                 <tr class="border border-slate-400">
                                     <td style="height: 1em;"></td>
                                 </tr>
 
                                 <?php $contador = 1;  ?>
-                                
+
                                 <td>
                                     <table cellspacing="2" cellpadding="2">
-                                        <tr class="border border-slate-400"> 
+                                        <tr class="border border-slate-400">
                                             <td class="w-4/12">
                                                 <img src='http://localhost/inventario/public/logoinformaticac.png'/>
                                             </td>
@@ -243,7 +225,7 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode; ?>
                                                     <p>{{$qrcode}}</p>
                                                 @endif
                                             </td>
-                                        </tr> 
+                                        </tr>
                                     </table>
                                 </td>
                             @endif
