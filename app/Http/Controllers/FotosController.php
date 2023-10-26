@@ -43,13 +43,13 @@ class FotosController extends Controller
 
     public function destroy($fotoId)
     {
-        $foto = Foto::findOrFail($fotoId);
+        $foto = Foto::find($fotoId);
         $fotoFilePath = public_path('storage/fotoequipos/' . basename($foto->Foto));
         if (file_exists($fotoFilePath)) {
             unlink($fotoFilePath); // Elimina el archivo del sistema de archivos
         }
-        $foto->delete();
-        
+        Foto::where('Id', $fotoId)->delete();
+
         return redirect()->back()->with('success', 'Imagen eliminada con éxito.');
     }
 }
