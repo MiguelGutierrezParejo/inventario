@@ -1,4 +1,19 @@
 <x-layout>
+    <script defer>
+       function showConfirmation(fotoId) {
+        if (confirm("¿Seguro que deseas eliminar esta imagen?")) {
+            fetch(`/inventario/public/fotos/${fotoId}`, {
+                method: 'DELETE',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                },
+            })
+            .then(response => {
+                location.reload();
+            });
+        }
+    }
+    </script>
     <table style="float: left">
         @foreach ($fotos as $foto)
             @if ($foto->IdEquipo == $equipo->Id)
@@ -6,11 +21,12 @@
                     <td>
                         <img src="{{ asset('storage/fotoequipos/' . basename($foto->Foto)) }}"
                             width="280px"
-                            style="padding-bottom: 10px">
+                            style="padding-bottom: 10px"
+                            title="Doble clic para borrar esta imagen"
+                            ondblclick="showConfirmation({{ $foto->Id }})">
                         <form action="{{ route('fotoequipos.destroy', ['fotoId' => $foto->Id]) }}" method="POST">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-semibold rounded-lg text-sm px-5 py-1" onclick="return confirm('¿Seguro que deseas eliminar esta imagen?')">Borrar</button>
                         </form>
                     </td>
                 </tr>

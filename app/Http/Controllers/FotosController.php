@@ -45,11 +45,19 @@ class FotosController extends Controller
     {
         $foto = Foto::find($fotoId);
         $fotoFilePath = public_path('storage/fotoequipos/' . basename($foto->Foto));
+
+        // Elimina el archivo del sistema
         if (file_exists($fotoFilePath)) {
-            unlink($fotoFilePath); // Elimina el archivo del sistema de archivos
+            unlink($fotoFilePath);
         }
+
+        // Elimina el registro de la base de datos
         Foto::where('Id', $fotoId)->delete();
 
-        return redirect()->back()->with('success', 'Imagen eliminada con éxito.');
+        if ($foto->delete()) {
+            return redirect()->back()->with('success', 'Imagen eliminada con éxito.');
+        } else {
+            return redirect()->back()->with('error', 'No se pudo eliminar la imagen.');
+        }
     }
 }
