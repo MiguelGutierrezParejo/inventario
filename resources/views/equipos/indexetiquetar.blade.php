@@ -1,5 +1,5 @@
 <?php
-use App\Models\I_impresora; 
+use App\Models\I_impresora;
 ?>
 <x-layout>
     <div class="flex flex-col text-center mt-4">
@@ -21,9 +21,6 @@ use App\Models\I_impresora;
                 <a href="/inventario/public/equipos/generaretiqueta/Completo/Etiquetadora"
                     style="background-color:  #0b5345 " class="text-white font-semibold rounded-lg text-sm px-5 py-1 text-center">Etiqueta
                 </a> &nbsp; | &nbsp;
-                <a href="/inventario/public/equipos/generaretiqueta/Completo/Impresora"
-                    style="background-color:  #0b5345 " class="text-white font-semibold rounded-lg text-sm px-5 py-1 text-center">Etiqueta A4
-                </a> &nbsp; | &nbsp;
                 <a href="/inventario/public/equipos/generaretiqueta/Reducido/Impresora"
                     style="background-color:  #0b5345 " class="text-white font-semibold rounded-lg text-sm px-5 py-1 text-center">Etiqueta reducida
                 </a>
@@ -33,13 +30,13 @@ use App\Models\I_impresora;
             <table width="100%" class="border-collapse border border-slate-400 text-left"  >
                 <thead class="bg-gray-100">
                         @php
-                            $link = e("Nombre=" . request('Nombre') . "&NInventario=" . request('NInventario') . "&IdTipo=" . request('IdTipo') 
-                            . "&NombreOrdenador=" . request('NombreOrdenador') . "&Modelo=" . request('Modelo') . "&FechaAlta=" . request('FechaAlta') 
+                            $link = e("Nombre=" . request('Nombre') . "&NInventario=" . request('NInventario') . "&IdTipo=" . request('IdTipo')
+                            . "&NombreOrdenador=" . request('NombreOrdenador') . "&Modelo=" . request('Modelo') . "&FechaAlta=" . request('FechaAlta')
                             . "&FechaBaja=" . request('FechaBaja') . "&PrecioAdquisicion=" . request('PrecioAdquisicion'));
 
                             $enlace = e("/inventario/public/etiquetar/$tipourl");
                         @endphp
-                
+
                     <tr>
                         <th class="border border-slate-300 px-6 py-2 font-semibold">
                             <a href="{!! $enlace !!}?orden=NInventario&dir={{request('dir') == 'asc' ? 'desc' : 'asc' }}&{!! $link !!}">Referencia
@@ -73,15 +70,15 @@ use App\Models\I_impresora;
                                 <input type="hidden" name="orden" value="{{ old('orden') }}">
                                 <input type="hidden" name="dir" value="{{ old('dir') }}">
                                 <td class="border">
-                                    <input type="text" class="border border-slate-300 px-6 py-2" name="NInventario" id="NInventario" 
+                                    <input type="text" class="border border-slate-300 px-6 py-2" name="NInventario" id="NInventario"
                                     value="{{ request()->query('NInventario') }}">
                                 </td>
                                 <td class="border border-slate-300 ">
-                                    <input type="text" class="border border-slate-300 px-6 py-2" name="Nombre" id="Nombre" 
+                                    <input type="text" class="border border-slate-300 px-6 py-2" name="Nombre" id="Nombre"
                                     value="{{ request()->query('Nombre') }}">
-                                </td>  
+                                </td>
                                 <td class="border border-slate-300 ">
-                                    <input type="text" class="border border-slate-300 px-6 py-2" name="NombreOrdenador" id="NombreOrdenador" 
+                                    <input type="text" class="border border-slate-300 px-6 py-2" name="NombreOrdenador" id="NombreOrdenador"
                                     value="{{ request()->query('NombreOrdenador') }}">
                                 </td>
                                 <td>
@@ -93,17 +90,17 @@ use App\Models\I_impresora;
                                             @endif
                                         @endforeach
                                     </select>
-                                </td>  
+                                </td>
                                 <td class="border border-slate-300 px-6 py-4 ocultar">
                                     <div class="hidden"><button type="submit"></button></div>
                                 </td>
                             </form>
                         </tr>
                             {{-----------------------------------------FIN BUSQUEDA---------------------------------------------------------------}}
-                    
+
                     <?php $contador = 0; ?>
                     @foreach ($objeto as $object)
-                    <?php $contador += 1; ?> 
+                    <?php $contador += 1; ?>
                         <tr class=" border border-slate-400">
                             <td class="border border-slate-300 px-6 py-4">
                                 <div class="text-sm text-gray-900">
@@ -153,7 +150,7 @@ use App\Models\I_impresora;
                                         <a href="">{{ $object->NombreOrdenador }}</a>
                                     @elseif ($object->Denominacion == 'Impresora')
                                         <a href="/inventario/public/impresoras/{{$object->Id}}">{{ $object->NombreOrdenador }}</a>
-                                        <?php 
+                                        <?php
                                         $impresora = I_impresora::where('NInventario', $object->NInventario)->first();
                                         ?>
                                         <a href="/inventario/public/impresoras/{{$object->Id}}">{{$impresora->modelo->Modelo }}</a>
@@ -169,28 +166,28 @@ use App\Models\I_impresora;
                                 <?php  $stringSeparado = explode('-', $object->NInventario); ?>
                                 @if ($object->Etiquetar == 1)
                                     <input type="checkbox" id="{{ $contador }}" value="{{$stringSeparado[0]}}-{{$object->Id}}" checked>
-                                @else 
+                                @else
                                 <input type="checkbox" id="{{ $contador }}" value="{{$stringSeparado[0]}}-{{$object->Id}}">
                                 @endif
                                 <script>
-                                    //Detecta cambia checkbox 
-                                    var y = document.getElementById("{{ $contador }}").addEventListener("change", function(event) {       
+                                    //Detecta cambia checkbox
+                                    var y = document.getElementById("{{ $contador }}").addEventListener("change", function(event) {
                                     if($("#{{$contador}}"). prop("checked") == true){
                                         var idaetiquetar = document.getElementById("{{ $contador }}").value
-                                        
+
                                         document.cookie = "idaetiquetar="+idaetiquetar+ "; path=/inventario/public" + ';max-age=1';
 
                                         document.location.replace('/inventario/public/equipos/etiquetar/{{ $tipourl}}');
                                     } else if($("#{{$contador}}"). prop("checked") == false) {
                                         var idaquitar = document.getElementById("{{ $contador }}").value
                                         document.cookie = "idaquitar="+idaquitar + "; path=/inventario/public" + ';max-age=1';
-                                        
+
                                         document.location.replace('/inventario/public/equipos/etiquetar/{{ $tipourl}}');
                                     }
 
-                                    });    
+                                    });
 
-                                        
+
                                 </script>
                             </td>
                         </tr>
