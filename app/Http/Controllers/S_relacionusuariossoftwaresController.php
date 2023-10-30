@@ -5,9 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\S_relacionusuariossoftware;
 use App\Models\S_software;
 use App\Models\Usuario;
-use Carbon\Carbon;
 use DateTime;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class S_relacionusuariossoftwaresController extends Controller
@@ -122,9 +120,8 @@ class S_relacionusuariossoftwaresController extends Controller
         ]);
     }
 
-    public function update(Request $request, $id)
+    public function update($id)
     {
-        #dd($request->all());
         $validados = $this->validar();
 
         $relacion = S_relacionusuariossoftware::findOrFail($id);
