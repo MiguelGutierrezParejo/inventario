@@ -69,8 +69,9 @@ Route::post('/relequip/{id}', [RelacionequiposController::class, 'store'])
 Route::get('/relequip/edit/{id}', [RelacionequiposController::class, 'edit']);
 Route::put('/relequip/{id}', [RelacionequiposController::class, 'update'])
     ->name('relequip.update');
-Route::get('/relequip/baja/{id}', [RelacionequiposController::class, 'baja']);
+#Route::get('/relequip/baja/{id}', [RelacionequiposController::class, 'baja']);
 Route::delete('/relequip/{id}', [RelacionequiposController::class, 'destroy']);
+
 
 ///////////////////////////////////////////////////MANTENIMIENTO//////////////////////////////////////////////////////////////////////
 
@@ -259,6 +260,9 @@ Route::get('/relacionusuariossoftwares/create/{id}', [S_relacionusuariossoftware
 Route::get('/relacionusuariossoftwares/createdesdeuser/{id}', [S_relacionusuariossoftwaresController::class, 'createdesdeuser']);
 Route::post('/relacionusuariossoftwares/{id}/{Origen}', [S_relacionusuariossoftwaresController::class, 'store'])
     ->name('relacionusuariossoftwares.store');
+Route::get('/relacionusuariossoftwares/edit/{id}', [S_relacionusuariossoftwaresController::class, 'edit']);
+Route::put('relacionusuariossoftwares/{id}/', [S_relacionusuariossoftwaresController::class, 'update'])
+    ->name('relacionusuariossoftwares.update');
 Route::delete('/relacionusuariossoftwares/{id}', [S_relacionusuariossoftwaresController::class, 'destroy']);
 
 ///////////////////////////////////////////////////RELACIÓN DE EQUIPOS////////////////////////////////////////////////////////////////

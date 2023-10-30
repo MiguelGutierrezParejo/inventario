@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Equipo;
 use App\Models\Foto;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class FotosController extends Controller
 {

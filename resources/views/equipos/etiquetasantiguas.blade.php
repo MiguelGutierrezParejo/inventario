@@ -48,18 +48,18 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode; ?>
                                             $relacionlineas = RelacionLinea::where('IdUsuario', $relacionterminal->IdUsuario)->first();
                                             ?>
                                             <strong>{{ $equipo->NInventario}}</strong>
-                                            <p class="mt-2">{{ $relacionlineas->linea->Numero }}</p>
-                                            <p class="mt-2">{{ $relacionlineas->linea->Extension }}</p>
+                                            <p style="font-size: 12px;" class="mt-2">{{ $relacionlineas->linea->Numero }}</p>
+                                            <p style="font-size: 12px;" class="mt-2">{{ $relacionlineas->linea->Extension }}</p>
                                         @elseif ($stringSeparado[0] == 'L')
                                             <?php
                                             $numerolinea = Linea::where('Id', $equipo->Id)->first();
                                             ?>
                                             <strong>{{ $equipo->NInventario}}</strong>
-                                            <p class="mt-2">{{ $numerolinea->Numero }}</p>
-                                            <p class="mt-2">{{ $numerolinea->Extension }}</p>
+                                            <p style="font-size: 12px;" class="mt-2">{{ $numerolinea->Numero }}</p>
+                                            <p style="font-size: 12px;" class="mt-2">{{ $numerolinea->Extension }}</p>
                                         @else
                                             <strong>{{ $equipo->NInventario}}</strong>
-                                            <p style="font-size: 8px;" class="mt-2">{{date('d-m-Y' , strtotime($equipo->FechaAlta))}}</p>
+                                            <p style="font-size: 12px;" class="mt-2">{{date('d-m-Y' , strtotime($equipo->FechaAlta))}}</p>
                                         @endif
                                     </td>
                                 </tr>

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\S_relacionusuariossoftware;
 use App\Models\S_software;
 use App\Models\Usuario;
-use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -58,14 +58,28 @@ class S_relacionusuariossoftwaresController extends Controller
 
     }
 
+    public function edit($id)
+    {
+        $relacion = S_RelacionUsuariosSoftware::find($id);
+        $empleados = Usuario::all();
+
+        return view('s_relacionusuariossoftware.edit', [
+            'relacion' => $relacion,
+            'empleados' => $empleados,
+        ]);
+    }
+
+
     private function validar()
     {
         //Establecer cookie para el usuario pasado
         setcookie("Nombreusuario", request('Usuario'), time() + 1);
 
         $validados = request()->validate([
-            'Usuario' => 'required',
-            'IdSoftware' => 'required',
+            'Usuario' => 'exists:usuarios,Id',
+            'FechaAlta' => 'required',
+            'FechaBaja' => 'nullable',
+            'Observaciones' => 'nullable|max:255',
         ]);
 
         return $validados;
@@ -74,9 +88,9 @@ class S_relacionusuariossoftwaresController extends Controller
     public function destroy($id)
     {
         $relacion = S_relacionusuariossoftware::findOrFail($id);
-        
+
         $relacion->delete();
-        
+
         DB::select('DELETE FROM s_relacionusuariossoftwares WHERE Id = ?', [$relacion->Id]);
 
         return redirect()->back()
@@ -108,5 +122,26 @@ class S_relacionusuariossoftwaresController extends Controller
         ]);
     }
 
-    
+    public function update(Request $request, $id)
+    {
+        #dd($request->all());
+        $validados = $this->validar();
+
+        $relacion = S_relacionusuariossoftware::findOrFail($id);
+
+        $FechaAlta = new DateTime($validados['FechaAlta']);
+
+        $FechaBaja = null;
+        if ($validados['FechaBaja']) {
+            $FechaBaja = new DateTime($validados['FechaBaja']);
+        }
+
+        $Observaciones = $validados['Observaciones'];
+
+        DB::select('UPDATE s_relacionusuariossoftwares SET FechaAlta = ?,
+                                               FechaBaja = ?, Observaciones = ?
+                                               WHERE id = ?', [$FechaAlta, $FechaBaja, $Observaciones, $id]);
+
+        return redirect('usuarios/' . $relacion->IdUsuario)->with('success', 'Empleado actualizado con éxito.');
+    }
 }

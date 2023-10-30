@@ -27,7 +27,7 @@ class RelacionequiposController extends Controller
             'mantenimiento' => $mantenimiento,
         ]);
     }
-    
+
     public function create($id)
     {
         $equipo = Equipo::findOrFail($id);
@@ -55,15 +55,15 @@ class RelacionequiposController extends Controller
         $relacion->Observaciones = $validados['Observaciones'];
 
         $relacion->save();
-        
+
         $contador = $relaciones->count();
 
         $FechaBajaAnterior =  $relacion->FechaAlta;
-        if ($contador == 1) { 
+        if ($contador == 1) {
             DB::select('UPDATE relacionequipos SET FechaBaja = ? WHERE id = ?', [$FechaBajaAnterior, $relaciones->first()->Id]);
         }
 
-        if ($contador > 1) { 
+        if ($contador > 1) {
             DB::select('UPDATE relacionequipos SET FechaBaja = ? WHERE id = ?', [$FechaBajaAnterior, $relaciones->last()->Id]);
         }
 
@@ -74,7 +74,7 @@ class RelacionequiposController extends Controller
         return redirect('equipos/' . $relacion->IdEquipo)
             ->with('success', 'Empleado asignado con éxito.');
     }
-    
+
     public function edit($id)
     {
         $relacion = Relacionequipo::findOrFail($id);
@@ -90,7 +90,7 @@ class RelacionequiposController extends Controller
     public function update($id)
     {
         $validados = $this->validar();
-        
+
         $relacion = Relacionequipo::findOrFail($id);
 
         $relaciones = Relacionequipo::where('IdEquipo', $relacion->IdEquipo)->whereNull('FechaBaja')->first();
@@ -100,7 +100,7 @@ class RelacionequiposController extends Controller
         $FechaBaja = null;
 
         if ($validados['FechaBaja']) {
-            $FechaBaja = new DateTime($validados['FechaBaja']);       
+            $FechaBaja = new DateTime($validados['FechaBaja']);
         } else {
 
             //Al editar y quitar la fecha de baja da de baja el anterior
@@ -116,14 +116,14 @@ class RelacionequiposController extends Controller
         DB::select('UPDATE relacionequipos SET IdUsuario = ?, FechaAlta = ?,
                                                FechaBaja = ?, Observaciones = ?
                                                WHERE id = ?', [$Usuario, $FechaAlta, $FechaBaja,$Observaciones, $id]);
-        
+
         if ($FechaBaja and $relacion->FechaBaja == null){
             DB::select('INSERT INTO relacionequipos (IdEquipo, IdUsuario, FechaAlta) VALUES ( ?, 0, ?)', [$relacion->IdEquipo, $FechaBaja]);
         }
-        
+
         return redirect('equipos/' . $relacion->IdEquipo)->with('success', 'Empleado actualizado con éxito.');
     }
-
+/*
     public function baja($id)
     {
         $relacion = Relacionequipo::findOrFail($id);
@@ -135,28 +135,28 @@ class RelacionequiposController extends Controller
             $FechaBaja = new DateTime($relacion->FechaBaja);
         } else {
             $FechaBaja = Carbon::now();
-        }   
+        }
 
         $Observaciones = $relacion->Observaciones;
 
         DB::select('UPDATE relacionequipos SET IdUsuario = ?, FechaAlta = ?,
                                                FechaBaja = ?, Observaciones = ?
                                                WHERE id = ?', [$Usuario, $FechaAlta, $FechaBaja,$Observaciones, $id]);
-        
+
         if ($FechaBaja){
             DB::select('INSERT INTO relacionequipos (IdEquipo, IdUsuario, FechaAlta) VALUES ( ?, 0, ?)', [$relacion->IdEquipo, $FechaBaja]);
         }
-    
+
         return redirect('equipos/' . $relacion->IdEquipo)->with('success', 'Empleado actualizado con éxito.');
     }
 
-
+*/
     public function destroy($id)
     {
         $relacion = Relacionequipo::findOrFail($id);
-        
+
         $relacion->delete();
-        
+
         DB::select('DELETE FROM relacionequipos WHERE id = ?', [$relacion->Id]);
 
         return redirect()->back()
