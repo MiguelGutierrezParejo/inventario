@@ -116,7 +116,11 @@
                         <a href="/inventario/public/softwares/{{$relacion->software->Id}}">{{ $relacion->software->Nombre}}</a>
                     </td>
                     <td class="px-2 border border-black">
+                        @if ($relacion->FechaAlta == null)
+                        <a href="/inventario/public/softwares/{{$relacion->software->Id}}"></a>
+                    @else
                         <a href="/inventario/public/softwares/{{$relacion->software->Id}}">{{ date('d-m-Y', strtotime($relacion->FechaAlta)) }}</a>
+                    @endif
                     </td>
                     <td class="px-2 border border-black">
                         @if ($relacion->FechaBaja == null)
