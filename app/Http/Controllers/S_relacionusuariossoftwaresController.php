@@ -43,6 +43,7 @@ class S_relacionusuariossoftwaresController extends Controller
         $relacion = new S_relacionusuariossoftware();
         $relacion->IdUsuario = $validados['Usuario'];
         $relacion->IdSoftware = $validados['IdSoftware'];
+        $relacion->FechaAlta = now()->format('Y-m-d');
         $relacion->save();
 
         //Para el redirect
@@ -75,7 +76,8 @@ class S_relacionusuariossoftwaresController extends Controller
 
         $validados = request()->validate([
             'Usuario' => 'exists:usuarios,Id',
-            'FechaAlta' => 'required',
+            'IdSoftware' => 'nullable',
+            'FechaAlta' => 'nullable',
             'FechaBaja' => 'nullable',
             'Observaciones' => 'nullable|max:255',
         ]);
