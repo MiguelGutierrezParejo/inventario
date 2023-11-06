@@ -28,7 +28,7 @@ class FotosController extends Controller
             $fotoFile = $request->file('Foto');
 
             // Generar una ruta única para almacenar la imagen
-            $rutaImagen = $fotoFile->store('', 'public');
+            $rutaImagen = $fotoFile->store('', 'custom');
 
             // Almacenar la ruta en la base de datos
             $foto = new Foto();
@@ -43,7 +43,7 @@ class FotosController extends Controller
     public function destroy($fotoId)
     {
         $foto = Foto::find($fotoId);
-        $fotoFilePath = storage_path('app/public/' . $foto->Foto);
+        $fotoFilePath = public_path('storage/' . basename($foto->Foto));
 
         // Elimina el archivo del sistema
         if (file_exists($fotoFilePath)) {

@@ -19,7 +19,7 @@
             @if ($foto->IdEquipo == $equipo->Id)
                 <tr>
                     <td>
-                        <img src="{{ asset('storage/' . $foto->Foto) }}"
+                        <img src="{{ asset('storage/' . basename($foto->Foto)) }}"
                             width="280px"
                             style="padding-bottom: 10px"
                             title="Doble clic para borrar esta imagen"
