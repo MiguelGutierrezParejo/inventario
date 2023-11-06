@@ -20,6 +20,7 @@ use App\Http\Controllers\RelacionTerminalesController;
 use App\Http\Controllers\S_relacionequipossoftwaresController;
 use App\Http\Controllers\S_relacionusuariossoftwaresController;
 use App\Http\Controllers\S_softwaresController;
+use App\Http\Controllers\ContratosController;
 use App\Http\Controllers\TerminalesController;
 use App\Http\Controllers\UsuariosController;
 use Illuminate\Support\Facades\Route;
@@ -253,6 +254,16 @@ Route::put('/proveedores/{id}', [I_proveedoresController::class, 'update']);
 Route::get('/proveedores', [I_proveedoresController::class, 'index'])
     ->name('proveedores');
 Route::get('/proveedores/{id}', [I_proveedoresController::class, 'show']);
+
+///////////////////////////////////////////////////CONTRATOS///////////////////////////////////////////////////////////////////////////
+
+Route::get('/contratos', [ContratosController::class, 'index'])
+    ->name('contratos');
+Route::get('/contratos/{id}', [ContratosController::class, 'show']);
+Route::get('/contratos/create', [ContratosController::class, 'create'])->name('contratos.create');
+Route::post('/contratos', [ContratosController::class, 'store'])->name('contratos.store');
+Route::get('/contratos/edit/{id}', [ContratosController::class, 'edit']);
+Route::put('/contratos/{id}', [ContratosController::class, 'update']);
 
 ///////////////////////////////////////////////////RELACIÓN USUARIOS//////////////////////////////////////////////////////////////////
 
