@@ -7,7 +7,7 @@
                     style="background-color: #0053D0" class="text-white font-semibold rounded-lg text-sm px-5 py-1 text-center">Nuevo contrato
                 </a>
             </div>
-            <table width="100%" class="table-fixed border-collapse border border-slate-400 text-left"  >
+            <table width="100%" class="table-fixed border-collapse border border-slate-400 text-left">
                 <thead class="bg-gray-100">
                     <tr>
                         <th class="w-2/12 border border-slate-300 px-6 py-2 font-semibold">

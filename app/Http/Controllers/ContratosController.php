@@ -44,11 +44,11 @@ class ContratosController extends Controller
     {
 
         $validados = request()->validate([
-            'Nombre' => 'nullable',
-            'Adjudicativos' => 'nullable',
-            'Fecha' => 'nullable|date_format:Y-m-d',
+            'Nombre' => 'required',
+            'Adjudicativos' => 'required',
+            'Fecha' => 'required|date_format:Y-m-d',
             'Observaciones' => 'nullable|max:255',
-            'Estado' => 'nullable',
+            'Estado' => 'required',
         ]);
 
         return $validados;

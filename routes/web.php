@@ -257,11 +257,11 @@ Route::get('/proveedores/{id}', [I_proveedoresController::class, 'show']);
 
 ///////////////////////////////////////////////////CONTRATOS///////////////////////////////////////////////////////////////////////////
 
+Route::get('/contratos/create', [ContratosController::class, 'create'])->name('contratos.create');
+Route::post('/contratos', [ContratosController::class, 'store'])->name('contratos.store');
 Route::get('/contratos', [ContratosController::class, 'index'])
     ->name('contratos');
 Route::get('/contratos/{id}', [ContratosController::class, 'show']);
-Route::get('/contratos/create', [ContratosController::class, 'create'])->name('contratos.create');
-Route::post('/contratos', [ContratosController::class, 'store'])->name('contratos.store');
 Route::get('/contratos/edit/{id}', [ContratosController::class, 'edit']);
 Route::put('/contratos/{id}', [ContratosController::class, 'update'])->name('contratos.update');
 
