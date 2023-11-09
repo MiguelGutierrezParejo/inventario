@@ -263,7 +263,7 @@ Route::get('/contratos/{id}', [ContratosController::class, 'show']);
 Route::get('/contratos/create', [ContratosController::class, 'create'])->name('contratos.create');
 Route::post('/contratos', [ContratosController::class, 'store'])->name('contratos.store');
 Route::get('/contratos/edit/{id}', [ContratosController::class, 'edit']);
-Route::put('/contratos/{id}', [ContratosController::class, 'update']);
+Route::put('/contratos/{id}', [ContratosController::class, 'update'])->name('contratos.update');
 
 ///////////////////////////////////////////////////RELACIÓN USUARIOS//////////////////////////////////////////////////////////////////
 

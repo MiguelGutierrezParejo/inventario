@@ -1,8 +1,7 @@
 <x-layout>
-    <form action="{{ route('contratos.store', ['id' => $contrato->Id]) }}" method="POST">
+    <form action="{{ route('contratos.update', ['id' => $contrato->Id]) }}" method="POST">
         @csrf
         @method('PUT')
-        <?php var_dump($contrato) ?>
 
         <h1 class="mb-4 text-2xl font-semibold">Editar contrato</h1>
 
@@ -22,14 +21,14 @@
         </div>
 
         <div class="mb-6">
-            <label for="Adjudicativo"
-                class="text-sm font-medium text-gray-900 block mb-2 @error('Adjudicativo') text-red-500 @enderror">
+            <label for="Adjudicativos"
+                class="text-sm font-medium text-gray-900 block mb-2 @error('Adjudicativos') text-red-500 @enderror">
                 Adjudicativo
             </label>
-            <input type="text" name="Adjudicativo" id="Adjudicativo"
-                class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 @error('Adjudicativo') border-red-500 @enderror"
-                value="{{ old('Adjudicativo', $contrato->Adjudicativo) }}">
-            @error('Adjudicativo')
+            <input type="text" name="Adjudicativos" id="Adjudicativos"
+                class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 @error('Adjudicativos') border-red-500 @enderror"
+                value="{{ old('Adjudicativos', $contrato->Adjudicativos) }}">
+            @error('Adjudicativos')
                 <p class="text-red-500 text-sm mt-1">
                     {{ $message }}
                 </p>
@@ -43,7 +42,7 @@
             </label>
             <input type="date" name="Fecha" id="Fecha"
                 class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/3 p-2.5 @error('Fecha') border-red-500 @enderror"
-                value="{{ old('Fecha', $contrato->Fecha) }}">
+                value="{{ old('Fecha', optional($contrato->Fecha)->format('Y-m-d')) }}">
             @error('contrato')
                 <p class="text-red-500 text-sm mt-1">
                     {{ $message }}

@@ -44,13 +44,12 @@ class ContratosController extends Controller
     {
 
         $validados = request()->validate([
-            'Nombre' => 'required',
-            'Adjudicativos' => 'required',
-            'FechaAlta' => 'required|date_format:Y-m-d',
+            'Nombre' => 'nullable',
+            'Adjudicativos' => 'nullable',
+            'Fecha' => 'nullable|date_format:Y-m-d',
             'Observaciones' => 'nullable|max:255',
-            'Estado' => 'required',
+            'Estado' => 'nullable',
         ]);
-
 
         return $validados;
     }
@@ -72,9 +71,9 @@ class ContratosController extends Controller
         return redirect('/contratos')->with('success', 'Software creado con éxito.');
     }
 
-    public function edit()
+    public function edit($id)
     {
-        $contrato = new Contrato();
+        $contrato = Contrato::findOrFail($id);
 
         return view('contratos.edit', [
             'contrato' => $contrato,
@@ -88,10 +87,14 @@ class ContratosController extends Controller
 
         DB::table('contratos')
         ->where('id', $id)
-        ->update(['Nombre' => $validados['Nombre'], 'Adjudicativos' => $validados['Adjudicativos'],
-         'Fecha' => new DateTime($validados['Fecha']), 'Observaciones' => $validados['Observaciones'], 'Estado' => $validados['Estado']]);
+        ->update([
+            'Nombre' => $validados['Nombre'],
+            'Adjudicativos' => $validados['Adjudicativos'],
+            'Fecha' => date('Y-m-d', strtotime($validados['Fecha'])),
+            'Observaciones' => $validados['Observaciones'],
+            'Estado' => $validados['Estado']
+        ]);
 
-        return redirect()->route('contratos/', $contrato->Id)->with('success', 'Contrato editado con éxito.');
-
+        return redirect('contratos/'. $contrato->Id)->with('success', 'Contrato editado con éxito.');
     }
 }
