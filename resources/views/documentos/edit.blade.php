@@ -1,7 +1,8 @@
 <x-layout>
-    <form action="{{ url('/docum') . '/' . $documento->Id }}" method="POST">
+    <form action="{{ url('/docum') . '/' . $documento->Id }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
+        <h1 class="text-2xl font-semibold">Editar documento</h1>
         <div class="mb-6">
             <label for="Nombre"
                 class="text-sm font-medium text-gray-900 block mb-2 @error('Nombre') text-red-500 @enderror">
@@ -11,6 +12,20 @@
                 class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-96 p-2.5 @error('Nombre') border-red-500 @enderror"
                 value="{{ old('Nombre', $documento->Nombre) }}">
             @error('Nombre')
+                <p class="text-red-500 text-sm mt-1">
+                    {{ $message }}
+                </p>
+            @enderror
+        </div>
+        <div class="mb-6">
+            <label for="Documento"
+                class="text-sm font-medium text-gray-900 block mb-2 @error('Documento') text-red-500 @enderror">
+                Documento
+            </label>
+            <input type="file" name="Documento" id="Documento"
+                class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-96 p-2.5 @error('documento') border-red-500 @enderror"
+                value="{{ old('Documento', $documento->Fichero) }}">
+            @error('Documento')
                 <p class="text-red-500 text-sm mt-1">
                     {{ $message }}
                 </p>
