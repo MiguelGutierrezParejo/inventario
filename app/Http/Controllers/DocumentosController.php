@@ -46,6 +46,7 @@ class DocumentosController extends Controller
         $documento->Nombre = $validados['Nombre'];
         $documento->Tabla = $table;
         $documento->IdRelacionado = $id;
+        $documento->Observaciones = $validados['Observaciones'];
 
         $documento->save();
         $archivo = request()->file('Documento');
@@ -54,6 +55,7 @@ class DocumentosController extends Controller
 
         $ruta = public_path('documentos/' . $nombre);
         $documento->Fichero = '/inventario/public/documentos/' . $nombre;
+
         $documento->save();
 
         copy($archivo, $ruta);
