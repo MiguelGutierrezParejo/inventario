@@ -21,6 +21,7 @@ use App\Http\Controllers\S_relacionequipossoftwaresController;
 use App\Http\Controllers\S_relacionusuariossoftwaresController;
 use App\Http\Controllers\S_softwaresController;
 use App\Http\Controllers\ContratosController;
+use App\Http\Controllers\ModelosController;
 use App\Http\Controllers\TerminalesController;
 use App\Http\Controllers\UsuariosController;
 use Illuminate\Support\Facades\Route;
@@ -264,6 +265,16 @@ Route::get('/contratos', [ContratosController::class, 'index'])
 Route::get('/contratos/{id}', [ContratosController::class, 'show']);
 Route::get('/contratos/edit/{id}', [ContratosController::class, 'edit']);
 Route::put('/contratos/{id}', [ContratosController::class, 'update'])->name('contratos.update');
+
+///////////////////////////////////////////////////MODELOS///////////////////////////////////////////////////////////////////////////
+
+Route::get('/modelos/create', [ModelosController::class, 'create'])->name('modelos.create');
+Route::post('/modelos', [ModelosController::class, 'store'])->name('modelos.store');
+Route::get('/modelos', [ModelosController::class, 'index'])
+    ->name('modelos');
+Route::get('/modelos/{id}', [ModelosController::class, 'show']);
+Route::get('/modelos/edit/{id}', [ModelosController::class, 'edit']);
+Route::put('/modelos/{id}', [ModelosController::class, 'update'])->name('modelos.update');
 
 ///////////////////////////////////////////////////RELACIÓN USUARIOS//////////////////////////////////////////////////////////////////
 

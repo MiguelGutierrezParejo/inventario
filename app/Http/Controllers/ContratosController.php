@@ -68,7 +68,7 @@ class ContratosController extends Controller
 
         $contrato->save();
 
-        return redirect('/contratos')->with('success', 'Software creado con éxito.');
+        return redirect('/contratos')->with('success', 'Contrato creado con éxito.');
     }
 
     public function edit($id)
