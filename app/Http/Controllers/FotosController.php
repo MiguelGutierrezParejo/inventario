@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Equipo;
+use App\Models\Modelo;
 use App\Models\Foto;
 use Illuminate\Http\Request;
 
@@ -10,18 +10,18 @@ class FotosController extends Controller
 {
     public function create($id)
     {
-        $equipo = Equipo::findOrFail($id);
+        $modelo = Modelo::findOrFail($id);
         $foto = new Foto();
 
         return view('fotoequipos.create', [
             'foto' => $foto,
-            'equipo' => $equipo,
+            'modelo' => $modelo,
         ]);
     }
 
     public function store(Request $request, $id)
     {
-        $equipo = Equipo::findOrFail($id);
+        $modelo = Modelo::findOrFail($id);
 
         // Verificar si se ha enviado un archivo
         if ($request->hasFile('Foto')) {
@@ -32,12 +32,12 @@ class FotosController extends Controller
 
             // Almacenar la ruta en la base de datos
             $foto = new Foto();
-            $foto->IdEquipo = $equipo->Id;
+            $foto->IdModelo = $modelo->Id;
             $foto->Foto = $rutaImagen;
             $foto->save();
         }
 
-        return redirect("/equipos/$equipo->Id")->with('success', 'Foto añadida con éxito.');
+        return redirect("/modelos/$modelo->Id")->with('success', 'Foto añadida con éxito.');
     }
 
     public function destroy($fotoId)

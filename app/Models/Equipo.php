@@ -76,11 +76,5 @@ class Equipo extends Model
         return $this->hasMany(S_relacionequipossoftware::class, 'IdEquipo', 'Id');
 
     }
-
-    public function fotos(){
-
-        return $this->hasMany(Foto::class, 'IdEquipo', 'Id');
-
-    }
 }
 

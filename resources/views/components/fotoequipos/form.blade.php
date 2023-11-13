@@ -1,7 +1,7 @@
 <form action="" method="post" enctype="multipart/form-data">
     @csrf
     @method('POST')
-    <h1 class="text-2xl font-semibold">Añadir foto a {{$equipo->NombreOrdenador}} </h1>
+    <h1 class="text-2xl font-semibold">Añadir foto a {{$modelo->Nombre}} </h1>
     <br>
     <div class="mb-6">
         <label for="Foto" class="text-sm font-medium text-gray-900 block mb-2 @error('Foto') text-red-500 @enderror">
@@ -16,5 +16,5 @@
     </div>
     <br>
     <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Aceptar</button>
-    <a href="/inventario/public/equipos/{{$equipo->Id}}" class="text-white border-green-700 border-2 bg-green-700 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Volver</a>
+    <a href="/inventario/public/modelos/{{$modelo->Id}}" class="text-white border-green-700 border-2 bg-green-700 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Volver</a>
 </form>

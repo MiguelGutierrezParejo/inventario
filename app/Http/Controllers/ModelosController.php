@@ -20,9 +20,11 @@ class ModelosController extends Controller
     public function show($id){
 
         $modelo = Modelo::findOrFail($id);
+        $fotos = DB::select('select * from fotos');
 
         return view('modelos.show', [
             'modelo' => $modelo,
+            'fotos' => $fotos,
         ]);
     }
 

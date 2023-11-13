@@ -11,9 +11,9 @@ class Foto extends Model
 
     protected $fillable = ['Foto'];
 
-    public function equipo(){
+    public function modelo(){
 
-        return $this->belongsTo(Equipo::class, 'IdEquipo');
-        
+        return $this->belongsTo(Modelo::class, 'IdModelo');
+
     }
 }
