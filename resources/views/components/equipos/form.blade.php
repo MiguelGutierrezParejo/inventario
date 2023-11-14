@@ -11,14 +11,14 @@
         Tipo
     </label>
     <select type="text" class="border border-slate-300 px-6 py-2" name="Tipo" id="Tipo" value="{{ old('$equipo->tipo->Denominacion', $equipo->IdTipo) }}">
-                                    @if ($equipo->tipo)
-                                        <option selected value="{{$equipo->IdTipo}}">{{$equipo->tipo->Denominacion}}</option>
-                                    @endif
-                                    <option></option>
+        @if ($equipo->tipo)
+            <option selected value="{{$equipo->IdTipo}}">{{$equipo->tipo->Denominacion}}</option>
+        @endif
+        <option></option>
 
-                                    @foreach ($tipos as $tipo)
-                                        <option value="{{ old('$rel->IdTipo', $tipo->Id) }}">{{ $tipo->Denominacion }}</option>
-                                    @endforeach
+        @foreach ($tipos as $tipo)
+            <option value="{{ $tipo->Id }}">{{ $tipo->Denominacion }}</option>
+        @endforeach
     </select>
     @error('Tipo')
         <p class="text-red-500 text-sm mt-1">
@@ -52,7 +52,7 @@
         <option></option>
 
         @foreach ($modelos as $modelo)
-            <option value="{{ old('$rel->IdModelo', $modelo->Id) }}">{{ $modelo->Modelo }}</option>
+            <option value="{{ $modelo->Id }}">{{ $modelo->Modelo }}</option>
         @endforeach
     </select>
     @error('Modelo')

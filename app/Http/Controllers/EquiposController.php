@@ -39,7 +39,7 @@ class EquiposController extends Controller
                         ->whereNull('relacionequipos.FechaBaja')
                         ->where('Nombre', 'LIKE', '%'.request('Nombre').'%')
                         ->where('IdTipo', 'LIKE', '%'.request('IdTipo').'%')
-                        ->where('IdModelo', 'LIKE', '%'.request('IdModelo').'%')
+                        ->where('IdModelo', 'LIKE', request('IdModelo'))
                         ->where('NombreOrdenador', 'LIKE', '%'.request('NombreOrdenador').'%')
                         ->where('PrecioAdquisicion', 'LIKE', '%'.request('PrecioAdquisicion').'%')
                         ->whereNull('equipos.FechaBaja')
@@ -55,7 +55,7 @@ class EquiposController extends Controller
                         ->whereNull('relacionequipos.FechaBaja')
                         ->where('Nombre', 'LIKE', '%'.request('Nombre').'%')
                         ->where('IdTipo', 'LIKE', '%'.request('IdTipo').'%')
-                        ->where('IdModelo', 'LIKE', '%'.request('IdModelo').'%')
+                        ->where('IdModelo', 'LIKE', request('IdModelo'))
                         ->where('NombreOrdenador', 'LIKE', '%'.request('NombreOrdenador').'%')
                         ->where('PrecioAdquisicion', 'LIKE', '%'.request('PrecioAdquisicion').'%')
                         ->whereNull('equipos.FechaBaja')
@@ -94,7 +94,7 @@ class EquiposController extends Controller
                         ->whereNull('relacionequipos.FechaBaja')
                         ->where('Nombre', 'LIKE', '%'.request('Nombre').'%')
                         ->where('IdTipo', 'LIKE', '%'.request('IdTipo').'%')
-                        ->where('IdModelo', 'LIKE', '%'.request('IdModelo').'%')
+                        ->where('IdModelo', 'LIKE', request('IdModelo'))
                         ->where('NombreOrdenador', 'LIKE', '%'.request('NombreOrdenador').'%')
                         ->where('NInventario', 'LIKE', '%'.request('NInventario').'%')
                         ->where('PrecioAdquisicion', 'LIKE', '%'.request('PrecioAdquisicion').'%')
@@ -110,7 +110,7 @@ class EquiposController extends Controller
                         ->whereNull('relacionequipos.FechaBaja')
                         ->where('Nombre', 'LIKE', '%'.request('Nombre').'%')
                         ->where('IdTipo', 'LIKE', '%'.request('IdTipo').'%')
-                        ->where('IdModelo', 'LIKE', '%'.request('IdModelo').'%')
+                        ->where('IdModelo', 'LIKE', request('IdModelo'))
                         ->where('NombreOrdenador', 'LIKE', '%'.request('NombreOrdenador').'%')
                         ->where('NInventario', 'LIKE', '%'.request('NInventario').'%')
                         ->where('PrecioAdquisicion', 'LIKE', '%'.request('PrecioAdquisicion').'%')
@@ -393,10 +393,12 @@ class EquiposController extends Controller
     {
         $equipo = new Equipo();
         $tipos = Tipoequipo::all();
+        $modelos = Modelo::all();
 
         return view('equipos.create', [
             'equipo' => $equipo,
             'tipos' => $tipos,
+            'modelos' => $modelos,
         ]);
     }
 
@@ -416,8 +418,8 @@ class EquiposController extends Controller
 
         $equipo->NInventario = $ninventariofinal;
         $equipo->IdTipo = $validados['Tipo'];
-        $equipo->Modelo = $validados['Modelo'];
         $equipo->NombreOrdenador = $validados['NombreOrdenador'];
+        $equipo->IdModelo = $validados['Modelo'];
         $equipo->NumSerie = $validados['NumSerie'];
         $equipo->FechaAlta = new DateTime($validados['FechaAlta']);
         if ($validados['FechaBaja']) {

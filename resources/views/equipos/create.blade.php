@@ -1,5 +1,5 @@
 <x-layout>
     <form action="{{  url('/equipos') }}" method="POST">
-        <x-equipos.form :equipo="$equipo" :tipos="$tipos" />
+        <x-equipos.form :equipo="$equipo" :tipos="$tipos" :modelos="$modelos" />
     </form>
 </x-layout>

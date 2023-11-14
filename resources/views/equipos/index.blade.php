@@ -104,8 +104,8 @@
                             <td class="border border-slate-300">
                                 <select type="text" class="border border-slate-300 px-6 py-2" name="IdModelo" id="IdModelo" value="{{ request()->query('IdModelo') }}">
                                     <option value="{{ request()->query('IdModelo') }}" selected>{{ request()->query('IdModelo') }}</option>
-                                    @foreach ($modelos as $modelos)
-                                        <option value="{{ $modelos->Id }}">{{ $modelos->Modelo }}</option>
+                                    @foreach ($modelos as $modelo)
+                                        <option value="{{ $modelo->Id }}">{{ $modelo->Modelo }}</option>
                                     @endforeach
                                 </select>
                             </td>
