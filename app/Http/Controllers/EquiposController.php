@@ -9,6 +9,7 @@ use App\Models\Mantenimientoequipo;
 use App\Models\Relacionequipo;
 use App\Models\Terminal;
 use App\Models\Linea;
+use App\Models\Modelo;
 use App\Models\Tipoequipo;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
@@ -21,22 +22,24 @@ class EquiposController extends Controller
 {
     public function index()
     {
-        $ordenes = ['NInventario', 'Nombre', 'IdTipo', 'NombreOrdenador', 'Modelo', 'FechaAlta', 'FechaBaja', 'PrecioAdquisicion'];
+        $ordenes = ['NInventario', 'Nombre', 'IdTipo', 'IdModelo', 'NombreOrdenador', 'FechaAlta', 'FechaBaja', 'PrecioAdquisicion'];
         $orden = request()->query('orden') ?: 'NombreOrdenador';
         abort_unless(in_array($orden, $ordenes), 404);
 
         $tipos = Tipoequipo::all();
+        $modelos = Modelo::all();
 
         if (request('dir') == 'desc') {
             $objeto = DB::table('equipos')
                         ->leftJoin('relacionequipos', 'equipos.id', '=', 'relacionequipos.IdEquipo')
                         ->leftJoin('tipoequipos', 'equipos.IdTipo', '=', 'tipoequipos.id')
                         ->leftJoin('usuarios', 'relacionequipos.IdUsuario', '=', 'usuarios.id')
-                        ->select('equipos.*', 'usuarios.Nombre', 'tipoequipos.Denominacion')
+                        ->leftJoin('modelos', 'equipos.IdModelo', '=', 'modelos.Id')
+                        ->select('equipos.*', 'usuarios.Nombre', 'tipoequipos.Denominacion', 'modelos.Modelo')
                         ->whereNull('relacionequipos.FechaBaja')
                         ->where('Nombre', 'LIKE', '%'.request('Nombre').'%')
                         ->where('IdTipo', 'LIKE', '%'.request('IdTipo').'%')
-                        ->where('Modelo', 'LIKE', '%'.request('Modelo').'%')
+                        ->where('IdModelo', 'LIKE', '%'.request('IdModelo').'%')
                         ->where('NombreOrdenador', 'LIKE', '%'.request('NombreOrdenador').'%')
                         ->where('PrecioAdquisicion', 'LIKE', '%'.request('PrecioAdquisicion').'%')
                         ->whereNull('equipos.FechaBaja')
@@ -47,11 +50,12 @@ class EquiposController extends Controller
                         ->leftJoin('relacionequipos', 'equipos.id', '=', 'relacionequipos.IdEquipo')
                         ->leftJoin('tipoequipos', 'equipos.IdTipo', '=', 'tipoequipos.id')
                         ->leftJoin('usuarios', 'relacionequipos.IdUsuario', '=', 'usuarios.id')
-                        ->select('equipos.*', 'usuarios.Nombre', 'tipoequipos.Denominacion')
+                        ->leftJoin('modelos', 'equipos.IdModelo', '=', 'modelos.Id')
+                        ->select('equipos.*', 'usuarios.Nombre', 'tipoequipos.Denominacion', 'modelos.Modelo')
                         ->whereNull('relacionequipos.FechaBaja')
                         ->where('Nombre', 'LIKE', '%'.request('Nombre').'%')
                         ->where('IdTipo', 'LIKE', '%'.request('IdTipo').'%')
-                        ->where('Modelo', 'LIKE', '%'.request('Modelo').'%')
+                        ->where('IdModelo', 'LIKE', '%'.request('IdModelo').'%')
                         ->where('NombreOrdenador', 'LIKE', '%'.request('NombreOrdenador').'%')
                         ->where('PrecioAdquisicion', 'LIKE', '%'.request('PrecioAdquisicion').'%')
                         ->whereNull('equipos.FechaBaja')
@@ -65,6 +69,7 @@ class EquiposController extends Controller
         return view('equipos.index', [
             'objeto' =>  $objeto,
             'tipos' => $tipos,
+            'modelos' => $modelos,
             'total' => $total,
             'pulsado' => $pulsado,
         ]);
@@ -72,22 +77,24 @@ class EquiposController extends Controller
 
     public function index2()
     {
-        $ordenes = ['NInventario', 'Nombre', 'IdTipo', 'NombreOrdenador', 'Modelo', 'NumSerie', 'FechaAlta', 'FechaBaja', 'PrecioAdquisicion'];
+        $ordenes = ['NInventario', 'Nombre', 'IdTipo', 'IdModelo', 'NombreOrdenador', 'NumSerie', 'FechaAlta', 'FechaBaja', 'PrecioAdquisicion'];
         $orden = request()->query('orden') ?: 'NombreOrdenador';
         abort_unless(in_array($orden, $ordenes), 404);
 
         $tipos = Tipoequipo::all();
+        $modelos = Modelo::all();
 
         if (request('dir') == 'desc') {
             $objeto = DB::table('equipos')
                         ->leftJoin('relacionequipos', 'equipos.id', '=', 'relacionequipos.IdEquipo')
                         ->leftJoin('tipoequipos', 'equipos.IdTipo', '=', 'tipoequipos.id')
                         ->leftJoin('usuarios', 'relacionequipos.IdUsuario', '=', 'usuarios.id')
-                        ->select('equipos.*', 'usuarios.Nombre', 'tipoequipos.Denominacion')
+                        ->leftJoin('modelos', 'equipos.IdModelo', '=', 'modelos.id')
+                        ->select('equipos.*', 'usuarios.Nombre', 'tipoequipos.Denominacion', 'modelos.Modelo')
                         ->whereNull('relacionequipos.FechaBaja')
                         ->where('Nombre', 'LIKE', '%'.request('Nombre').'%')
                         ->where('IdTipo', 'LIKE', '%'.request('IdTipo').'%')
-                        ->where('Modelo', 'LIKE', '%'.request('Modelo').'%')
+                        ->where('IdModelo', 'LIKE', '%'.request('IdModelo').'%')
                         ->where('NombreOrdenador', 'LIKE', '%'.request('NombreOrdenador').'%')
                         ->where('NInventario', 'LIKE', '%'.request('NInventario').'%')
                         ->where('PrecioAdquisicion', 'LIKE', '%'.request('PrecioAdquisicion').'%')
@@ -98,11 +105,12 @@ class EquiposController extends Controller
                         ->leftJoin('relacionequipos', 'equipos.id', '=', 'relacionequipos.IdEquipo')
                         ->leftJoin('tipoequipos', 'equipos.IdTipo', '=', 'tipoequipos.id')
                         ->leftJoin('usuarios', 'relacionequipos.IdUsuario', '=', 'usuarios.id')
-                        ->select('equipos.*', 'usuarios.Nombre', 'tipoequipos.Denominacion')
+                        ->leftJoin('modelos', 'equipos.IdModelo', '=', 'modelos.id')
+                        ->select('equipos.*', 'usuarios.Nombre', 'tipoequipos.Denominacion', 'modelos.Modelo')
                         ->whereNull('relacionequipos.FechaBaja')
                         ->where('Nombre', 'LIKE', '%'.request('Nombre').'%')
                         ->where('IdTipo', 'LIKE', '%'.request('IdTipo').'%')
-                        ->where('Modelo', 'LIKE', '%'.request('Modelo').'%')
+                        ->where('IdModelo', 'LIKE', '%'.request('IdModelo').'%')
                         ->where('NombreOrdenador', 'LIKE', '%'.request('NombreOrdenador').'%')
                         ->where('NInventario', 'LIKE', '%'.request('NInventario').'%')
                         ->where('PrecioAdquisicion', 'LIKE', '%'.request('PrecioAdquisicion').'%')
@@ -115,15 +123,16 @@ class EquiposController extends Controller
         return view('equipos.index', [
             'objeto' =>  $objeto,
             'tipos' => $tipos,
+            'modelos' => $modelos,
             'total' => Equipo::all()->count(),
             'pulsado' => $pulsado,
         ]);
     }
 
-    //index con equipos, terminales e impresoras   
+    //index con equipos, terminales e impresoras
     public function indexetiquetar($Tipo)
     {
-        $ordenes = ['NInventario', 'Nombre', 'IdTipo', 'NombreOrdenador', 'Modelo', 'FechaAlta', 'FechaBaja', 'PrecioAdquisicion'];
+        $ordenes = ['NInventario', 'Nombre', 'IdTipo', 'NombreOrdenador', 'FechaAlta', 'FechaBaja', 'PrecioAdquisicion'];
         $orden = request()->query('orden') ?: 'NombreOrdenador';
         abort_unless(in_array($orden, $ordenes), 404);
 
@@ -175,7 +184,7 @@ class EquiposController extends Controller
                 ->where('NInventario', 'LIKE', '%'.request('NInventario').'%')
                 ->where('Denominación', 'LIKE', '%'.request('IdTipo').'%')
                 ->where('Etiquetado', 0);
-        
+
                 $objeto = DB::table("equipos")
                 ->select("usuarios.Nombre","equipos.Id", "equipos.NombreOrdenador","equipos.NInventario", "tipoequipos.Denominacion", "equipos.Etiquetar")
                 ->leftJoin('relacionequipos', 'equipos.id', '=', 'relacionequipos.IdEquipo')
@@ -234,7 +243,7 @@ class EquiposController extends Controller
                 ->where('Denominación', 'LIKE', '%'.request('IdTipo').'%')
                 ->where('Etiquetado', 0)
                 ->OrderBy($orden);
-  
+
                 $objeto = DB::table("equipos")
                 ->select("usuarios.Nombre","equipos.Id", "equipos.NombreOrdenador","equipos.NInventario", "tipoequipos.Denominacion", "equipos.Etiquetar")
                 ->leftJoin('relacionequipos', 'equipos.id', '=', 'relacionequipos.IdEquipo')
@@ -284,7 +293,7 @@ class EquiposController extends Controller
                 ->where('Numero', 'LIKE', '%'.request('NombreOrdenador').'%')
                 ->where('NInventario', 'LIKE', '%'.request('NInventario').'%')
                 ->where('Denominación', 'LIKE', '%'.request('IdTipo').'%');
-        
+
                 $objeto = DB::table("equipos")
                 ->select("usuarios.Nombre","equipos.Id", "equipos.NombreOrdenador","equipos.NInventario", "tipoequipos.Denominacion", "equipos.Etiquetar")
                 ->leftJoin('relacionequipos', 'equipos.id', '=', 'relacionequipos.IdEquipo')
@@ -332,7 +341,7 @@ class EquiposController extends Controller
                 ->where('NInventario', 'LIKE', '%'.request('NInventario').'%')
                 ->where('Denominación', 'LIKE', '%'.request('IdTipo').'%')
                 ->orderBy($orden);
-        
+
                 $objeto = DB::table("equipos")
                 ->select("usuarios.Nombre","equipos.Id", "equipos.NombreOrdenador","equipos.NInventario", "tipoequipos.Denominacion", "equipos.Etiquetar")
                 ->leftJoin('relacionequipos', 'equipos.id', '=', 'relacionequipos.IdEquipo')
@@ -349,7 +358,7 @@ class EquiposController extends Controller
                 ->get();
             }
         }
-     
+
         $total = sizeof($objeto);
 
         return view('equipos.indexetiquetar', [
@@ -368,6 +377,7 @@ class EquiposController extends Controller
         $mantenimiento = Mantenimientoequipo::all()->where('IdEquipo', $id);
         $documentos = Documento::where('Tabla', $equipo->tipo->Denominacion)->where('IdRelacionado', $id)->get();
         $fotos = DB::select('select * from fotos');
+        $modelo = Modelo::find($equipo->IdModelo);
 
         return view('equipos.show', [
             'equipo' => $equipo,
@@ -375,14 +385,15 @@ class EquiposController extends Controller
             'mantenimiento' => $mantenimiento,
             'documentos' => $documentos,
             'fotos' => $fotos,
+            'modelo' => $modelo,
         ]);
-    }  
+    }
 
     public function create()
     {
         $equipo = new Equipo();
         $tipos = Tipoequipo::all();
-        
+
         return view('equipos.create', [
             'equipo' => $equipo,
             'tipos' => $tipos,
@@ -419,7 +430,7 @@ class EquiposController extends Controller
         $equipo->save();
 
         DB::select('INSERT INTO relacionequipos (IdEquipo, IdUsuario, FechaAlta) VALUES ( ?, 0, ?)', [$equipo->id, $equipo->FechaAlta]);
-        
+
         return redirect('/')->with('success', 'Equipo creado con éxito.');
     }
 
@@ -428,7 +439,7 @@ class EquiposController extends Controller
     {
         $equipo = Equipo::findOrFail($id);
         $tipos = Tipoequipo::all()->sortby("Denominacion");
-        
+
         return view('equipos.edit', [
             'equipo' => $equipo,
             'tipos' => $tipos,
@@ -439,15 +450,15 @@ class EquiposController extends Controller
     {
         $validados = $this->validar();
         $equipo = Equipo::findOrFail($id);
- 
+
         $FechaAlta = new DateTime($validados['FechaAlta']);
         $FechaBaja = null;
         if ($validados['FechaBaja']) {
             $FechaBaja = new DateTime($validados['FechaAlta']);
         }
 
-        DB::select('UPDATE equipos SET IdTipo = ?, Modelo = ?, NombreOrdenador = ?, NumSerie = ?, FechaAlta = ?, FechaBaja = ?, Observaciones = ?, PrecioAdquisicion = ?  
-                                   WHERE id = ?', [$validados['Tipo'], $validados['Modelo'], $validados['NombreOrdenador'], $validados['NumSerie'], $FechaAlta, 
+        DB::select('UPDATE equipos SET IdTipo = ?, Modelo = ?, NombreOrdenador = ?, NumSerie = ?, FechaAlta = ?, FechaBaja = ?, Observaciones = ?, PrecioAdquisicion = ?
+                                   WHERE id = ?', [$validados['Tipo'], $validados['Modelo'], $validados['NombreOrdenador'], $validados['NumSerie'], $FechaAlta,
                                  $FechaBaja, $validados['Observaciones'], $validados['PrecioAdquisicion'], $id]);
 
         return redirect('/equipos/'.$equipo->Id)->with('success', 'Equipo actualizado.');
@@ -471,7 +482,7 @@ class EquiposController extends Controller
 
     public function recabar()
     {
-        $tipos = Tipoequipo::all();        
+        $tipos = Tipoequipo::all();
 
         $mantenimientos = ['No', 'Si'];
 
@@ -486,8 +497,8 @@ class EquiposController extends Controller
 
         if($request->Hasta == null) {
             $request->Hasta = Carbon::now();
-        } 
-      
+        }
+
         if ($request->Tipo != 'Todos'){
 
             $altas = Equipo::select('*')
@@ -502,7 +513,7 @@ class EquiposController extends Controller
 
             $altas2 = $altas->where('IdTipo', $request->Tipo)
                             ->where('FechaAlta', '<=', $request->Hasta);
-            
+
 
             $bajas = Equipo::select('*')
                 ->where('IdTipo', $request->Tipo)
@@ -513,7 +524,7 @@ class EquiposController extends Controller
                             ->join('equipos', 'mantenimientoequipos.IdEquipo', 'equipos.id')
                             ->select('mantenimientoequipos.*', 'equipos.IdTipo')
                             ->where('equipos.IdTipo', $request->Tipo)->get();
-           
+
         } else {
 
             $altas = Equipo::select('*')
@@ -558,7 +569,7 @@ class EquiposController extends Controller
             }
 
             $coalta = $coalta->whereNotIn('Id', $arraycoalta);
-            
+
             //Para comprobar los mantenimientos de alta por tipos
             if ($request->Tipo != 'Todos' and $coalta->count() != 0) {
                 $equipostipos = Equipo::where('IdTipo', $request->Tipo)->get();
@@ -569,7 +580,7 @@ class EquiposController extends Controller
                 }
 
                 $coalta = $coalta->whereIn('IdEquipo', $array);
-                   
+
             }
 
             $cobaja = Mantenimientoequipo::select('*')
@@ -586,10 +597,10 @@ class EquiposController extends Controller
                 }
 
                 $cobaja = $cobaja->whereIn('IdEquipo', $array);
-                
-            } 
+
+            }
         }
- 
+
         $pdf = Pdf::loadView('equipos.generar', [
             'equipoAlta' => $altas,
             'equipoBaja' => $bajas,
@@ -597,8 +608,8 @@ class EquiposController extends Controller
             'componenteBaja' => $cobaja,
             'request' => $request,
         ])->setPaper('a4', 'landscape');
-        return $pdf->stream(); 
-      
+        return $pdf->stream();
+
     }
 
     public function etiquetar($Tipo)
@@ -648,11 +659,11 @@ class EquiposController extends Controller
         }
 
         return redirect(route('etiquetar', $Tipo));
-   
+
     }
 
     public function generaretiqueta($tipo, $tipo2)
-    {        
+    {
         $equiposaetiquetar = Equipo::where('Etiquetar', 1)->where('Etiquetado', 0)->get();
         $terminalesaetiquetar = Terminal::where('Etiquetar', 1)->where('Etiquetado', 0)->get();
         $impresorasaetiquetar = I_impresora::where('Etiquetar', 1)->where('Etiquetado', 0)->get();
@@ -698,27 +709,27 @@ class EquiposController extends Controller
             DB::table('terminales')
             ->where('Id', $terminal->Id)
             ->update(['Etiquetado' => 1]);
-        } 
+        }
 
         foreach ($lineasaetiquetar as $linea) {
             DB::table('lineas')
             ->where('Id', $linea->Id)
             ->update(['Etiquetado' => 1]);
-        } 
+        }
 
         //Elegir si imprimir con la etiquetadora o con la impresora
         if ($tipo2 == 'Etiquetadora') {
             return view('equipos.etiqueta', [
                 'equipos' => $equipos,
                 'tipo' => $tipo,
-            ]); 
+            ]);
         } elseif ($tipo2 == 'Impresora') {
             return view('equipos.etiquetasantiguas', [
                 'equipos' => $equipos,
                 'tipo' => $tipo,
-            ]); 
+            ]);
         }
-    
+
     }
 
     public function quitaretiquetar($Tipo)
