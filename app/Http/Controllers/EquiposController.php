@@ -439,10 +439,12 @@ class EquiposController extends Controller
     {
         $equipo = Equipo::findOrFail($id);
         $tipos = Tipoequipo::all()->sortby("Denominacion");
+        $modelos = Modelo::all();
 
         return view('equipos.edit', [
             'equipo' => $equipo,
             'tipos' => $tipos,
+            'modelos' => $modelos,
         ]);
     }
 
@@ -457,7 +459,7 @@ class EquiposController extends Controller
             $FechaBaja = new DateTime($validados['FechaAlta']);
         }
 
-        DB::select('UPDATE equipos SET IdTipo = ?, Modelo = ?, NombreOrdenador = ?, NumSerie = ?, FechaAlta = ?, FechaBaja = ?, Observaciones = ?, PrecioAdquisicion = ?
+        DB::select('UPDATE equipos SET IdTipo = ?, IdModelo = ?, NombreOrdenador = ?, NumSerie = ?, FechaAlta = ?, FechaBaja = ?, Observaciones = ?, PrecioAdquisicion = ?
                                    WHERE id = ?', [$validados['Tipo'], $validados['Modelo'], $validados['NombreOrdenador'], $validados['NumSerie'], $FechaAlta,
                                  $FechaBaja, $validados['Observaciones'], $validados['PrecioAdquisicion'], $id]);
 
@@ -469,7 +471,7 @@ class EquiposController extends Controller
         $validados = request()->validate([
             'Tipo' => 'exists:tipoequipos,Id',
             'NombreOrdenador' => 'required|max:255',
-            'Modelo' => 'required|max:255',
+            'Modelo' => 'exists:modelos,Id',
             'NumSerie' => 'required|max:255',
             'FechaAlta' => 'required|date_format:Y-m-d',
             'FechaBaja' => 'nullable|date_format:Y-m-d',

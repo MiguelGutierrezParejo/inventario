@@ -6,14 +6,14 @@
         <h1 class="mb-4 text-2xl font-semibold">Editar modelo</h1>
 
         <div class="mb-6">
-            <label for="Nombre"
-                class="text-sm font-medium text-gray-900 block mb-2 @error('Nombre') text-red-500 @enderror">
+            <label for="Modelo"
+                class="text-sm font-medium text-gray-900 block mb-2 @error('Modelo') text-red-500 @enderror">
                 Nombre del modelo
             </label>
-            <input type="text" name="Nombre" id="Nombre"
-                class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 @error('Nombre') border-red-500 @enderror"
-                value="{{ old('Nombre', $modelo->Nombre) }}">
-            @error('Nombre')
+            <input type="text" name="Modelo" id="Modelo"
+                class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 @error('Modelo') border-red-500 @enderror"
+                value="{{ old('Modelo', $modelo->Modelo) }}">
+            @error('Modelo')
                 <p class="text-red-500 text-sm mt-1">
                     {{ $message }}
                 </p>
@@ -28,7 +28,7 @@
             <input type="text" name="Observaciones" id="Observaciones"
                 class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 @error('Observaciones') border-red-500 @enderror"
                 value="{{ old('Observaciones', $modelo->Observaciones) }}">
-            @error('Modelo')
+            @error('Observaciones')
                 <p class="text-red-500 text-sm mt-1">
                     {{ $message }}
                 </p>

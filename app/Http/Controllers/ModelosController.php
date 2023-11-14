@@ -41,7 +41,7 @@ class ModelosController extends Controller
     {
 
         $validados = request()->validate([
-            'Nombre' => 'required',
+            'Modelo' => 'required',
             'Observaciones' => 'nullable|max:255',
         ]);
 
@@ -54,7 +54,7 @@ class ModelosController extends Controller
 
         $modelo = new Modelo();
 
-        $modelo->Nombre = $validados['Nombre'];
+        $modelo->Modelo = $validados['Modelo'];
         $modelo->Observaciones = $validados['Observaciones'];
 
         $modelo->save();
@@ -79,7 +79,7 @@ class ModelosController extends Controller
         DB::table('modelos')
         ->where('id', $id)
         ->update([
-            'Nombre' => $validados['Nombre'],
+            'Modelo' => $validados['Modelo'],
             'Observaciones' => $validados['Observaciones'],
         ]);
 

@@ -24,7 +24,7 @@
         </div>
 
         <h3 class="border-t mb-2 pt-3 font-semibold">Nombre:
-            <span class="font-thin">{{ $modelo->Nombre }}</span>
+            <span class="font-thin">{{ $modelo->Modelo }}</span>
         </h3>
         <h3 class="border-t mb-2 pt-3 font-semibold">Observaciones:
             <span class="font-thin">{{ $modelo->Observaciones }}</span>

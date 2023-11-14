@@ -25,7 +25,7 @@
                      <tr class="border border-slate-400">
                         <td class="border border-slate-300 px-6 py-4">
                            <div class="text-sm text-gray-900">
-                                <a href="/inventario/public/modelos/{{$modelo->Id}}">{{ $modelo->Nombre }}</a>
+                                <a href="/inventario/public/modelos/{{$modelo->Id}}">{{ $modelo->Modelo }}</a>
                            </div>
                         </td>
                         <td class="border border-slate-300 px-6 py-4">
