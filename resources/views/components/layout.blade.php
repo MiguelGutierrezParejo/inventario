@@ -71,27 +71,6 @@
                             </li>
                         </ul>
                     </div> |
-                    <div class="group inline-block">
-                        <button class="outline-none focus:outline-none px-3 py-1 rounded-sm flex items-center min-w-32">
-                            <span class="pr-1 font-semibold flex-1">Personas</span>
-                            <span>
-                                <svg class="fill-current h-4 w-4 transform group-hover:-rotate-180 transition duration-150 ease-in-out" xmlns="http://www.w3.org/2000/svg"
-                                     viewBox="0 0 20 20">
-                                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                                </svg>
-                            </span>
-                        </button>
-                        <ul class="bg-white border rounded-sm transform scale-0 group-hover:scale-100 absolute  transition duration-150 ease-in-out origin-top min-w-32">
-                            <li class="rounded-sm px-3 py-1 hover:bg-gray-100"><a class="hover:text-blue-500 hover:underline" href="/inventario/public/usuarios">Empleados</a></li>
-                            <li class="rounded-sm px-3 py-1 hover:bg-gray-100"><a class="hover:text-blue-500 hover:underline" href="/inventario/public/proveedores">Proveedores</a></li>
-                        </ul>
-                    </div> |
-                    <button class="px-3 py-1 rounded-sm items-center min-w-32">
-                        <a class="pr-1 font-semibold" href="/inventario/public/contratos">Contratos</a>
-                    </button> |
-                    <button class="px-3 py-1 rounded-sm items-center min-w-32">
-                        <a class="pr-1 font-semibold" href="/inventario/public/modelos">Modelos</a>
-                    </button> |
                     <!-- Settings Dropdown -->
                     <div class="group inline-block">
                         <x-dropdown align="right" width="48">
@@ -120,7 +99,31 @@
                                 </form>
                             </x-slot>
                         </x-dropdown>
-                    </div>
+                    </div> |
+                    <div class="group inline-block">
+                        <button class="outline-none focus:outline-none px-3 py-1 rounded-sm flex items-center min-w-32">
+                            <span class="pr-1 font-semibold flex-1">
+                                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M4 6h16M4 12h16m-7 6h7">
+                                </path>
+                                </svg>
+                            </span>
+                            <span>
+                                <svg class="fill-current h-4 w-4 transform group-hover:-rotate-180 transition duration-150 ease-in-out" xmlns="http://www.w3.org/2000/svg"
+                                     viewBox="0 0 20 20">
+                                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                                </svg>
+                            </span>
+                        </button>
+                        <ul class="bg-white border rounded-sm transform scale-0 group-hover:scale-100 absolute  transition duration-150 ease-in-out origin-top min-w-32">
+                            <li class="rounded-sm px-3 py-1 hover:bg-gray-100"><a class="hover:text-blue-500 hover:underline" href="/inventario/public/usuarios">Empleados</a></li>
+                            <li class="rounded-sm px-3 py-1 hover:bg-gray-100"><a class="hover:text-blue-500 hover:underline" href="/inventario/public/proveedores">Proveedores</a></li>
+                            <li class="rounded-sm px-3 py-1 hover:bg-gray-100"><a class="hover:text-blue-500 hover:underline" href="/inventario/public/contratos">Contratos</a></li>
+                            <li class="rounded-sm px-3 py-1 hover:bg-gray-100"><a class="hover:text-blue-500 hover:underline" href="/inventario/public/modelos">Modelos</a></li>
+                        </ul>
+                    </div> |
                 </nav>
             </div>
         </header>
