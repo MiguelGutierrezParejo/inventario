@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Contrato;
 use App\Models\Documento;
 use App\Models\Equipo;
 use App\Models\Foto;
@@ -372,12 +373,12 @@ class EquiposController extends Controller
 
     public function show($id)
     {
-
         $equipo = Equipo::all()->firstWhere('Id', $id);
         $relacion = Relacionequipo::OrderByDesc('FechaAlta')->where('IdEquipo', $id)->get();
         $mantenimiento = Mantenimientoequipo::all()->where('IdEquipo', $id);
         $documentos = Documento::where('Tabla', $equipo->tipo->Denominacion)->where('IdRelacionado', $id)->get();
         $modelo = Modelo::find($equipo->IdModelo);
+        $contrato = Contrato::find($equipo->IdContrato);
         $fotos = Foto::where('IdModelo', $modelo->Id)->orderBy('orden')->get();
 
         return view('equipos.show', [
@@ -387,6 +388,7 @@ class EquiposController extends Controller
             'documentos' => $documentos,
             'fotos' => $fotos,
             'modelo' => $modelo,
+            'contrato' => $contrato,
         ]);
     }
 
@@ -395,11 +397,13 @@ class EquiposController extends Controller
         $equipo = new Equipo();
         $tipos = Tipoequipo::all();
         $modelos = Modelo::all();
+        $contrato = Contrato::all();
 
         return view('equipos.create', [
             'equipo' => $equipo,
             'tipos' => $tipos,
             'modelos' => $modelos,
+            'contrato' => $contrato,
         ]);
     }
 
@@ -419,6 +423,7 @@ class EquiposController extends Controller
 
         $equipo->NInventario = $ninventariofinal;
         $equipo->IdTipo = $validados['Tipo'];
+        $equipo->IdContrato = $validados['Contrato'];
         $equipo->NombreOrdenador = $validados['NombreOrdenador'];
         $equipo->IdModelo = $validados['Modelo'];
         $equipo->NumSerie = $validados['NumSerie'];
@@ -443,11 +448,13 @@ class EquiposController extends Controller
         $equipo = Equipo::findOrFail($id);
         $tipos = Tipoequipo::all()->sortby("Denominacion");
         $modelos = Modelo::all();
+        $contrato = Contrato::all();
 
         return view('equipos.edit', [
             'equipo' => $equipo,
             'tipos' => $tipos,
             'modelos' => $modelos,
+            'contrato' => $contrato,
         ]);
     }
 
@@ -462,8 +469,8 @@ class EquiposController extends Controller
             $FechaBaja = new DateTime($validados['FechaAlta']);
         }
 
-        DB::select('UPDATE equipos SET IdTipo = ?, IdModelo = ?, NombreOrdenador = ?, NumSerie = ?, FechaAlta = ?, FechaBaja = ?, Observaciones = ?, PrecioAdquisicion = ?
-                                   WHERE id = ?', [$validados['Tipo'], $validados['Modelo'], $validados['NombreOrdenador'], $validados['NumSerie'], $FechaAlta,
+        DB::select('UPDATE equipos SET IdTipo = ?, IdContrato = ?, IdModelo = ?, NombreOrdenador = ?, NumSerie = ?, FechaAlta = ?, FechaBaja = ?, Observaciones = ?, PrecioAdquisicion = ?
+                                   WHERE id = ?', [$validados['Tipo'], $validados['Contrato'], $validados['Modelo'], $validados['NombreOrdenador'], $validados['NumSerie'], $FechaAlta,
                                  $FechaBaja, $validados['Observaciones'], $validados['PrecioAdquisicion'], $id]);
 
         return redirect('/equipos/'.$equipo->Id)->with('success', 'Equipo actualizado.');
@@ -474,6 +481,7 @@ class EquiposController extends Controller
         $validados = request()->validate([
             'Tipo' => 'exists:tipoequipos,Id',
             'NombreOrdenador' => 'required|max:255',
+            'Contrato' => 'nullable|exists:contratos,Id',
             'Modelo' => 'exists:modelos,Id',
             'NumSerie' => 'required|max:255',
             'FechaAlta' => 'required|date_format:Y-m-d',

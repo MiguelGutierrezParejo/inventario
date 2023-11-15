@@ -16,7 +16,7 @@ class Equipo extends Model
         'FechaBaja' => 'date:dd/mm/YYYY',
     ];
 
-    protected $fillable = ['IdTipo', 'Fabricante', 'IdModelo', 'NumSerie', 'FechaAlta', 'FechaBaja', 'Observaciones'];
+    protected $fillable = ['IdTipo', 'Fabricante', 'IdModelo', 'IdContrato', 'NumSerie', 'FechaAlta', 'FechaBaja', 'Observaciones'];
 
     /* public function scopeIdTipo($query, $IdTipo)
     {
@@ -55,11 +55,18 @@ class Equipo extends Model
     } */
 
     public function tipo(){
+
         return $this->belongsTo(Tipoequipo::class, 'IdTipo');
     }
 
     public function modelo(){
+
         return $this->belongsTo(Modelo::class, 'IdModelo');
+    }
+
+    public function contrato(){
+
+        return $this->belongsTo(Contrato::class, 'IdContrato');
     }
 
     public function mantenimientos(){

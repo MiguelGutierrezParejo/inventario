@@ -115,9 +115,6 @@
                             <td class="border border-slate-300 px-6 py-4 ocultar">
                                 <div class="hidden"><button type="submit"></button></div>
                             </td>
-                            <td class="border border-slate-300">
-
-                            </td>
                         </form>
                     </tr>
                     {{-----------------------------------------FIN BUSQUEDA---------------------------------------------------------------}}

@@ -76,6 +76,27 @@
     @enderror
 </div>
 <div class="mb-6">
+    <label for="Contrato"
+        class="text-sm font-medium text-gray-900 block mb-2 @error('Contrato') text-red-500 @enderror">
+        Contrato
+    </label>
+    <select type="text" class="border border-slate-300 px-6 py-2" name="Contrato" id="Contrato" value="{{ old('$equipo->contrato->Nombre', $equipo->IdContrato) }}">
+        @if ($equipo->contrato)
+            <option selected value="{{$equipo->IdContrato}}">{{$equipo->contrato->Nombre}}</option>
+        @endif
+        <option></option>
+
+        @foreach ($contrato as $con)
+            <option value="{{ $con->Id }}">{{ $con->Nombre }}</option>
+        @endforeach
+    </select>
+    @error('Contrato')
+        <p class="text-red-500 text-sm mt-1">
+            {{ $message }}
+        </p>
+    @enderror
+</div>
+<div class="mb-6">
     <label for="FechaAlta"
         class="text-sm font-medium text-gray-900 block mb-2 @error('FechaAlta') text-red-500 @enderror">
         FechaAlta

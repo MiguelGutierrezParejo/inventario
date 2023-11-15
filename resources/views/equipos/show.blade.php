@@ -292,9 +292,8 @@
 
     <div class="bg-white rounded-md max-w-4xl mx-auto p-4 space-y-4 shadow-lg">
         <div class="flex justify-between">
-            <strong class="text-2xl">Contratos</strong>
-            <a href="/inventario/public/docum/create/{{ $equipo->tipo->Denominacion }}/{{ $equipo->Id }}" class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-semibold rounded-lg text-sm px-5 py-1">Añadir
-            </a>
+            <strong class="text-2xl">Contrato</strong>
+            <a href="/inventario/public/equipos/edit/{{ $equipo->Id }}" class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-semibold rounded-lg text-sm px-5 py-1">Añadir</a>
         </div>
         <table class="table-fixed border border-gray-500 border-collapse mt-14">
             <thead>
@@ -304,21 +303,15 @@
                     <th class="bg-gray-300 text-left px-2"></th>
                 </tr>
             </thead>
+            @if ($equipo->contrato) <!-- Verifica si el equipo tiene un contrato -->
             <tbody>
-                @foreach ($documentos as $doc )
-                <tr class="border border-black">
-                    <td class="text-left px-2 border border-black"><a href="{{$doc->Fichero}}" target="_blank">{{ $doc->Nombre}}</a></td>
-                    <td class="px-2 border border-black">{{ $doc->Observaciones}}</td>
-                    <td class="px-2">
-                        <a href="/inventario/public/docum/edit/{{ $doc->Id }}">
-                            <svg class="h-8 w-8 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                            </svg>
-                        </a>
-                    </td>
-                </tr>
-                @endforeach
+                    <tr class="border border-black">
+                        <td class="text-left px-2 border border-black"><a href="/inventario/public/contratos/{{ $equipo->contrato->Id }}">{{ $equipo->contrato->Nombre }}</td></a>
+                        <td class="px-2">{{ $equipo->contrato->Observaciones }}</td>
+                        <td class="px-2"></td>
+                    </tr>
             </tbody>
+            @endif
         </table>
     </div>
     <div class="flex justify-end space-x-2 pt-3">
