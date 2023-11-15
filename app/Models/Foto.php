@@ -9,7 +9,9 @@ class Foto extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['Foto'];
+    protected $table = 'fotos';
+
+    protected $fillable = ['Foto', 'Orden'];
 
     public function modelo(){
 

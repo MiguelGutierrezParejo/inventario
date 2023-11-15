@@ -88,13 +88,14 @@ Route::delete('/mantequip/{id}', [MantenimientoequiposController::class, 'destro
 
 ///////////////////////////////////////////////////FOTOS//////////////////////////////////////////////////////////////////////////////
 
-// Ruta para mostrar la vista de creación de fotos
-Route::get('/equipos/{id}/fotos/create', [FotosController::class, 'create'])->name('fotoequipos.create');
+Route::get('/modelos/{id}/fotos/create', [FotosController::class, 'create'])->name('fotoequipos.create');
 
-// Ruta para almacenar una foto en el servidor
-Route::post('/equipos/{id}/fotos', [FotosController::class, 'store'])->name('fotoequipos.store');
+Route::post('/modelos/{id}/fotos', [FotosController::class, 'store'])->name('fotoequipos.store');
 
-// Ruta para eliminar una foto
+Route::get('/fotos/edit/{id}', [FotosController::class, 'edit'])->name('fotoequipos.edit');
+
+Route::put('/fotos/{id}', [FotosController::class, 'update'])->name('fotoequipos.update');
+
 Route::delete('/fotos/{fotoId}', [FotosController::class, 'destroy'])->name('fotoequipos.destroy');
 
 ///////////////////////////////////////////////////RELACIÓN TERMINALES////////////////////////////////////////////////////////////////

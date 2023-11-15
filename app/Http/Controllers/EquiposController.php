@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Documento;
 use App\Models\Equipo;
+use App\Models\Foto;
 use App\Models\I_impresora;
 use App\Models\Mantenimientoequipo;
 use App\Models\Relacionequipo;
@@ -376,8 +377,8 @@ class EquiposController extends Controller
         $relacion = Relacionequipo::OrderByDesc('FechaAlta')->where('IdEquipo', $id)->get();
         $mantenimiento = Mantenimientoequipo::all()->where('IdEquipo', $id);
         $documentos = Documento::where('Tabla', $equipo->tipo->Denominacion)->where('IdRelacionado', $id)->get();
-        $fotos = DB::select('select * from fotos');
         $modelo = Modelo::find($equipo->IdModelo);
+        $fotos = Foto::where('IdModelo', $modelo->Id)->orderBy('orden')->get();
 
         return view('equipos.show', [
             'equipo' => $equipo,

@@ -1,7 +1,7 @@
 <form action="" method="post" enctype="multipart/form-data">
     @csrf
     @method('POST')
-    <h1 class="text-2xl font-semibold">Añadir foto a {{$modelo->Nombre}} </h1>
+    <h1 class="text-2xl font-semibold">Añadir foto a {{$modelo->Modelo}} </h1>
     <br>
     <div class="mb-6">
         <label for="Foto" class="text-sm font-medium text-gray-900 block mb-2 @error('Foto') text-red-500 @enderror">

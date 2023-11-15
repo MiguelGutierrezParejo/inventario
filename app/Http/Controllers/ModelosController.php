@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Foto;
 use App\Models\Modelo;
 use Illuminate\Support\Facades\DB;
 
@@ -20,7 +21,7 @@ class ModelosController extends Controller
     public function show($id){
 
         $modelo = Modelo::findOrFail($id);
-        $fotos = DB::select('select * from fotos');
+        $fotos = Foto::where('IdModelo', $modelo->Id)->orderBy('orden')->get();
 
         return view('modelos.show', [
             'modelo' => $modelo,
