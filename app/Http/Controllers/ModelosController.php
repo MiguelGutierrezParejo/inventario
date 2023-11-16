@@ -11,7 +11,7 @@ class ModelosController extends Controller
 
     public function index(){
 
-        $modelos = Modelo::all();
+        $modelos = Modelo::orderBy('Modelo', 'asc')->get();
 
         return view('modelos.index', [
             'modelos' => $modelos,
