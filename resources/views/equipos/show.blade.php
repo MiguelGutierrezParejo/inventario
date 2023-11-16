@@ -4,14 +4,17 @@
             @if ($foto->IdModelo == $equipo->IdModelo)
                 <tr>
                     <td>
-                        <img src="{{ asset('storage/' . basename($foto->Foto)) }}"
-                            width="280px"
-                            style="padding-bottom: 10px">
+                        <a href="{{ asset('storage/' . basename($foto->Foto)) }}" data-lightbox="fotos">
+                            <img src="{{ asset('storage/' . basename($foto->Foto)) }}"
+                                width="280px"
+                                style="padding-bottom: 10px">
+                        </a>
                     </td>
                 </tr>
             @endif
         @endforeach
     </table>
+
     <div class="bg-white rounded-md max-w-4xl mx-auto p-4 space-y-4 shadow-lg">
         <div class="flex justify-between">
             <strong class="text-2xl">Datos del equipo</strong>
@@ -317,5 +320,4 @@
     <div class="flex justify-end space-x-2 pt-3">
         <a href="/inventario/public/" style="background-color: #0053D0" class="transition-colors rounded-[8px] px-[15px] py-[4px] text-white focus:ring-2">Volver</a>
     </div>
-
 </x-layout>

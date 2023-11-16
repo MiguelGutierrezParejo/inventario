@@ -10,6 +10,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="{{ asset('js/otro.js') }}"></script>
     <link href="/inventario/public/logoinformaticac.png" rel="icon" type="image/png">
+    <link  href="{{ asset('css/lightbox.min.css') }}" rel="stylesheet">
+    <script src="{{ asset('js/lightbox.min.js') }}"></script>
     <title>Inventario</title>
 </head>
 
@@ -156,6 +158,12 @@
             </div>
         </footer>
     </div>
+    <script>
+        lightbox.option({
+            'disableScrolling': true,
+            'albumLabel': "%1 de %2",
+            'wrapAround': true,
+        });
+    </script>
 </body>
-
 </html>
