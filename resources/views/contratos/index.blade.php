@@ -14,7 +14,10 @@
                             <a href="">Nombre</a>
                         </th>
                         <th class="w-2/12 border border-slate-300 px-6 py-2 font-semibold">
-                            <a href="">Adjudicativos</a>
+                            <a href="">Adjudicatarios</a>
+                        </th>
+                        <th class="w-2/12 border border-slate-300 px-6 py-2 font-semibold">
+                            <a href="">Número de Expediente</a>
                         </th>
                         <th class="w-2/12 border border-slate-300 px-6 py-2 font-semibold">
                             <a href="">Fecha</a>
@@ -39,7 +42,12 @@
                         </td>
                         <td class="border border-slate-300 px-6 py-4">
                             <div class="text-sm text-gray-900">
-                                {{ $contrato->Adjudicativos }}
+                                {{ $contrato->Adjudicatarios }}
+                            </div>
+                        </td>
+                        <td class="border border-slate-300 px-6 py-4">
+                            <div class="text-sm text-gray-900">
+                                {{ $contrato->NumExpediente }}
                             </div>
                         </td>
                         <td class="border border-slate-300 px-6 py-4">

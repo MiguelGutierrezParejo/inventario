@@ -14,12 +14,17 @@ class I_modeloimpresora extends Model
     public function impresoras(){
 
         return $this->hasMany(I_impresora::class, 'IdModImpresora', 'Id');
-        
+
     }
 
     public function relaciones(){
 
         return $this->hasMany(I_relacionconsumible::class, 'IdModelo', 'Id');
-        
+
+    }
+
+    public function fotos()
+    {
+        return $this->hasMany(Fotoimpresora::class, 'IdModelo', 'Id');
     }
 }

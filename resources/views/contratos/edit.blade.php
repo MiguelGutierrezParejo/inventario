@@ -21,14 +21,29 @@
         </div>
 
         <div class="mb-6">
-            <label for="Adjudicativos"
-                class="text-sm font-medium text-gray-900 block mb-2 @error('Adjudicativos') text-red-500 @enderror">
-                Adjudicativo
+            <label for="Adjudicatarios"
+                class="text-sm font-medium text-gray-900 block mb-2 @error('Adjudicatarios') text-red-500 @enderror">
+                Adjudicatario
             </label>
-            <input type="text" name="Adjudicativos" id="Adjudicativos"
-                class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 @error('Adjudicativos') border-red-500 @enderror"
-                value="{{ old('Adjudicativos', $contrato->Adjudicativos) }}">
-            @error('Adjudicativos')
+            <input type="text" name="Adjudicatarios" id="Adjudicatarios"
+                class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 @error('Adjudicatarios') border-red-500 @enderror"
+                value="{{ old('Adjudicatarios', $contrato->Adjudicatarios) }}">
+            @error('Adjudicatarios')
+                <p class="text-red-500 text-sm mt-1">
+                    {{ $message }}
+                </p>
+            @enderror
+        </div>
+
+        <div class="mb-6">
+            <label for="NumExpediente"
+                class="text-sm font-medium text-gray-900 block mb-2 @error('NumExpediente') text-red-500 @enderror">
+                Número de Expediente
+            </label>
+            <input type="text" name="NumExpediente" id="NumExpediente"
+                class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 @error('NumExpediente') border-red-500 @enderror"
+                value="{{ old('NumExpediente', $contrato->NumExpediente) }}">
+            @error('NumExpediente')
                 <p class="text-red-500 text-sm mt-1">
                     {{ $message }}
                 </p>

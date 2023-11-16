@@ -9,11 +9,11 @@ class Contrato extends Model
 {
 
     protected $table = 'contratos';
-    
+
     protected $casts = [
         'Fecha' => 'date:d-m-Y',
     ];
 
-    protected $fillable = ['Nombre', 'Adjudicativos', 'Fecha', 'Observaciones', 'Estado'];
+    protected $fillable = ['Nombre', 'Adjudicatarios', 'NumExpediente', 'Fecha', 'Observaciones', 'Estado'];
 
 }

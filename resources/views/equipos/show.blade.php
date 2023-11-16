@@ -47,6 +47,11 @@
         <h3 class="border-t mb-2 pt-3 font-semibold">Precio de adquisición:
             <span class="font-thin">{{ number_format($equipo->PrecioAdquisicion, 2, ',', '.')}}€</span>
         </h3>
+        <h3 class="border-t mb-2 pt-3 font-semibold">Contrato:
+        @if ($equipo->contrato) <!-- Verifica si el equipo tiene un contrato -->
+            <span class="font-thin">{{ $equipo->contrato->Nombre }}</span>
+        @endif
+        </h3>
         <h3 class="border-t mb-2 pt-3 font-semibold">Observaciones:
             <span class="font-thin">{{ $equipo->Observaciones }}</span>
         </h3>
@@ -293,30 +298,6 @@
 
     <br>
 
-    <div class="bg-white rounded-md max-w-4xl mx-auto p-4 space-y-4 shadow-lg">
-        <div class="flex justify-between">
-            <strong class="text-2xl">Contrato</strong>
-            <a href="/inventario/public/equipos/edit/{{ $equipo->Id }}" class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-semibold rounded-lg text-sm px-5 py-1">Añadir</a>
-        </div>
-        <table class="table-fixed border border-gray-500 border-collapse mt-14">
-            <thead>
-                <tr class="border-b-2 border-black">
-                    <th class="w-6/12 bg-gray-300 text-left px-2">Nombre</th>
-                    <th class="w-6/12 bg-gray-300 text-left px-2">Observaciones</th>
-                    <th class="bg-gray-300 text-left px-2"></th>
-                </tr>
-            </thead>
-            @if ($equipo->contrato) <!-- Verifica si el equipo tiene un contrato -->
-            <tbody>
-                    <tr class="border border-black">
-                        <td class="text-left px-2 border border-black"><a href="/inventario/public/contratos/{{ $equipo->contrato->Id }}">{{ $equipo->contrato->Nombre }}</td></a>
-                        <td class="px-2">{{ $equipo->contrato->Observaciones }}</td>
-                        <td class="px-2"></td>
-                    </tr>
-            </tbody>
-            @endif
-        </table>
-    </div>
     <div class="flex justify-end space-x-2 pt-3">
         <a href="/inventario/public/" style="background-color: #0053D0" class="transition-colors rounded-[8px] px-[15px] py-[4px] text-white focus:ring-2">Volver</a>
     </div>

@@ -11,8 +11,11 @@
         <h3 class="border-t mb-2 pt-3 font-semibold">Nombre:
             <span class="font-thin">{{ $contrato->Nombre }}</span>
         </h3>
-        <h3 class="border-t mb-2 pt-3 font-semibold">Adjudicativos:
-            <span class="font-thin">{{ $contrato->Adjudicativos }}</span>
+        <h3 class="border-t mb-2 pt-3 font-semibold">Adjudicatarios:
+            <span class="font-thin">{{ $contrato->Adjudicatarios }}</span>
+        </h3>
+        <h3 class="border-t mb-2 pt-3 font-semibold">Número de Expediente:
+            <span class="font-thin">{{ $contrato->NumExpediente }}</span>
         </h3>
         <h3 class="border-t mb-2 pt-3 font-semibold">Fecha:
             <span class="font-thin"> {{date('d-m-Y', strtotime($contrato->Fecha))}}</span>

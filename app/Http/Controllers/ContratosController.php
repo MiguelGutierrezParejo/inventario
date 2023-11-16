@@ -45,7 +45,8 @@ class ContratosController extends Controller
 
         $validados = request()->validate([
             'Nombre' => 'required',
-            'Adjudicativos' => 'required',
+            'Adjudicatarios' => 'required',
+            'NumExpediente' => 'required',
             'Fecha' => 'required|date_format:Y-m-d',
             'Observaciones' => 'nullable|max:255',
             'Estado' => 'required',
@@ -61,7 +62,8 @@ class ContratosController extends Controller
         $contrato = new Contrato();
 
         $contrato->Nombre = $validados['Nombre'];
-        $contrato->Adjudicativos = $validados['Adjudicativos'];
+        $contrato->Adjudicatarios = $validados['Adjudicatarios'];
+        $contrato->NumExpediente = $validados['NumExpediente'];
         $contrato->Fecha = new DateTime($validados['Fecha']);
         $contrato->Observaciones = $validados['Observaciones'];
         $contrato->Estado = $validados['Estado'];
@@ -89,7 +91,8 @@ class ContratosController extends Controller
         ->where('id', $id)
         ->update([
             'Nombre' => $validados['Nombre'],
-            'Adjudicativos' => $validados['Adjudicativos'],
+            'Adjudicatarios' => $validados['Adjudicatarios'],
+            'NumExpediente' => $validados['NumExpediente'],
             'Fecha' => date('Y-m-d', strtotime($validados['Fecha'])),
             'Observaciones' => $validados['Observaciones'],
             'Estado' => $validados['Estado']
