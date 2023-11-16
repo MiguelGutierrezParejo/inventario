@@ -28,6 +28,8 @@ class FotosController extends Controller
         if ($request->hasFile('Foto')) {
             $fotoFile = $request->file('Foto');
 
+            // Obtener el siguiente número de orden
+            $orden = $modelo->fotos()->count() + 1;
             // Generar una ruta única para almacenar la imagen
             $rutaImagen = $fotoFile->store('', 'custom');
 
@@ -35,6 +37,7 @@ class FotosController extends Controller
             $foto = new Foto();
             $foto->IdModelo = $modelo->Id;
             $foto->Foto = $rutaImagen;
+            $foto->orden = $orden; // Asignar el número de orden
             $foto->save();
         }
 

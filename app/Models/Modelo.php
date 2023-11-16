@@ -11,4 +11,9 @@ class Modelo extends Model
 
     protected $fillable = ['Nombre', 'Observaciones'];
 
+    public function fotos()
+    {
+        return $this->hasMany(Foto::class, 'IdModelo', 'Id');
+    }
+
 }
