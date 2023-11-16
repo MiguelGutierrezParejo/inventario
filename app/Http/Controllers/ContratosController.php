@@ -66,7 +66,7 @@ class ContratosController extends Controller
         $contrato->NumExpediente = $validados['NumExpediente'];
         $contrato->Fecha = new DateTime($validados['Fecha']);
         $contrato->Observaciones = $validados['Observaciones'];
-        $contrato->Estado = $validados['Estado'];
+        $contrato->Estado = $validados['Estado'] == '1' ? 1 : 0;
 
         $contrato->save();
 
@@ -95,7 +95,7 @@ class ContratosController extends Controller
             'NumExpediente' => $validados['NumExpediente'],
             'Fecha' => date('Y-m-d', strtotime($validados['Fecha'])),
             'Observaciones' => $validados['Observaciones'],
-            'Estado' => $validados['Estado']
+            'Estado' => $validados['Estado'] == '1' ? 1 : 0,
         ]);
 
         return redirect('contratos/'. $contrato->Id)->with('success', 'Contrato editado con éxito.');

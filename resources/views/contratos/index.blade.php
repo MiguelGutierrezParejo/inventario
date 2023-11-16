@@ -62,7 +62,7 @@
                          </td>
                         <td class="border border-slate-300 px-6 py-4">
                            <div class="text-sm text-gray-900">
-                                {{ $contrato->Estado }}
+                            {{ $contrato->Estado == 1 ? 'Abierto' : 'Cerrado' }}
                            </div>
                         </td>
                      </tr>

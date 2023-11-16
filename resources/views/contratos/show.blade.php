@@ -21,7 +21,7 @@
             <span class="font-thin"> {{date('d-m-Y', strtotime($contrato->Fecha))}}</span>
         </h3>
         <h3 class="border-t mb-2 pt-3 font-semibold">Estado:
-            <span class="font-thin">{{ $contrato->Estado }}</span>
+            <span class="font-thin"> {{ $contrato->Estado == 1 ? 'Abierto' : 'Cerrado' }}</span>
         </h3>
         <h3 class="border-t mb-2 pt-3 font-semibold">Observaciones:
             <span class="font-thin">{{ $contrato->Observaciones }}</span>

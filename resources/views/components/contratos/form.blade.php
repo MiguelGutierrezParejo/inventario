@@ -77,13 +77,13 @@
 </div>
 
 <div class="mb-6">
-    <label for="Estado"
-        class="text-sm font-medium text-gray-900 block mb-2 @error('Estado') text-red-500 @enderror">
-        Estado(Abierto o Cerrado)
+    <label for="Estado" class="text-sm font-medium text-gray-900 block mb-2 @error('Estado') text-red-500 @enderror">
+        Estado
     </label>
-    <input type="text" name="Estado" id="Estado"
-        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 @error('Estado') border-red-500 @enderror"
-        value="{{ old('Estado', $contrato->Estado) }}">
+    <select name="Estado" id="Estado" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 @error('Estado') border-red-500 @enderror">
+        <option value="1" {{ old('Estado', $contrato->Estado) == 1 ? 'selected' : '' }}>Abierto</option>
+        <option value="0" {{ old('Estado', $contrato->Estado) == 0 ? '' : '' }}>Cerrado</option>
+    </select>
     @error('Estado')
         <p class="text-red-500 text-sm mt-1">
             {{ $message }}
