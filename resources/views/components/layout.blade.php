@@ -125,7 +125,7 @@
                             <li class="rounded-sm px-3 py-1 hover:bg-gray-100"><a class="hover:text-blue-500 hover:underline" href="/inventario/public/contratos">Contratos</a></li>
                             <li class="rounded-sm px-3 py-1 hover:bg-gray-100"><a class="hover:text-blue-500 hover:underline" href="/inventario/public/modelos">Modelos</a></li>
                         </ul>
-                    </div> |
+                    </div> 
                 </nav>
             </div>
         </header>
