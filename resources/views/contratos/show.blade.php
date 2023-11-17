@@ -90,20 +90,22 @@
 
         <div class="flex justify-between mt-6">
             <strong class="text-2xl">Equipos asociados</strong>
+            <a href="{{ route('contratos.formularioagregar', ['id' => $contrato->Id]) }}"
+                class="text-white bg-green-700 font-semibold rounded-lg text-sm px-5 py-1 mr-2 text-center">Añadir equipos</a>
         </div>
 
         <table class="table-fixed border border-gray-500 border-collapse mt-2">
             <thead>
                 <tr class="border-b-2 border-black">
-                    <th class="w-2/12 bg-gray-300 text-left px-2">Número de Inventario</th>
                     <th class="w-4/12 bg-gray-300 text-left px-2">Nombre del Ordenador</th>
+                    <th class="w-2/12 bg-gray-300 text-left px-2">Número de Inventario</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($equipos as $equipo)
                     <tr class="border border-black">
+                        <td class="px-2"><a href="/inventario/public/equipos/{{ $equipo->Id }}">{{ $equipo->NombreOrdenador }}</td></a>
                         <td class="text-left px-2 border border-black"><a href="/inventario/public/equipos/{{ $equipo->Id }}">{{ $equipo->NInventario }}</td></a>
-                        <td class="px-2">{{ $equipo->NombreOrdenador }}</td>
                     </tr>
                 @endforeach
             </tbody>

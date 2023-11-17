@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Contrato;
 use App\Models\Documento;
+use App\Models\Equipo;
 use DateTime;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class ContratosController extends Controller
@@ -23,7 +25,7 @@ class ContratosController extends Controller
 
         $contrato = Contrato::findOrFail($id);
         $documentos = Documento::where('Tabla', 'Contrato')->where('IdRelacionado', $id)->OrderByDesc('created_at')->get();
-        $equipos = $contrato->equipos;
+        $equipos = $contrato->equipos()->orderBy('NombreOrdenador')->get();
 
         return view('contratos.show', [
             'contrato' => $contrato,
@@ -100,5 +102,28 @@ class ContratosController extends Controller
         ]);
 
         return redirect('contratos/'. $contrato->Id)->with('success', 'Contrato editado con éxito.');
+    }
+
+    public function formularioagregar($id)
+    {
+        $contrato = Contrato::findOrFail($id);
+        $equiposDisponibles = Equipo::whereDoesntHave('contrato')->orderBy('NombreOrdenador')->get();
+
+        return view('contratos.formularioagregar', [
+            'contrato' => $contrato,
+            'equiposDisponibles' => $equiposDisponibles,
+        ]);
+    }
+
+    public function agregarEquipos(Request $request, $id)
+    {
+        $contrato = Contrato::findOrFail($id);
+
+        $equipoIds = $request->input('equipos');
+
+        Equipo::whereIn('id', $equipoIds)
+            ->update(['IdContrato' => $contrato->Id]);
+
+        return redirect('contratos/' . $contrato->Id)->with('success', 'Equipos agregados con éxito al contrato.');
     }
 }

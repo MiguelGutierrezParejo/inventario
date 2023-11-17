@@ -98,6 +98,19 @@ Route::put('/fotos/{id}', [FotosController::class, 'update'])->name('fotoequipos
 
 Route::delete('/fotos/{fotoId}', [FotosController::class, 'destroy'])->name('fotoequipos.destroy');
 
+///////////////////////////////////////////////////FOTOS IMPRESORA//////////////////////////////////////////////////////////////////////////////
+
+Route::get('/modeloimpresora/{id}/fotoimpresora/create', [FotosimpresorasController::class, 'create'])->name('fotoimpresoras.create');
+
+Route::post('/modeloimpresora/{id}/fotoimpresora', [FotosimpresorasController::class, 'store'])->name('fotoimpresoras.store');
+
+Route::get('/fotoimpresora/edit/{id}', [FotosimpresorasController::class, 'edit'])->name('fotoimpresoras.edit');
+
+Route::put('/fotoimpresora/{id}', [FotosimpresorasController::class, 'update'])->name('fotoimpresoras.update');
+
+Route::delete('/fotoimpresora/{id}', [FotosimpresorasController::class, 'destroy'])->name('fotoimpresoras.destroy');
+
+
 ///////////////////////////////////////////////////RELACIÓN TERMINALES////////////////////////////////////////////////////////////////
 
 Route::get('/relterm/create/{id}', [RelacionTerminalesController::class, 'create']);
@@ -185,6 +198,7 @@ Route::get('/modeloimpresoras', [I_modeloimpresorasController::class, 'index'])
     ->name('modelosimpresoras');
 Route::get('/modeloimpresoras/{id}', [I_modeloimpresorasController::class, 'show']);
 
+
 ///////////////////////////////////////////////////MANTENIMIENTO IMPRESORAS///////////////////////////////////////////////////////////
 
 Route::get('/mantenimientoimpresoras/create/{Id}', [I_mantenimientoimpresorasController::class, 'create']);
@@ -266,6 +280,9 @@ Route::get('/contratos', [ContratosController::class, 'index'])
 Route::get('/contratos/{id}', [ContratosController::class, 'show']);
 Route::get('/contratos/edit/{id}', [ContratosController::class, 'edit']);
 Route::put('/contratos/{id}', [ContratosController::class, 'update'])->name('contratos.update');
+Route::get('contratos/{id}/formularioagregar', [ContratosController::class, 'formularioagregar'])
+    ->name('contratos.formularioagregar');
+Route::post('/contratos/{id}', [ContratosController::class, 'agregarEquipos'])->name('contratos.agregarEquipos');
 
 ///////////////////////////////////////////////////MODELOS///////////////////////////////////////////////////////////////////////////
 
