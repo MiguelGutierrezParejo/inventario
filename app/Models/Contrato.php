@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
-use Facade\Ignition\Tabs\Tab;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Contrato extends Model
 {
+    use HasFactory;
 
     protected $table = 'contratos';
 
@@ -15,5 +16,10 @@ class Contrato extends Model
     ];
 
     protected $fillable = ['Nombre', 'Adjudicatarios', 'NumExpediente', 'Fecha', 'Observaciones', 'Estado'];
+
+    public function equipos()
+    {
+        return $this->hasMany(Equipo::class, 'IdContrato', 'Id');
+    }
 
 }

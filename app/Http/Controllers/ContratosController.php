@@ -23,11 +23,12 @@ class ContratosController extends Controller
 
         $contrato = Contrato::findOrFail($id);
         $documentos = Documento::where('Tabla', 'Contrato')->where('IdRelacionado', $id)->OrderByDesc('created_at')->get();
-
+        $equipos = $contrato->equipos;
 
         return view('contratos.show', [
             'contrato' => $contrato,
-            'documentos' => $documentos
+            'documentos' => $documentos,
+            'equipos' => $equipos,
         ]);
     }
 
