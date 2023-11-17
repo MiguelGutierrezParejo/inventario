@@ -11,7 +11,9 @@ class Documento extends Model
 
     protected $table = 'documentos';
 
+    protected $casts = [
+        'FechaAlta' => 'date:d-m-Y',
+    ];
 
-    protected $fillable = ['Tabla', 'IdRelacionado', 'Nombre', 'Fichero', 'Observaciones'];
-
+    protected $fillable = ['Tabla', 'IdRelacionado', 'Nombre', 'Fichero', 'FechaAlta', 'Observaciones'];
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Documento;
+use DateTime;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
@@ -44,6 +45,7 @@ class DocumentosController extends Controller
         $validados = $this->validar();
         $documento = new Documento;
         $documento->Nombre = $validados['Nombre'];
+        $documento->FechaAlta =  new DateTime($validados['FechaAlta']);
         $documento->Tabla = $table;
         $documento->IdRelacionado = $id;
         $documento->Observaciones = $validados['Observaciones'];
@@ -93,6 +95,7 @@ class DocumentosController extends Controller
         $documento = Documento::findOrFail($id);
 
         $documento->Nombre = $validados['Nombre'];
+        $documento->FechaAlta = new DateTime($validados['FechaAlta']);
         $documento->Observaciones = $validados['Observaciones'];
 
         if (request()->hasFile('Documento')) {
@@ -115,8 +118,8 @@ class DocumentosController extends Controller
 
         $documento->save();
 
-        DB::select('UPDATE documentos SET Nombre = ?, Observaciones = ?
-                    WHERE id = ?', [$validados['Nombre'], $validados['Observaciones'], $id]);
+        DB::select('UPDATE documentos SET Nombre = ?, FechaAlta = ?, Observaciones = ?
+                    WHERE id = ?', [$validados['Nombre'], $validados['FechaAlta'], $validados['Observaciones'], $id]);
 
         if ($documento->Tabla == 'Empleado') {
             return redirect('/usuarios/'.$documento->IdRelacionado)->with('success', 'Información actualizada.');
@@ -139,6 +142,7 @@ class DocumentosController extends Controller
         $validados = request()->validate([
             'Nombre' => 'required|max:255',
             'Documento' => 'nullable|mimes:pdf',
+            'FechaAlta' => 'required',
             'Observaciones' => 'nullable|max:255',
         ]);
 

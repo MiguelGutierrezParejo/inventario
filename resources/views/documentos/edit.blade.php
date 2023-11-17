@@ -32,6 +32,20 @@
             @enderror
         </div>
         <div class="mb-6">
+            <label for="FechaAlta"
+                class="text-sm font-medium text-gray-900 block mb-2 @error('FechaAlta') text-red-500 @enderror">
+                Fecha de alta
+            </label>
+            <input type="date" name="FechaAlta" id="FechaAlta"
+                class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/3 p-2.5 @error('FechaAlta') border-red-500 @enderror"
+                value="{{ old('FechaAlta', optional($documento->FechaAlta)->format('Y-m-d')) }}">
+            @error('documento')
+                <p class="text-red-500 text-sm mt-1">
+                    {{ $message }}
+                </p>
+            @enderror
+        </div>
+        <div class="mb-6">
             <label for="Observaciones"
                 class="text-sm font-medium text-gray-900 block mb-2 @error('Observaciones') text-red-500 @enderror">
                 Observaciones
