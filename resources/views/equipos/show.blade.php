@@ -31,7 +31,7 @@
             <span class="font-thin">{{ $equipo->NombreOrdenador }}</span>
         </h3>
         <h3 class="border-t mb-2 pt-3 font-semibold">Modelo:
-            <span class="font-thin">{{ $modelo->Modelo }}</span>
+            <span class="font-thin"><a href="/inventario/public/modelos/{{$modelo->Id}}">{{ $modelo->Modelo }}</span></a>
         </h3>
         <h3 class="border-t mb-2 pt-3 font-semibold">Nº Serie:
             <span class="font-thin">{{ $equipo->NumSerie }}</span>

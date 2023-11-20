@@ -1,40 +1,10 @@
 <x-layout>
     <div class="bg-white rounded-md max-w-4xl mx-auto p-4 space-y-4 shadow-lg">
-    <div class="flex justify-between">
-            <strong class="text-2xl">Datos del Empleado</strong>
-            <a href="/inventario/public/usuarios/edit/{{ $usuario->Id }}" style="background-color: #0053D0"
-                class="text-white focus:ring-4 font-semibold rounded-lg text-sm px-5 py-1">Editar</a>
-    </div>
-
-    <div class="flex border-separate border-t">
-        <table>
-            @foreach ($terminales as $terminal)
-                <tr>
-                    <td>
-                        <h3 class="mb-2 pt-3 font-semibold">Equipo:
-                            @if ($equipo)
-                            <a href="/inventario/public/equipos/{{$equipo->IdEquipo}}"><span class="font-thin">{{ $equipo->equipo->Modelo }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></a>
-                            @endif
-                        </h3>
-                    </td>
-                    <td>
-                        <h3 class="mb-2 pt-3 font-semibold">Terminal:
-                            @if ($terminal)
-                            <a href="/inventario/public/terminales/{{$terminal->IdTerminal}}"><span class="font-thin">{{ $terminal->terminal->Modelo }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></a>
-                            @endif
-                        </h3>
-                    </td>
-                    <td>
-                        <h3 class="mb-2 pt-3 font-semibold">Número:
-                            @if ($linea)
-                            <a href="/inventario/public/lineas/{{$linea->IdLinea}}"><span class="font-thin">{{ $linea->linea->Numero }}</span></a>
-                            @endif
-                        </h3>
-                    </td>
-                @endforeach
-            </tr>
-        </table>
-    </div>
+        <div class="flex justify-between">
+                <strong class="text-2xl">Datos del Empleado</strong>
+                <a href="/inventario/public/usuarios/edit/{{ $usuario->Id }}" style="background-color: #0053D0"
+                    class="text-white focus:ring-4 font-semibold rounded-lg text-sm px-5 py-1">Editar</a>
+        </div>
 
         <h3 class="border-t mb-2 pt-3 font-semibold">Nombre:
             <span class="font-thin">{{ $usuario->Nombre }}</span>

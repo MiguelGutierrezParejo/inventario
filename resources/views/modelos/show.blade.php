@@ -57,7 +57,7 @@
                                 style="padding-top: 10px; padding-bottom: 10px; max-width:75px"
                                 title="Doble clic para borrar esta imagen"
                                 ondblclick="showConfirmation({{ $foto->Id }})">
-                            <form action="{{ route('fotoequipos.destroy', ['id' => $foto->Id]) }}" method="POST">
+                            <form action="{{ route('fotoequipos.destroy', ['fotoId' => $foto->Id]) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
                             </form>

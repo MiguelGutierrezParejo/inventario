@@ -27,7 +27,7 @@
             <span class="font-thin">{{ $impresora->Id }}</span>
         </h3>
         <h3 class="border-t mb-2 pt-3 font-semibold ">Modelo impresora:
-            <span class="font-thin"><a>{{$impresora->Modelo}}</a></span>
+            <span class="font-thin"><a href="/inventario/public/modeloimpresoras/{{$impresora->IdModImpresora}}">{{$impresora->Modelo}}</a></span>
         </h3>
         <h3 class="border-t mb-2 pt-3 font-semibold">Usuario:
             <span class="font-thin"><a>{{$impresora->Nombre}}</a></span>
