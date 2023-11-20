@@ -7,14 +7,14 @@ use App\Models\Fotoimpresora;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class FotosController extends Controller
+class FotosimpresoraController extends Controller
 {
     public function create($id)
     {
         $modelo = I_modeloimpresora::findOrFail($id);
         $foto = new Fotoimpresora();
 
-        return view('fotoequipos.create', [
+        return view('fotoimpresoras.create', [
             'foto' => $foto,
             'modelo' => $modelo,
         ]);
@@ -59,7 +59,7 @@ class FotosController extends Controller
         $foto = Fotoimpresora::findOrFail($id);
         $modelo = I_modeloimpresora::findOrFail($foto->IdModelo);
 
-        return view('fotoequipos.edit', compact('foto', 'modelo'));
+        return view('fotoimpresoras.edit', compact('foto', 'modelo'));
     }
 
     public function update($id)
@@ -67,18 +67,18 @@ class FotosController extends Controller
         $validados = $this->validar();
         $foto = Fotoimpresora::findOrFail($id);
 
-        DB::table('fotos')
+        DB::table('fotosimpresoras')
         ->where('id', $id)
         ->update([
             'Orden' => $validados['Orden']
         ]);
 
-        return redirect("/modelos/$foto->IdModelo")->with('success', 'Orden de la foto actualizado con éxito.');
+        return redirect("/modeloimpresoras/$foto->IdModelo")->with('success', 'Orden de la foto actualizado con éxito.');
     }
 
-    public function destroy($fotoId)
+    public function destroy($id)
     {
-        $foto = Fotoimpresora::find($fotoId);
+        $foto = Fotoimpresora::find($id);
         $fotoFilePath = public_path('storage/' . basename($foto->Foto));
 
         // Elimina el archivo del sistema
@@ -87,7 +87,7 @@ class FotosController extends Controller
         }
 
         // Elimina el registro de la base de datos
-        Fotoimpresora::where('Id', $fotoId)->delete();
+        Fotoimpresora::where('Id', $id)->delete();
 
         if ($foto->delete()) {
             return redirect()->back()->with('success', 'Imagen eliminada con éxito.');

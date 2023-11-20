@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Fotoimpresora;
 use App\Models\I_modeloimpresora;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Barryvdh\DomPDF\PDF as DomPDFPDF;
@@ -47,10 +48,12 @@ class I_modeloimpresorasController extends Controller
 
     public function show($id){
         $modelo = I_modeloimpresora::all()->firstWhere('Id', $id);
+        $fotos = Fotoimpresora::where('IdModelo', $modelo->Id)->orderBy('orden')->get();
+
 
         return view('i_modeloimpresoras.show', [
             'modelo' => $modelo,
-
+            'fotos' => $fotos,
         ]);
     }
 
@@ -74,7 +77,7 @@ class I_modeloimpresorasController extends Controller
         $modeloimpresora->Observaciones = $validados['Observaciones'];
 
         $modeloimpresora->save();
-        
+
         return redirect('/modeloimpresoras')->with('success', 'Modelo creado con éxito.');
     }
 
@@ -110,6 +113,6 @@ class I_modeloimpresorasController extends Controller
 
         return redirect('/modeloimpresoras/'.$modeloimpresora->Id)->with('success', 'Modelo actualizado.');
 
-    } 
+    }
 
 }

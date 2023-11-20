@@ -13,7 +13,7 @@ class Fotoimpresora extends Model
 
     protected $fillable = ['Foto', 'Orden'];
 
-    public function modelo(){
+    public function modeloimpresora(){
 
         return $this->belongsTo(I_modeloimpresora::class, 'IdModelo');
 

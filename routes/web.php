@@ -21,6 +21,7 @@ use App\Http\Controllers\S_relacionequipossoftwaresController;
 use App\Http\Controllers\S_relacionusuariossoftwaresController;
 use App\Http\Controllers\S_softwaresController;
 use App\Http\Controllers\ContratosController;
+use App\Http\Controllers\FotosimpresoraController;
 use App\Http\Controllers\ModelosController;
 use App\Http\Controllers\TerminalesController;
 use App\Http\Controllers\UsuariosController;
@@ -89,27 +90,18 @@ Route::delete('/mantequip/{id}', [MantenimientoequiposController::class, 'destro
 ///////////////////////////////////////////////////FOTOS//////////////////////////////////////////////////////////////////////////////
 
 Route::get('/modelos/{id}/fotos/create', [FotosController::class, 'create'])->name('fotoequipos.create');
-
 Route::post('/modelos/{id}/fotos', [FotosController::class, 'store'])->name('fotoequipos.store');
-
 Route::get('/fotos/edit/{id}', [FotosController::class, 'edit'])->name('fotoequipos.edit');
-
 Route::put('/fotos/{id}', [FotosController::class, 'update'])->name('fotoequipos.update');
-
 Route::delete('/fotos/{fotoId}', [FotosController::class, 'destroy'])->name('fotoequipos.destroy');
 
-///////////////////////////////////////////////////FOTOS IMPRESORA//////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////FOTOS//////////////////////////////////////////////////////////////////////////////
 
-Route::get('/modeloimpresora/{id}/fotoimpresora/create', [FotosimpresorasController::class, 'create'])->name('fotoimpresoras.create');
-
-Route::post('/modeloimpresora/{id}/fotoimpresora', [FotosimpresorasController::class, 'store'])->name('fotoimpresoras.store');
-
-Route::get('/fotoimpresora/edit/{id}', [FotosimpresorasController::class, 'edit'])->name('fotoimpresoras.edit');
-
-Route::put('/fotoimpresora/{id}', [FotosimpresorasController::class, 'update'])->name('fotoimpresoras.update');
-
-Route::delete('/fotoimpresora/{id}', [FotosimpresorasController::class, 'destroy'])->name('fotoimpresoras.destroy');
-
+Route::get('/modeloimpresoras/{id}/fotoimpresora/create', [FotosimpresoraController::class, 'create'])->name('fotoimpresoras.create');
+Route::post('/modeloimpresoras/{id}/fotoimpresora', [FotosimpresoraController::class, 'store'])->name('fotoimpresoras.store');
+Route::get('/fotoimpresora/edit/{id}', [FotosimpresoraController::class, 'edit'])->name('fotoimpresoras.edit');
+Route::put('/fotoimpresora/{id}', [FotosimpresoraController::class, 'update'])->name('fotoimpresoras.update');
+Route::delete('/fotoimpresora/{id}', [FotosimpresoraController::class, 'destroy'])->name('fotoimpresoras.destroy');
 
 ///////////////////////////////////////////////////RELACIÓN TERMINALES////////////////////////////////////////////////////////////////
 
