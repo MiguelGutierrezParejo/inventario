@@ -4,11 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Fotoimpresora;
 use App\Models\I_modeloimpresora;
-use Barryvdh\DomPDF\Facade\Pdf;
-use Barryvdh\DomPDF\PDF as DomPDFPDF;
-use DateTime;
-use Dompdf\Dompdf;
-use Dompdf\Options;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 

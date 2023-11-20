@@ -95,7 +95,7 @@ Route::get('/fotos/edit/{id}', [FotosController::class, 'edit'])->name('fotoequi
 Route::put('/fotos/{id}', [FotosController::class, 'update'])->name('fotoequipos.update');
 Route::delete('/fotos/{fotoId}', [FotosController::class, 'destroy'])->name('fotoequipos.destroy');
 
-///////////////////////////////////////////////////FOTOS//////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////FOTOS IMPRESORA//////////////////////////////////////////////////////////////////////////////
 
 Route::get('/modeloimpresoras/{id}/fotoimpresora/create', [FotosimpresoraController::class, 'create'])->name('fotoimpresoras.create');
 Route::post('/modeloimpresoras/{id}/fotoimpresora', [FotosimpresoraController::class, 'store'])->name('fotoimpresoras.store');
