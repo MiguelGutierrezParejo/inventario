@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Documento;
+use App\Models\Fotoimpresora;
 use App\Models\I_consumible;
 use App\Models\I_impresora;
 use App\Models\I_mantenimientoimpresora;
@@ -97,7 +98,7 @@ class I_impresorasController extends Controller
                     ->leftJoin('i_modeloimpresoras', 'i_impresoras.IdModImpresora', '=', 'i_modeloimpresoras.id')
                     ->leftJoin('usuarios', 'i_impresoras.IdUsuario', '=', 'usuarios.id')
                     ->leftJoin('i_mantenimientoimpresoras', 'i_impresoras.Id', '=', 'i_mantenimientoimpresoras.IdImpresora')
-                    ->select('i_impresoras.*', 'usuarios.Nombre', 'i_modeloimpresoras.Modelo', 'i_mantenimientoimpresoras.IdImpresora', 
+                    ->select('i_impresoras.*', 'usuarios.Nombre', 'i_modeloimpresoras.Modelo', 'i_mantenimientoimpresoras.IdImpresora',
                     'i_mantenimientoimpresoras.IdConsumible', 'i_mantenimientoimpresoras.Fecha', 'i_mantenimientoimpresoras.Observaciones as ObservacionesMantenimiento' )
                     ->where('i_impresoras.Id', $id)
                     ->orderBy('Fecha', 'desc')
@@ -106,6 +107,7 @@ class I_impresorasController extends Controller
         $consumibles = I_consumible::all();
 
         $documentos = Documento::where('Tabla', 'Impresora')->where('IdRelacionado', $id)->get();
+        $fotos = Fotoimpresora::where('IdModelo', $impresoras->first()->IdModImpresora)->orderBy('orden')->get();
 
         $fechaactual = Carbon::now();
         $Añopasado = $fechaactual->subYear();
@@ -116,6 +118,7 @@ class I_impresorasController extends Controller
             'impresora' => $impresoras->first(),
             'Añopasado' => $Añopasado,
             'documentos' => $documentos,
+            'fotos' => $fotos,
         ]);
     }
 
@@ -179,7 +182,7 @@ class I_impresorasController extends Controller
         $impresora->PrecioAdquisicion = $validados['PrecioAdquisicion'];
 
         $impresora->save();
-     
+
         return redirect('/impresorasindex/Simple')->with('success', 'Impresora creada con éxito.');
     }
 
@@ -188,7 +191,7 @@ class I_impresorasController extends Controller
         $impresora = I_impresora::findOrFail($id);
         $modelos = I_modeloimpresora::all()->sortBy("Modelo");
         $usuarios = Usuario::all()->sortBy("Nombre");
-        
+
         return view('i_impresoras.edit', [
             'impresora' => $impresora,
             'modelos' => $modelos,
@@ -217,24 +220,24 @@ class I_impresorasController extends Controller
     }
 
     public function recabar()
-    {     
+    {
 
         $mantenimientos = ['No', 'Si'];
         $titulares = ['No', 'Si'];
 
         return view('i_impresoras.recabar', [
             'mantenimientos' => $mantenimientos,
-            'titulares' => $titulares,  
+            'titulares' => $titulares,
         ]);
     }
 
     public function generar(Request $request)
     {
-        
+
         if($request->Hasta == null) {
             $request->Hasta = Carbon::now();
-        } 
-        
+        }
+
         $altas = I_impresora::select('*')
         ->where('FechaAlta', '<=', $request->Hasta)
         ->whereNull('FechaBaja')
@@ -249,7 +252,7 @@ class I_impresorasController extends Controller
         ->get();
 
         $mantenimientos = null;
-        
+
         if ($request->mantenimiento == 'Si') {
 
             $mantenimientos = I_mantenimientoimpresora::select('*')
@@ -262,12 +265,12 @@ class I_impresorasController extends Controller
             'impresoraBaja' => $bajas,
             'mantenimientos' => $mantenimientos,
             'request' => $request,
-            'titular' => $request->titular, 
+            'titular' => $request->titular,
         ])->setPaper('a4', 'landscape');
-        return $pdf->stream(); 
-        
+        return $pdf->stream();
+
     }
 
-    
+
 
 }

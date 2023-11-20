@@ -1,5 +1,19 @@
 <x-layout>
-
+    <table style="float: left">
+        @foreach ($fotos as $foto)
+            @if ($foto->IdModelo == $impresora->IdModImpresora)
+                <tr>
+                    <td>
+                        <a href="{{ asset('storage/' . basename($foto->Foto)) }}" data-lightbox="fotos">
+                            <img src="{{ asset('storage/' . basename($foto->Foto)) }}"
+                                width="280px"
+                                style="padding-bottom: 10px">
+                        </a>
+                    </td>
+                </tr>
+            @endif
+        @endforeach
+    </table>
     <div class="bg-white rounded-md max-w-4xl mx-auto p-4 space-y-4 shadow-lg">
         <div class="flex justify-between">
             <strong class="text-2xl">Datos de la impresora</strong>
