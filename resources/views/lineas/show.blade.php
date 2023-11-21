@@ -1,6 +1,6 @@
 <x-layout>
     <div class="bg-white rounded-md max-w-4xl mx-auto p-4 space-y-4 shadow-lg">
-        
+
     <div class="flex justify-between">
             <strong class="text-2xl">Datos de la linea</strong>
             <a href="/inventario/public/lineas/edit/{{ $linea->Id }}" style="background-color: #0053D0"
@@ -18,8 +18,20 @@
         <h3 class="border-t mb-2 pt-3 font-semibold">Número:
             <span class="font-thin">{{ $linea->Numero }}</span>
         </h3>
+        <h3 class="border-t mb-2 pt-3 font-semibold">Terminal asociado:
+            <span class="font-thin">
+                @if ($telefono == null)
+                    Sin terminal asociado
+                @else
+                    {{ $telefono->Marca }} {{$telefono->Modelo}}
+                @endif
+            </span>
+        </h3>
         <h3 class="border-t mb-2 pt-3 font-semibold">Extensión:
             <span class="font-thin">{{ $linea->Extension }}</span>
+        </h3>
+        <h3 class="border-t mb-2 pt-3 font-semibold">Características:
+            <span class="font-thin">{{ $linea->Caracteristicas }}</span>
         </h3>
         <h3 class="border-t mb-2 pt-3 font-semibold">Pin:
             <span class="font-thin">{{ $linea->Pin }}</span>
@@ -82,7 +94,7 @@
                         <td class="px-2">
                             <a href="/inventario/public/relinea/edit/{{ $rel->Id }}">
                                 <svg class="h-8 w-8 text-blue-500"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
                                 </svg>
                             </a>
@@ -93,7 +105,7 @@
                                 @method('DELETE')
                                 <button onclick="return confirm('¿Está seguro de borrar esta asignación?')" type="submit">
                                     <svg class="h-8 w-8 text-red-500"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
                                     </svg>
                                 </button>
@@ -110,7 +122,7 @@
     <div class="bg-white rounded-md max-w-4xl mx-auto p-4 space-y-4 shadow-lg">
         <div class="flex justify-between">
             <strong class="text-2xl">Documentos asignados ({{$documentos->count()}})</strong>
-            <a href="/inventario/public/docum/create/{{'Linea'}}/{{$linea->Id}}" 
+            <a href="/inventario/public/docum/create/{{'Linea'}}/{{$linea->Id}}"
                 class="text-white bg-green-700 font-semibold rounded-lg text-sm px-5 py-1 mr-2 text-center">Añadir documento</a>
         </div>
             <table width="100%" class="table-fixed border border-gray-500 border-collapse mt-14">
@@ -135,10 +147,10 @@
                         <td class="text-left px-2 border border-black">
                             <a href="{{$documento->Fichero}}">{{$documento->Observaciones}}</a>
                         </td>
-                        <td class="px-6"> 
+                        <td class="px-6">
                             <a href="/inventario/public/docum/edit/{{ $documento->Id }}">
                                 <svg class="h-8 w-8 text-blue-500"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
                                 </svg>
                             </a>
@@ -149,7 +161,7 @@
                                 @method('DELETE')
                                 <button onclick="return confirm('¿Está seguro de borra este documento?')" type="submit">
                                     <svg class="h-8 w-8 text-red-500"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
                                     </svg>
                                 </button>
@@ -158,7 +170,7 @@
                     </tr>
                     @endforeach
                 </tbody>
-            </table> 
+            </table>
     </div>
 
     <div class="flex justify-end space-x-2 pt-3">

@@ -89,19 +89,25 @@ class LineasController extends Controller
 
         $documentos = Documento::where('Tabla', 'Linea')->where('IdRelacionado', $id)->get();
 
+        $telefono = Terminal::find($linea->IdTerminal);
+
         return view('lineas.show', [
             'linea' => $linea,
             'terminal' => $terminal,
             'relacion' => $relacion,
             'documentos' => $documentos,
+            'telefono' => $telefono,
         ]);
     }
 
     public function create()
     {
         $linea = new Linea();
+        $terminal = Terminal::all();
+
         return view('lineas.create', [
             'linea' => $linea,
+            'terminal' => $terminal,
         ]);
     }
 
@@ -120,12 +126,14 @@ class LineasController extends Controller
         $linea = new Linea();
 
         $linea->NInventario = $ninventariofinal;
+        $linea->IdTerminal = $validados['Terminal'];
         $linea->Numero = $validados['Numero'];
         $linea->Extension = $validados['Extension'];
         $linea->Pin = $validados['Pin'];
         $linea->Puk1 = $validados['Puk1'];
         $linea->Puk2 = $validados['Puk2'];
         $linea->NumTarjeta = $validados['NumTarjeta'];
+        $linea->Caracteristicas = $validados['Caracteristicas'];
         $linea->FechaAlta = new DateTime($validados['FechaAlta']);
         if ($validados['FechaBaja']) {
             $linea->FechaBaja = new DateTime($validados['FechaBaja']);
@@ -142,10 +150,11 @@ class LineasController extends Controller
     public function edit($id)
     {
         $linea = Linea::findOrFail($id);
+        $terminal = Terminal::all();
 
         return view('lineas.edit', [
             'linea' => $linea,
-
+            'terminal' => $terminal,
         ]);
     }
 
@@ -160,9 +169,9 @@ class LineasController extends Controller
             $FechaBaja = new DateTime($validados['FechaBaja']);
         }
 
-        DB::select('UPDATE lineas SET Numero = ?, Extension = ?, Pin = ?, Puk1 = ?, Puk2 = ?, NumTarjeta = ?,
-                                      FechaAlta = ?, FechaBaja = ?, Observaciones = ? WHERE id = ?', [$validados['Numero'], $validados['Extension'], $validados['Pin'], $validados['Puk1'],
-                            $validados['Puk2'], $validados['NumTarjeta'], $FechaAlta, $FechaBaja, $validados['Observaciones'], $id]);
+        DB::select('UPDATE lineas SET  Numero = ?, IdTerminal = ?, Extension = ?, Pin = ?, Puk1 = ?, Puk2 = ?, NumTarjeta = ?, Caracteristicas = ?,
+                                      FechaAlta = ?, FechaBaja = ?, Observaciones = ? WHERE id = ?', [$validados['Numero'], $validados['Terminal'], $validados['Extension'], $validados['Pin'], $validados['Puk1'],
+                            $validados['Puk2'], $validados['NumTarjeta'], $validados['Caracteristicas'], $FechaAlta, $FechaBaja, $validados['Observaciones'], $id]);
 
         return redirect('/lineas/'.$linea->Id)->with('success', 'Linea actualizada.');
     }
@@ -170,13 +179,14 @@ class LineasController extends Controller
     private function validar()
     {
         $validados = request()->validate([
-
             'Numero' => 'required|max:255',
+            'Terminal' =>'nullable|exists:terminales,Id',
             'Extension' => 'required|max:255',
             'Pin' => 'nullable|max:255',
             'Puk1' => 'nullable|max:255',
             'Puk2' => 'nullable|max:255',
             'NumTarjeta' => 'nullable|max:255',
+            'Caracteristicas' => 'nullable|max:255',
             'FechaAlta' => 'required|date_format:Y-m-d',
             'FechaBaja' => 'nullable|date_format:Y-m-d',
             'Observaciones' => 'nullable|max:255',

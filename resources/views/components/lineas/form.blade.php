@@ -90,15 +90,50 @@
     @enderror
 </div>
 <div class="mb-6">
+    <label for="Caracteristicas"
+        class="text-sm font-medium text-gray-900 block mb-2 @error('Caracteristicas') text-red-500 @enderror">
+        Caracteristicas
+    </label>
+    <input type="text" name="Caracteristicas" id="Caracteristicas"
+        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 @error('Caracteristicas') border-red-500 @enderror"
+        value="{{ old('Caracteristicas', $linea->Caracteristicas) }}">
+    @error('Caracteristicas')
+        <p class="text-red-500 text-sm mt-1">
+            {{ $message }}
+        </p>
+    @enderror
+</div>
+<div class="mb-6">
+    <label for="Terminal"
+        class="text-sm font-medium text-gray-900 block mb-2 @error('Terminal') text-red-500 @enderror">
+        Terminal
+    </label>
+    <select type="text" class="border border-slate-300 px-6 py-2" name="Terminal" id="Terminal" value="{{ old('$linea->terminal->Modelo', $linea->IdTerminal) }}">
+        @if ($linea->terminal)
+            <option selected value="{{$linea->IdTerminal}}">{{$linea->terminal->Modelo}}</option>
+        @endif
+        <option></option>
+
+        @foreach ($terminal as $ter)
+            <option value="{{ $ter->Id }}">{{ $ter->Modelo }}</option>
+        @endforeach
+    </select>
+    @error('Terminal')
+        <p class="text-red-500 text-sm mt-1">
+            {{ $message }}
+        </p>
+    @enderror
+</div>
+<div class="mb-6">
     <label for="FechaAlta"
         class="text-sm font-medium text-gray-900 block mb-2 @error('FechaAlta') text-red-500 @enderror">
         FechaAlta
     </label>
     @if ($linea->FechaAlta)
-    <input type="date" name="FechaAlta" id="FechaAlta" 
+    <input type="date" name="FechaAlta" id="FechaAlta"
         class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/3 p-2.5 @error('FechaAlta') border-red-500 @enderror"
         value="{{ old('FechaAlta', $linea->FechaAlta->format('Y-m-d')) }}">
-    @else 
+    @else
         <input type="date" name="FechaAlta" id="FechaAlta"
             class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/3 p-2.5 @error('FechaAlta') border-red-500 @enderror"
             value="{{ old('FechaAlta', $linea->FechaAlta) }}">
@@ -114,11 +149,11 @@
         class="text-sm font-medium text-gray-900 block mb-2 @error('FechaBaja') text-red-500 @enderror">
         FechaBaja
     </label>
-    @if ($linea->FechaBaja) 
+    @if ($linea->FechaBaja)
         <input type="date" name="FechaBaja" id="FechaBaja"
             class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/3 p-2.5 @error('FechaBaja') border-red-500 @enderror"
             value="{{ old('FechaBaja', $linea->FechaBaja->format('Y-m-d')) }}">
-    @else 
+    @else
         <input type="date" name="FechaBaja" id="FechaBaja"
             class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/3 p-2.5 @error('FechaBaja') border-red-500 @enderror"
             value="{{ old('FechaBaja', $linea->FechaBaja) }}">
