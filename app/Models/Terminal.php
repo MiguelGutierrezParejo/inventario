@@ -39,6 +39,10 @@ class Terminal extends Model
     public function terminales(){
 
         return $this->hasMany(RelacionTerminal::class, 'IdTerminal','Id');
-        
+
+    }
+
+    public function lineas(){
+        return $this->hasMany(Linea::class, 'IdTerminal', 'Id');
     }
 }

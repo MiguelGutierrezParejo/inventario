@@ -22,7 +22,7 @@
                     class="text-white font-semibold rounded-lg text-sm px-5 py-1 text-center">Generar Inventario
                 </a>
                 <p class="text-left">**Aparecen {{ count($objeto) }} instancias de {{ $total }}**</p>
-            </div> 
+            </div>
             <table width="100%" class="border-collapse border border-slate-400 text-left">
                 <thead class="bg-gray-50">
                     @php
@@ -51,6 +51,12 @@
                                 @if (request('orden') == 'Extension') @if (request('dir', 'asc') == 'asc') &darr; @else &uarr; @endif @endif
                             </a>
                         </th>
+                        <th class="border border-slate-300 px-6 py-2 font-semibold">
+                            Caracteristicas
+                        </th>
+                        <th class="border border-slate-300 px-6 py-2 font-semibold">
+                            Terminal
+                        </th>
                         <th class="border border-slate-300 px-6 py-2 font-semibold w-fit">
                             Observaciones
                         </th>
@@ -73,6 +79,12 @@
                             </td>
                             <td class="border border-slate-300 ">
                                 <input type="text" class="border border-slate-300 px-6 py-2" name="Extension" id="Extension" value="{{ request()->query('Extension') }}">
+                            </td>
+                            <td class="border border-slate-300 px-6 py-4">
+                                <div class="hidden"><button type="submit" type="hidden"></button></div>
+                            </td>
+                            <td class="border border-slate-300 px-6 py-4">
+                                <div class="hidden"><button type="submit" type="hidden"></button></div>
                             </td>
                             <td class="border border-slate-300 px-6 py-4">
                                 <div class="hidden"><button type="submit" type="hidden"></button></div>
@@ -100,6 +112,22 @@
                             <td class="border border-slate-300 px-6 py-4">
                                 <div class="text-sm text-gray-900">
                                     {{ $objet->Extension }}
+                                </div>
+                            </td>
+                            <td class="border border-slate-300 px-6 py-4">
+                                <div class="text-sm text-gray-900">
+                                    {{ $objet->Caracteristicas }}
+                                </div>
+                            </td>
+                            <td class="border border-slate-300 px-6 py-4">
+                                <div class="text-ellipsis text-sm text-gray-900">
+                                    <a href="/inventario/public/terminales/{{$objet->IdTerminal}}">
+                                    @if ($objet->IdTerminal == null)
+                                        Ninguno
+                                    @else
+                                        {{ $objet->Marca }} {{ $objet->terminal_modelo }}
+                                    @endif
+                                    </a>
                                 </div>
                             </td>
                             <td class="border border-slate-300 px-6 py-4">

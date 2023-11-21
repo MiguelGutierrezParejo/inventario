@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Linea extends Model
 {
     use HasFactory;
-    
+
     protected $casts = [
         'FechaAlta' => 'date:d-m-Y',
         'FechaBaja' => 'date:d-m-Y',
@@ -17,7 +17,9 @@ class Linea extends Model
     public function lineas(){
 
         return $this->hasMany(RelacionLinea::class, 'IdLinea', 'Id');
-        
     }
 
+    public function terminal(){
+        return $this->belongsTo(Terminal::class, 'IdTerminal');
+    }
 }

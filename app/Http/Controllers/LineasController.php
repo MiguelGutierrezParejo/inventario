@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Documento;
-use App\Http\Livewire\Lineas;
 use App\Models\Linea;
 use App\Models\RelacionLinea;
-use App\Models\Relaciontelefono;
+use App\Models\Terminal;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use DateTime;
@@ -18,31 +17,33 @@ class LineasController extends Controller
 
     public function index($tipo){
 
-        $ordenes = ['NInventario', 'Nombre','Numero', 'Extension'];
+        $ordenes = ['NInventario', 'Nombre','Numero', 'Extension', 'IdTerminal', 'Caracteristicas'];
         $orden = request()->query('orden') ?: 'Nombre';
         abort_unless(in_array($orden, $ordenes), 404);
-        
+
         if ($tipo == 'Simple') {
             if (request('dir') == 'desc') {
                 $objeto = DB::table('lineas')->leftJoin('relacionlineas', 'lineas.id', '=', 'relacionlineas.IdLinea')
                                          ->leftJoin('usuarios', 'relacionlineas.IdUsuario', '=', 'usuarios.id')
-                                         ->select('lineas.*', 'usuarios.Nombre')
+                                         ->leftJoin('terminales', 'lineas.IdTerminal', '=', 'terminales.Id')
+                                         ->select('lineas.*', 'usuarios.Nombre', 'terminales.Marca', 'terminales.Modelo as terminal_modelo')
                                          ->whereNull('relacionlineas.FechaBaja')
                                          ->where('Nombre', 'LIKE', '%'.request('Nombre').'%')
                                          ->where('Numero', 'LIKE', '%'.request('Numero').'%')
                                          ->where('Extension', 'LIKE', '%'.request('Extension').'%')
-                                         ->where('NInventario', 'LIKE', '%'.request('NInventario').'%')
+                                         ->where('lineas.NInventario', 'LIKE', '%'.request('NInventario').'%')
                                          ->whereNull('lineas.FechaBaja')
                                          ->orderByDesc($orden)->get();
             } else {
                 $objeto = DB::table('lineas')->leftJoin('relacionlineas', 'lineas.id', '=', 'relacionlineas.IdLinea')
                                          ->leftJoin('usuarios', 'relacionlineas.IdUsuario', '=', 'usuarios.id')
-                                         ->select('lineas.*', 'usuarios.Nombre')
+                                         ->leftJoin('terminales', 'lineas.IdTerminal', '=', 'terminales.Id')
+                                         ->select('lineas.*', 'usuarios.Nombre', 'terminales.Marca', 'terminales.Modelo as terminal_modelo')
                                          ->whereNull('relacionlineas.FechaBaja')
                                          ->where('Nombre', 'LIKE', '%'.request('Nombre').'%')
                                          ->where('Numero', 'LIKE', '%'.request('Numero').'%')
                                          ->where('Extension', 'LIKE', '%'.request('Extension').'%')
-                                         ->where('NInventario', 'LIKE', '%'.request('NInventario').'%')
+                                         ->where('lineas.NInventario', 'LIKE', '%'.request('NInventario').'%')
                                          ->whereNull('lineas.FechaBaja')
                                          ->OrderBy($orden)->get();
             }
@@ -50,32 +51,32 @@ class LineasController extends Controller
             if (request('dir') == 'desc') {
                 $objeto = DB::table('lineas')->leftJoin('relacionlineas', 'lineas.id', '=', 'relacionlineas.IdLinea')
                                          ->leftJoin('usuarios', 'relacionlineas.IdUsuario', '=', 'usuarios.id')
-                                         ->select('lineas.*', 'usuarios.Nombre')
+                                         ->leftJoin('terminales', 'lineas.IdTerminal', '=', 'terminales.Id')
+                                         ->select('lineas.*', 'usuarios.Nombre', 'terminales.Marca', 'terminales.Modelo as terminal_modelo')
                                          ->whereNull('relacionlineas.FechaBaja')
                                          ->where('Nombre', 'LIKE', '%'.request('Nombre').'%')
                                          ->where('Numero', 'LIKE', '%'.request('Numero').'%')
                                          ->where('Extension', 'LIKE', '%'.request('Extension').'%')
-                                         ->where('NInventario', 'LIKE', '%'.request('NInventario').'%')
+                                         ->where('lineas.NInventario', 'LIKE', '%'.request('NInventario').'%')
                                          ->orderByDesc($orden)->get();
             } else {
                 $objeto = DB::table('lineas')->leftJoin('relacionlineas', 'lineas.id', '=', 'relacionlineas.IdLinea')
                                          ->leftJoin('usuarios', 'relacionlineas.IdUsuario', '=', 'usuarios.id')
-                                         ->select('lineas.*', 'usuarios.Nombre')
+                                         ->leftJoin('terminales', 'lineas.IdTerminal', '=', 'terminales.Id')
+                                         ->select('lineas.*', 'usuarios.Nombre', 'terminales.Marca', 'terminales.Modelo as terminal_modelo')
                                          ->whereNull('relacionlineas.FechaBaja')
                                          ->where('Nombre', 'LIKE', '%'.request('Nombre').'%')
                                          ->where('Numero', 'LIKE', '%'.request('Numero').'%')
                                          ->where('Extension', 'LIKE', '%'.request('Extension').'%')
-                                         ->where('NInventario', 'LIKE', '%'.request('NInventario').'%')
+                                         ->where('lineas.NInventario', 'LIKE', '%'.request('NInventario').'%')
                                          ->OrderBy($orden)->get();
             }
         }
-
-            return view('lineas.index', [
-                'objeto' => $objeto,
-                'total' => Linea::all()->count(),
-                'tipo' => $tipo,
-            ]);
-
+        return view('lineas.index', [
+            'objeto' => $objeto,
+            'total' => Linea::all()->count(),
+            'tipo' => $tipo,
+        ]);
     }
 
     public function show($id){
@@ -134,14 +135,14 @@ class LineasController extends Controller
         $linea->save();
 
         DB::select('INSERT INTO relacionlineas (IdLinea, IdUsuario, FechaAlta) VALUES ( ?, 0, ?)', [$linea->id, $linea->FechaAlta]);
-        
+
         return redirect('/lineasindex/Simple')->with('success', 'Línea creada con éxito.');
     }
 
     public function edit($id)
     {
         $linea = Linea::findOrFail($id);
-        
+
         return view('lineas.edit', [
             'linea' => $linea,
 
@@ -169,7 +170,7 @@ class LineasController extends Controller
     private function validar()
     {
         $validados = request()->validate([
-            
+
             'Numero' => 'required|max:255',
             'Extension' => 'required|max:255',
             'Pin' => 'nullable|max:255',
@@ -191,11 +192,11 @@ class LineasController extends Controller
 
     public function generar(Request $request)
     {
-        
+
         if($request->Hasta == null) {
             $request->Hasta = Carbon::now();
-        } 
-        
+        }
+
         $altas = Linea::select('*')
             ->where('FechaAlta', '<=', $request->Hasta)
             ->whereNull('FechaBaja')
@@ -216,7 +217,7 @@ class LineasController extends Controller
             'equipoBaja' => $bajas,
             'request' => $request,
         ])->setPaper('a4', 'landscape');
-        return $pdf->stream(); 
-        
+        return $pdf->stream();
+
     }
 }
