@@ -11,7 +11,7 @@ class Usuario extends Model
 
     protected $casts = [
         'FechaAlta' => 'date:d-m-Y',
-        'FechaBaja' => 'date:d-m-Y', 
+        'FechaBaja' => 'date:d-m-Y',
     ];
 
     public function scopeNombre($query, $Nombre)
@@ -40,32 +40,32 @@ class Usuario extends Model
 
     public function equipos(){
 
-        return $this->hasMany(Relacionequipo::class);
-        
+        return $this->hasMany(Relacionequipo::class, 'IdUsuario','Id');
+
     }
 
     public function terminales(){
 
-        return $this->hasMany(RelacionTerminal::class);
-        
+        return $this->hasMany(RelacionTerminal::class, 'IdUsuario','Id');
+
     }
 
     public function lineas(){
 
-        return $this->hasMany(RelacionLinea::class);
-        
+        return $this->hasMany(RelacionLinea::class, 'IdUsuario','Id');
+
     }
 
     public function impresoras(){
 
         return $this->hasMany(I_impresora::class, 'IdUsuario', 'Id');
-        
+
     }
 
     public function relaciones(){
 
         return $this->hasMany(S_relacionusuariossoftware::class, 'IdUsuario', 'Id');
-        
+
     }
 
 }

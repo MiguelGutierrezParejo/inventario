@@ -7,7 +7,7 @@
 <div class="mt-6 mb-6">
     <label for="Numero"
         class="text-sm font-medium text-gray-900 block mb-2 @error('Numero') text-red-500 @enderror">
-        Numero
+        Número
     </label>
     <input type="number" name="Numero" id="Numero" min="0"
         class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 @error('Numero') border-red-500 @enderror"
@@ -21,7 +21,7 @@
 <div class="mb-6">
     <label for="Extension"
         class="text-sm font-medium text-gray-900 block mb-2 @error('Extension') text-red-500 @enderror">
-        Extension
+        Extensión
     </label>
     <input type="number" name="Extension" id="Extension" min="0"
         class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 @error('Extension') border-red-500 @enderror"
@@ -92,7 +92,7 @@
 <div class="mb-6">
     <label for="Caracteristicas"
         class="text-sm font-medium text-gray-900 block mb-2 @error('Caracteristicas') text-red-500 @enderror">
-        Caracteristicas
+        Características
     </label>
     <input type="text" name="Caracteristicas" id="Caracteristicas"
         class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 @error('Caracteristicas') border-red-500 @enderror"
@@ -108,14 +108,16 @@
         class="text-sm font-medium text-gray-900 block mb-2 @error('Terminal') text-red-500 @enderror">
         Terminal
     </label>
-    <select type="text" class="border border-slate-300 px-6 py-2" name="Terminal" id="Terminal" value="{{ old('$linea->terminal->Modelo', $linea->IdTerminal) }}">
+    <select type="text" class="border border-slate-300 px-6 py-2" name="Terminal" id="Terminal" value="{{ old('$linea->terminal->NInventario', $linea->IdTerminal) }}">
         @if ($linea->terminal)
-            <option selected value="{{$linea->IdTerminal}}">{{$linea->terminal->Modelo}}</option>
+            <option selected value="{{$linea->IdTerminal}}">{{$linea->terminal->NInventario}}</option>
         @endif
         <option></option>
 
-        @foreach ($terminal as $ter)
-            <option value="{{ $ter->Id }}">{{ $ter->Modelo }}</option>
+        @foreach ($resultados as $res)
+            <option value="{{ $res->Id }}">{{ $res->NInventario }} - {{$res->Nombre}}
+
+            </option>
         @endforeach
     </select>
     @error('Terminal')
@@ -127,7 +129,7 @@
 <div class="mb-6">
     <label for="FechaAlta"
         class="text-sm font-medium text-gray-900 block mb-2 @error('FechaAlta') text-red-500 @enderror">
-        FechaAlta
+        Fecha de alta
     </label>
     @if ($linea->FechaAlta)
     <input type="date" name="FechaAlta" id="FechaAlta"
@@ -147,7 +149,7 @@
 <div class="mb-6">
     <label for="FechaBaja"
         class="text-sm font-medium text-gray-900 block mb-2 @error('FechaBaja') text-red-500 @enderror">
-        FechaBaja
+        Fecha de aja
     </label>
     @if ($linea->FechaBaja)
         <input type="date" name="FechaBaja" id="FechaBaja"

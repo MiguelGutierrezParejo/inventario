@@ -11,8 +11,7 @@ class RelacionTerminal extends Model
 
     protected $table = 'relacionterminales';
 
-    protected $fillable = ['Nombre', 'Numero', 'Observaciones','FechaAlta', 'FechaBaja'];
-
+    protected $fillable = ['IdTerminal', 'IdUsuario', 'FechaAlta', 'FechaBaja', 'Observaciones'];
 
     protected $casts = [
         'FechaAlta' => 'date:d-m-Y',
@@ -22,12 +21,10 @@ class RelacionTerminal extends Model
     public function terminal(){
 
         return $this->belongsTo(Terminal::class, 'IdTerminal');
-        
     }
 
     public function usuario(){
 
         return $this->belongsTo(Usuario::class, 'IdUsuario');
-        
     }
 }

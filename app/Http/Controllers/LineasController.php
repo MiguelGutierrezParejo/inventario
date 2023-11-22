@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Documento;
 use App\Models\Linea;
 use App\Models\RelacionLinea;
+use App\Models\RelacionTerminal;
 use App\Models\Terminal;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
@@ -103,11 +104,18 @@ class LineasController extends Controller
     public function create()
     {
         $linea = new Linea();
-        $terminal = Terminal::all();
+        $resultados = DB::select("
+        SELECT usuarios.Nombre, terminales.NInventario, terminales.Id
+        FROM usuarios, relacionterminales, terminales
+        WHERE usuarios.Id = relacionterminales.IdUsuario
+        AND terminales.Id = relacionterminales.IdTerminal
+        AND relacionterminales.FechaBaja IS null
+        ORDER BY terminales.NINventario");
+
 
         return view('lineas.create', [
             'linea' => $linea,
-            'terminal' => $terminal,
+            'resultados' => $resultados,
         ]);
     }
 
@@ -150,11 +158,17 @@ class LineasController extends Controller
     public function edit($id)
     {
         $linea = Linea::findOrFail($id);
-        $terminal = Terminal::all();
+        $resultados = DB::select("
+        SELECT usuarios.Nombre, terminales.NInventario, terminales.Id
+        FROM usuarios, relacionterminales, terminales
+        WHERE usuarios.Id = relacionterminales.IdUsuario
+        AND terminales.Id = relacionterminales.IdTerminal
+        AND relacionterminales.FechaBaja IS null
+        ORDER BY terminales.NINventario");
 
         return view('lineas.edit', [
             'linea' => $linea,
-            'terminal' => $terminal,
+            'resultados' => $resultados,
         ]);
     }
 
