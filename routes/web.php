@@ -191,6 +191,9 @@ Route::get('/modeloimpresoras', [I_modeloimpresorasController::class, 'index'])
 Route::get('/modeloimpresoras/{id}', [I_modeloimpresorasController::class, 'show']);
 Route::get('/modeloimpresoras/{id}/consumibles',[I_modeloimpresorasController::class, 'formularioconsum'])->name('modeloimpresoras.formularioconsum');
 Route::post('/modeloimpresoras/{id}',[I_modeloimpresorasController::class, 'agregarconsum'])->name('modeloimpresoras.agregarconsum');
+Route::get('/relacionconsumibles/edit/{id}', [I_relacionconsumiblesController::class, 'edit'])->name('relacionconsumibles.edit');
+Route::put('/relacionconsumibles/{id}', [I_relacionconsumiblesController::class, 'update'])->name('relacionconsumibles.update');
+Route::delete('/relacionconsumibles/{id}', [I_relacionconsumiblesController::class, 'destroy']);
 
 ///////////////////////////////////////////////////MANTENIMIENTO IMPRESORAS///////////////////////////////////////////////////////////
 
