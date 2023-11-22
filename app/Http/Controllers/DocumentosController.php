@@ -72,6 +72,8 @@ class DocumentosController extends Controller
             return redirect('/terminales/'.$documento->IdRelacionado)->with('success', 'Información actualizada.');
         } else if ($documento->Tabla == 'Contrato'){
             return redirect('/contratos/'.$documento->IdRelacionado)->with('success', 'Información actualizada.');
+        } else if ($documento->Tabla == 'Proveedor') {
+            return redirect('/proveedores/'.$documento->IdRelacionado)->with('success', 'Información actualizada.');
         }
 
         return redirect('/equipos/'.$documento->IdRelacionado)->with('success', 'Información actualizada.');
