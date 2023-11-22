@@ -52,10 +52,10 @@
                             </a>
                         </th>
                         <th class="border border-slate-300 px-6 py-2 font-semibold">
-                            Caracteristicas
-                        </th>
-                        <th class="border border-slate-300 px-6 py-2 font-semibold">
                             Terminal
+                        </th>
+                        <th class="border border-slate-300 px-6 py-2 font-semibold w-fit">
+                            Caracteristicas
                         </th>
                         <th class="border border-slate-300 px-6 py-2 font-semibold w-fit">
                             Observaciones
@@ -69,20 +69,20 @@
                             <input type="hidden" name="orden" value="{{ old('orden') }}">
                             <input type="hidden" name="dir" value="{{ old('dir') }}">
                             <td class="border">
-                                    <input type="text" class="border border-slate-300 px-1 py-2" name="NInventario" id="NInventario" value="{{ request()->query('NInventario') }}">
+                                    <input type="text" class="border border-slate-300 px-1 py-2" style="width: 130px" name="NInventario" id="NInventario" value="{{ request()->query('NInventario') }}">
                             </td>
                             <td class="border border-slate-300 ">
                                 <input type="text" class="border border-slate-300 px-1 py-2" name="Nombre" id="Nombre" value="{{ request()->query('Nombre') }}">
                             </td>
                             <td class="border border-slate-300 ">
-                                <input type="text" class="border border-slate-300 px-1 py-2" name="Numero" id="Numero" value="{{ request()->query('Numero') }}">
+                                <input type="text" class="border border-slate-300 px-1 py-2" style="width: 100px" name="Numero" id="Numero" value="{{ request()->query('Numero') }}">
                             </td>
                             <td class="border border-slate-300 ">
-                                <input type="text" class="border border-slate-300 px-1 py-2" name="Extension" id="Extension" value="{{ request()->query('Extension') }}">
+                                <input type="text" class="border border-slate-300 px-1 py-2" style="width: 100px" name="Extension" id="Extension" value="{{ request()->query('Extension') }}">
                             </td>
                             <td class="border border-slate-300 py-2"></td>
-                            <td class="border border-slate-300 py-2"></td>
-                            <td class="border border-slate-300 py-2"></td>
+                            <td class="border border-slate-300 py-2" style="width: 290px"></td>
+                            <td class="border border-slate-300 py-2"style="width: 400px"></td>
                         </form>
                     </tr>
                     {{-----------------------------------------FIN BUSQUEDA---------------------------------------------------------------}}
@@ -118,11 +118,6 @@
                                 </div>
                             </td>
                             <td class="border border-slate-300 px-6 py-2">
-                                <div class="text-sm text-gray-900">
-                                    {{ $objet->Caracteristicas }}
-                                </div>
-                            </td>
-                            <td class="border border-slate-300 px-6 py-2">
                                 <div class="text-ellipsis text-sm text-gray-900">
                                     <a href="/inventario/public/terminales/{{$objet->IdTerminal}}">
                                     @if ($objet->IdTerminal == null)
@@ -131,6 +126,11 @@
                                         {{ $objet->Marca }} {{ $objet->terminal_modelo }}
                                     @endif
                                     </a>
+                                </div>
+                            </td>
+                            <td class="border border-slate-300 px-6 py-2">
+                                <div class="text-sm text-gray-900">
+                                    {{ $objet->Caracteristicas }}
                                 </div>
                             </td>
                             <td class="border border-slate-300 px-6 py-2">
