@@ -68,7 +68,9 @@
             </tbody>
         </table>
     </div>
+
     <br>
+    
     <div class="bg-white rounded-md max-w-4xl mx-auto p-4 space-y-4 shadow-lg">
         <div class="flex justify-between">
             <strong class="text-2xl">Fotos asignadas</strong>
@@ -117,6 +119,39 @@
         </table>
     </div>
 
+    <br>
+
+    <div class="bg-white rounded-md max-w-4xl mx-auto p-4 space-y-4 shadow-lg mt-4">
+        <div class="flex justify-between">
+            <strong class="text-2xl">Consumibles asociados</strong>
+            <a href="/inventario/public/modeloimpresoras/{{ $modelo->Id }}/consumibles"
+                class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-semibold rounded-lg text-sm px-5 py-1">Añadir
+                consumible</a>
+        </div>
+
+        <table class="table-fixed border border-gray-500 border-collapse mt-14">
+            <thead>
+                <tr class="border-b-2 border-black">
+                    <th class="w-6/12 bg-gray-300 text-left px-2">Modelo</th>
+                    <th class="w-6/12 bg-gray-300 text-left px-2">Referencia</th>
+                    <th class="w-5/12 bg-gray-300 text-left px-2">Stock</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($modelo->relaciones as $relacion)
+                    <tr class="border border-black">
+                        <td class="text-left px-2 border border-black"><a href="/inventario/public/consumibles/{{$relacion->consumible->Id}}">
+                            {{ $relacion->consumible->Modelo }}
+                        </a></td>
+                        <td class="px-2 border border-black"><a href="/inventario/public/consumibles/{{$relacion->consumible->Id}}">
+                            {{ $relacion->consumible->Referencia }}
+                        </a></td>
+                        <td class="text-left px-2 border border-black">{{$relacion->consumible->Stock}}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
     <div class="flex justify-end space-x-2 pt-3">
         <a href="/inventario/public/modeloimpresoras" style="background-color: #0053D0"
             class="transition-colors rounded-[8px] px-[15px] py-[4px] text-white focus:ring-2">Volver</a>

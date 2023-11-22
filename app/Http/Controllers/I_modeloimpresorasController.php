@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Fotoimpresora;
+use App\Models\I_consumible;
 use App\Models\I_modeloimpresora;
+use App\Models\I_relacionconsumible;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -76,6 +78,33 @@ class I_modeloimpresorasController extends Controller
         return redirect('/modeloimpresoras')->with('success', 'Modelo creado con éxito.');
     }
 
+    public function formularioconsum($id)
+    {
+        $modeloimpresora = I_modeloimpresora::findOrFail($id);
+        $consumibles = $consumibles = I_consumible::whereDoesntHave('relaciones', function ($query) use ($modeloimpresora) {
+            $query->where('IdModelo', $modeloimpresora->Id);
+        })->get();
+
+        return view('i_modeloimpresoras.formularioconsum', [
+            'modeloimpresora' => $modeloimpresora,
+            'consumibles' => $consumibles
+        ]);
+    }
+
+    public function agregarconsum(Request $request, $id)
+    {
+        $modeloimpresora = I_modeloimpresora::findOrFail($id);
+
+        foreach ($request->input('relacion') as $consumibleId) {
+            I_relacionconsumible::create([
+                'IdModelo' => $modeloimpresora->Id,
+                'IdConsumible' => $consumibleId,
+            ]);
+        }
+
+        return redirect('/modeloimpresoras/'.$modeloimpresora->Id)->with('success', 'Relación de consumibles agregada correctamente');
+    }
+
     private function validar()
     {
 
@@ -97,7 +126,7 @@ class I_modeloimpresorasController extends Controller
         ]);
     }
 
-    public function update(Request $request, $id) {
+    public function update($id) {
 
         $validados = $this->validar();
         $modeloimpresora = I_modeloimpresora::findOrFail($id);

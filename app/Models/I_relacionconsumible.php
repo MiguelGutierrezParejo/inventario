@@ -18,6 +18,4 @@ class I_relacionconsumible extends Model
     public function modelo(){
         return $this->belongsTo(I_modeloimpresora::class, 'IdModelo', 'Id');
     }
-
-
 }
