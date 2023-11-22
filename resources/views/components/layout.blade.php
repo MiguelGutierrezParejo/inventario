@@ -66,7 +66,7 @@
                                 <a class="hover:text-blue-500 hover:underline" href="/inventario/public/pedidos">Pedidos</a>
                             </li>
                             <li class="rounded-sm px-3 py-1 hover:bg-gray-100">
-                                <a class="text-gray-400 hover:text-blue-500 hover:underline" href="/inventario/public/modeloimpresoras">Modelos de impresoras</a>
+                                <a class="text-blue-400 hover:text-blue-500 hover:underline" href="/inventario/public/modeloimpresoras">Modelos de impresoras</a>
                             </li>
                             <li class="rounded-sm px-3 py-1 hover:bg-gray-100">
                                 <a class="text-gray-400 hover:text-blue-500 hover:underline" href="/inventario/public/mantenimientoimpresoras">Mantenimientos</a>
