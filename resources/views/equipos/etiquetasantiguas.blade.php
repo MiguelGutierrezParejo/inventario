@@ -61,7 +61,7 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode; ?>
                                             <strong>{{ $equipo->NInventario}}</strong>
                                             <p style="font-size: 12px;" class="mt-2">{{date('d-m-Y' , strtotime($equipo->FechaAlta))}}</p>
                                         @endif
-                                    </td>
+                                    </td><br>
                                 </tr>
                             </table>
                         </td>
