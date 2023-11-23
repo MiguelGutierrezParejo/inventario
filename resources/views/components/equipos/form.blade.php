@@ -11,8 +11,8 @@
         Tipo
     </label>
     <select type="text" class="border border-slate-300 px-6 py-2" name="Tipo" id="Tipo" value="{{ old('$equipo->tipo->Denominacion', $equipo->IdTipo) }}">
-        @if ($equipo->tipo)
-            <option selected value="{{$equipo->IdTipo}}">{{$equipo->tipo->Denominacion}}</option>
+        @if (session()->has('Tipo'))
+            <option selected value="{{ session('Tipo') }}">{{ session('Tipo') }}</option>
         @endif
         <option></option>
 
@@ -46,9 +46,9 @@
         Modelo
     </label>
     <select type="text" class="border border-slate-300 px-6 py-2" name="Modelo" id="Modelo" value="{{ old('$equipo->modelo->Modelo', $equipo->IdModelo) }}">
-        @if ($equipo->modelo)
-            <option selected value="{{$equipo->IdModelo}}">{{$equipo->modelo->Modelo}}</option>
-        @endif
+        @if (session()->has('Modelo'))
+        <option selected value="{{ session('Modelo') }}">{{ session('Modelo') }}</option>
+    @endif
         <option></option>
 
         @foreach ($modelos as $modelo)
@@ -81,8 +81,8 @@
         Contrato
     </label>
     <select type="text" class="border border-slate-300 px-6 py-2" name="Contrato" id="Contrato" value="{{ old('$equipo->contrato->Nombre', $equipo->IdContrato) }}">
-        @if ($equipo->contrato)
-            <option selected value="{{$equipo->IdContrato}}">{{$equipo->contrato->Nombre}}</option>
+        @if (session()->has('Contrato'))
+            <option selected value="{{ session('Contrato') }}">{{ session('Contrato') }}</option>
         @endif
         <option></option>
 
@@ -160,7 +160,7 @@
     <input type="text" name="Observaciones" id="Observaciones"
         class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 @error('Observaciones') border-red-500 @enderror"
         value="{{ old('Observaciones', $equipo->Observaciones) }}">
-    @error('Modelo')
+    @error('Observaciones')
         <p class="text-red-500 text-sm mt-1">
             {{ $message }}
         </p>

@@ -407,8 +407,13 @@ class EquiposController extends Controller
         ]);
     }
 
-    public function store()
+    public function store(Request $request)
     {
+        session_start();
+        session(['Tipo' => $request->input('Tipo')]);
+        session(['Modelo' => $request->input('Modelo')]);
+        session(['Contrato' => $request->input('Contrato')]);
+
         $validados = $this->validar();
 
         //Para crear NInventario
@@ -436,6 +441,7 @@ class EquiposController extends Controller
         $equipo->PrecioAdquisicion = $validados['PrecioAdquisicion'];
 
         $equipo->save();
+        session()->flush();
 
         DB::select('INSERT INTO relacionequipos (IdEquipo, IdUsuario, FechaAlta) VALUES ( ?, 0, ?)', [$equipo->id, $equipo->FechaAlta]);
 
