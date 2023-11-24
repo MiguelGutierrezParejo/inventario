@@ -409,7 +409,6 @@ class EquiposController extends Controller
 
     public function store(Request $request)
     {
-        session_start();
         session(['Tipo' => $request->input('Tipo')]);
         session(['Modelo' => $request->input('Modelo')]);
         session(['Contrato' => $request->input('Contrato')]);

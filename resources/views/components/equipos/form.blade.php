@@ -11,8 +11,18 @@
         Tipo
     </label>
     <select type="text" class="border border-slate-300 px-6 py-2" name="Tipo" id="Tipo" value="{{ old('$equipo->tipo->Denominacion', $equipo->IdTipo) }}">
+        @if ($equipo->tipo)
+            <option selected value="{{$equipo->IdTipo}}">{{$equipo->tipo->Denominacion}}</option>
+        @endif
         @if (session()->has('Tipo'))
-            <option selected value="{{ session('Tipo') }}">{{ session('Tipo') }}</option>
+            @php
+            $idTipo = session('Tipo');
+            $denominacion = DB::select("
+                    SELECT tipoequipos.Denominacion
+                    FROM tipoequipos
+                    WHERE tipoequipos.Id = $idTipo");
+            @endphp
+            <option selected value="{{ session('Tipo') }}">{{ $denominacion[0]->Denominacion }}</option>
         @endif
         <option></option>
 
@@ -46,9 +56,19 @@
         Modelo
     </label>
     <select type="text" class="border border-slate-300 px-6 py-2" name="Modelo" id="Modelo" value="{{ old('$equipo->modelo->Modelo', $equipo->IdModelo) }}">
+        @if ($equipo->modelo)
+            <option selected value="{{$equipo->IdModelo}}">{{$equipo->modelo->Modelo}}</option>
+        @endif
         @if (session()->has('Modelo'))
-        <option selected value="{{ session('Modelo') }}">{{ session('Modelo') }}</option>
-    @endif
+        @php
+            $idModelo = session('Modelo');
+            $nombreModelo = DB::select("
+                    SELECT modelos.Modelo
+                    FROM modelos
+                    WHERE modelos.Id = $idModelo");
+            @endphp
+            <option selected value="{{ session('Modelo') }}">{{ $nombreModelo[0]->Modelo }}</option>
+        @endif
         <option></option>
 
         @foreach ($modelos as $modelo)
@@ -81,9 +101,19 @@
         Contrato
     </label>
     <select type="text" class="border border-slate-300 px-6 py-2" name="Contrato" id="Contrato" value="{{ old('$equipo->contrato->Nombre', $equipo->IdContrato) }}">
-        @if (session()->has('Contrato'))
-            <option selected value="{{ session('Contrato') }}">{{ session('Contrato') }}</option>
+        @if ($equipo->contrato)
+            <option selected value="{{$equipo->IdContrato}}">{{$equipo->contrato->Nombre}}</option>
         @endif
+        @if (session()->has('Contrato'))
+        @php
+            $idContrato = session('Contrato');
+            $nombreContrato = DB::select("
+                    SELECT contratos.Nombre
+                    FROM contratos
+                    WHERE contratos.Id = $idContrato");
+            @endphp
+        <option selected value="{{ session('Contrato') }}">{{ $nombreContrato[0]->Nombre }}</option>
+    @endif
         <option></option>
 
         @foreach ($contrato as $con)
@@ -99,7 +129,7 @@
 <div class="mb-6">
     <label for="FechaAlta"
         class="text-sm font-medium text-gray-900 block mb-2 @error('FechaAlta') text-red-500 @enderror">
-        FechaAlta
+        Fecha de alta
     </label>
     @if ($equipo->FechaAlta)
     <input type="date" name="FechaAlta" id="FechaAlta"
@@ -110,7 +140,7 @@
             class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/3 p-2.5 @error('FechaAlta') border-red-500 @enderror"
             value="{{ old('FechaAlta', $equipo->FechaAlta) }}">
     @endif
-    @error('equipo')
+    @error('FechaAlta')
         <p class="text-red-500 text-sm mt-1">
             {{ $message }}
         </p>
@@ -119,7 +149,7 @@
 <div class="mb-6">
     <label for="FechaBaja"
         class="text-sm font-medium text-gray-900 block mb-2 @error('FechaBaja') text-red-500 @enderror">
-        FechaBaja
+        Fecha de baja
     </label>
     @if ($equipo->FechaBaja)
         <input type="date" name="FechaBaja" id="FechaBaja"
@@ -130,7 +160,7 @@
             class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/3 p-2.5 @error('FechaBaja') border-red-500 @enderror"
             value="{{ old('FechaBaja', $equipo->FechaBaja) }}">
     @endif
-    @error('equipo')
+    @error('FechaBaja')
         <p class="text-red-500 text-sm mt-1">
             {{ $message }}
         </p>
