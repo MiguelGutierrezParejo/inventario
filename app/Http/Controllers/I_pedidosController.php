@@ -21,23 +21,35 @@ class I_pedidosController extends Controller
 {
 
     public function index($dato = 'Fecha', $orden = 'desc'){
-        
+
+        if ($orden == 'desc') {
+            $pedidos = I_pedido::where('Finalizado', 0)->orderByDesc($dato)->get();
+        } else {
+            $pedidos = I_pedido::where('Finalizado', 0)->orderBy($dato)->get();
+        }
+
+        return view('i_pedidos.index', [
+            'pedidos' => $pedidos,
+        ]);
+    }
+
+    public function index2($dato = 'Fecha', $orden = 'desc'){
+
         if ($orden == 'desc') {
             $pedidos = I_pedido::all()->sortByDesc($dato);
         } else {
             $pedidos = I_pedido::all()->sortBy($dato);
         }
 
-        return view('i_pedidos.index', [
-            'pedidos' => $pedidos,           
+        return view('i_pedidos.index2', [
+            'pedidos' => $pedidos,
         ]);
     }
-    
 
 
     public function create(Request $request) {
 
-    
+
         $pedido = new I_pedido();
         $consumiblesapedir = I_consumible::all()->where('Cantidad', '!=', 0);
         // $proveedor = I_proveedor::all()->whereNull('FechaBaja')->first();
@@ -55,7 +67,7 @@ class I_pedidosController extends Controller
 
         //Le sumo el iva
 
-        $sumatoriocompleto = $sumatoriomenosdescuento + ($sumatoriomenosdescuento * ($proveedor->Iva /100)); 
+        $sumatoriocompleto = $sumatoriomenosdescuento + ($sumatoriomenosdescuento * ($proveedor->Iva /100));
 
         return view('i_pedidos.create', [
             'pedido' => $pedido,
@@ -67,7 +79,7 @@ class I_pedidosController extends Controller
             'iva' => round($sumatoriomenosdescuento * ($proveedor->Iva /100), 2),
 
         ]);
-            
+
     }
 
     public function store()
@@ -92,14 +104,14 @@ class I_pedidosController extends Controller
 
         //Le sumo el iva
 
-        $sumatoriocompleto = $sumatoriomenosdescuento + ($sumatoriomenosdescuento * ($proveedor->Iva /100)); 
+        $sumatoriocompleto = $sumatoriomenosdescuento + ($sumatoriomenosdescuento * ($proveedor->Iva /100));
 
         $pedido->IdProveedor = $validados['IdProveedor'];
         $pedido->Fecha = Carbon::now();
         $pedido->importe = $sumatoriocompleto ;
 
         //Generar pdf valorado
-        $consumibles = I_consumible::all()->where('Cantidad', '!=', 0); 
+        $consumibles = I_consumible::all()->where('Cantidad', '!=', 0);
 
         $pdf = Pdf::loadView('i_pedidos.generar', [
             'consumibles' => $consumibles,
@@ -111,7 +123,7 @@ class I_pedidosController extends Controller
             'iva' => round($sumatoriomenosdescuento * ($proveedor->Iva /100), 2),
         ])->setPaper('a4', 'landscape');
         $pdf->render();
-        
+
         $nombre = date('d-m-Y H.i.s', strtotime(Carbon::now())) ."pedidos.pdf";
 
         //Ruta a la que se manda el archivo pdf
@@ -129,7 +141,7 @@ class I_pedidosController extends Controller
             'pedido' => $pedido,
         ])->setPaper('a4', 'landscape');
         $pdfsinvalorar->render();
-        
+
         $nombre = date('d-m-Y H.i.s', strtotime(Carbon::now())) ."pedidossinvalorar.pdf";
 
         //Ruta a la que se manda el archivo pdfsinvalorar
@@ -161,14 +173,14 @@ class I_pedidosController extends Controller
             ->where('Id', $consumibleapedir->Id)
             ->update(['Cantidad' => 0, 'Editado' => 0]);
         }
-        
+
         return redirect('consumibles/')->with('success', 'Pedido creado con éxito.');
     }
 
     private function validar()
     {
         $validados = request()->validate([
-            
+
             'IdProveedor' => 'required',
         ]);
 
