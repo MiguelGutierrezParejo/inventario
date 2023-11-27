@@ -231,10 +231,8 @@ Route::get('/pedidos/{dato?}/{orden?}', [I_pedidosController::class, 'index'])
 
 ///////////////////////////////////////////////////DETALLES PEDIDOS///////////////////////////////////////////////////////////////////
 
-Route::put('/detallespedidos/{Id}/{IdPedido}', [I_detallespedidosController::class, 'update'])
-    ->name('detallespedidos.update');
-Route::get('/detallespedidos/editar', [I_detallespedidosController::class, 'editarpedidos'])
-    ->name('detallespedidos');
+Route::put('/detallespedidos/{id}', [I_detallespedidosController::class, 'editarpedido'])
+    ->name('detallespedidos.editarpedido');
 
 ///////////////////////////////////////////////////RECEPCIÓN DE PEDIDOS///////////////////////////////////////////////////////////////
 
