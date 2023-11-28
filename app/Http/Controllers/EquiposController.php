@@ -630,7 +630,7 @@ class EquiposController extends Controller
 
     }
 
-    public function etiquetar($Tipo)
+    public function etiquetar()
     {
         if (isset($_COOKIE['idaetiquetar'])) {
             $stringSeparado = explode('-', $_COOKIE['idaetiquetar']);
@@ -676,8 +676,7 @@ class EquiposController extends Controller
             }
         }
 
-        return redirect(route('etiquetar', $Tipo));
-
+        return redirect()->back();
     }
 
     public function generaretiqueta($tipo, $tipo2)
