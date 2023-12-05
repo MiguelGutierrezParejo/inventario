@@ -12,23 +12,15 @@
                     <tr>
                         <th class=" border border-slate-300 px-6 py-2 font-semibold">
                             <a href="">Proveedor</a>
-                            <a href="/inventario/public/pedido/{{'IdProveedor'}}/{{'asc'}}">&uarr; </a>
-                            <a href="/inventario/public/pedido/{{'IdProveedor'}}/{{'desc'}}">&darr;</a>
                         </th>
                         <th class="w-1/12 border border-slate-300 px-6 py-2 font-semibold">
                             <a href="">Fecha</a>
-                            <a href="/inventario/public/pedido/{{'Fecha'}}/{{'asc'}}">&uarr; </a>
-                            <a href="/inventario/public/pedido/{{'Fecha'}}/{{'desc'}}">&darr;</a>
                         </th>
                         <th class="border border-slate-300 px-6 py-2 font-semibold">
                             <a href="">Importe</a>
-                            <a href="/inventario/public/pedido/{{'Importe'}}/{{'asc'}}">&uarr; </a>
-                            <a href="/inventario/public/pedido/{{'Importe'}}/{{'desc'}}">&darr;</a>
                         </th>
                         <th class="border border-slate-300 px-6 py-2 font-semibold">
                             <a href="">Estado</a>
-                            <a href="/inventario/public/pedido/{{'Finalizado'}}/{{'asc'}}">&uarr; </a>
-                            <a href="/inventario/public/pedido/{{'Finalizado'}}/{{'desc'}}">&darr;</a>
                         </th>
                         <th class="border border-slate-300 px-6 py-2 font-semibold">
                             <a href="">Documento</a>
