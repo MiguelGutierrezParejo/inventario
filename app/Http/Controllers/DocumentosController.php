@@ -30,6 +30,8 @@ class DocumentosController extends Controller
             $tipo = 'terminales';
         } elseif ($documento->Tabla == 'Contrato') {
             $tipo = 'contratos';
+        } elseif ($documento->Tabla == 'Pedido') {
+            $tipo = 'pedidos';
         } else {
             $tipo = 'equipos';
         }
@@ -74,6 +76,8 @@ class DocumentosController extends Controller
             return redirect('/contratos/'.$documento->IdRelacionado)->with('success', 'Información actualizada.');
         } else if ($documento->Tabla == 'Proveedor') {
             return redirect('/proveedores/'.$documento->IdRelacionado)->with('success', 'Información actualizada.');
+        } else if ($documento->Tabla == 'Pedido') {
+            return redirect('/pedidos/'.$documento->IdRelacionado)->with('success', 'Información actualizada.');
         }
 
         return redirect('/equipos/'.$documento->IdRelacionado)->with('success', 'Información actualizada.');
@@ -133,6 +137,8 @@ class DocumentosController extends Controller
             return redirect('/terminales/'.$documento->IdRelacionado)->with('success', 'Información actualizada.');
         } else if ($documento->Tabla == 'Contrato'){
             return redirect('/contratos/'.$documento->IdRelacionado)->with('success', 'Información actualizada.');
+        } else if ($documento->Tabla == 'Pedido') {
+            return redirect('/pedidos/'.$documento->IdRelacionado)->with('success', 'Información actualizada.');
         }
 
         return redirect('/equipos/'.$documento->IdRelacionado)->with('success', 'Información actualizada.');

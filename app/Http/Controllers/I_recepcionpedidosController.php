@@ -24,7 +24,7 @@ class I_recepcionpedidosController extends Controller
             'pedido' => $pedido,
 
         ]);
-            
+
     }
 
     public function todos($IdPedido) {
@@ -43,7 +43,7 @@ class I_recepcionpedidosController extends Controller
     private function validar()
     {
         $validados = request()->validate([
-            
+
             'IdPedido' => 'required',
             'Albaran' => 'mimes:pdf',
             'Observaciones' => 'nullable|max:255',
@@ -65,7 +65,7 @@ class I_recepcionpedidosController extends Controller
         foreach ($recepcionados as $recepcionado) {
 
             $consumible = I_consumible::find($recepcionado->IdConsumible);
-            
+
             DB::table('i_consumibles')
             ->where('Id', $recepcionado->IdConsumible)
             ->increment('Stock', $recepcionado->CantidadRecibida * $consumible->Equivalencia);
@@ -85,23 +85,23 @@ class I_recepcionpedidosController extends Controller
         //Pasar albarán de recepcionados a través de input file
 
         $archivo = request()->file('Albaran');
-        
+
         if ($archivo) {
 
         $nombre = date('d-m-Y H.i.s', strtotime(Carbon::now())) . 'albaran.pdf';
 
         $ruta = public_path('documentos/' . $nombre);
         $recepcion->Albaran = '/inventario/public/documentos/' . $nombre;
-        
+
         if ($archivo) {
             copy($archivo, $ruta);
         }
 
         $recepcion->Observaciones = $validados['Observaciones'];
-        
+
         $recepcion->save();
     }
-    
+
         foreach ($recepcionados as $recepcionado) {
             DB::table('i_detallespedidos')
             ->where('id', $recepcionado->Id)
@@ -122,13 +122,13 @@ class I_recepcionpedidosController extends Controller
             ->where('Id', $validados['IdPedido'])
             ->update(['Finalizado' => 0]);
         }
-        
+
         return redirect()->route('pedidos' ,$pedido->IdPedido)->with('success', 'Recepción realizada con éxito.');
 
     }
 
 
-    //Recepciona todos los pedidos 
+    //Recepciona todos los pedidos
     public function recepciontodos() {
 
         $validados = $this->validar();
@@ -141,7 +141,7 @@ class I_recepcionpedidosController extends Controller
         foreach ($recepcionados as $recepcionado) {
 
             $consumible = I_consumible::find($recepcionado->IdConsumible);
-            
+
             DB::table('i_consumibles')
             ->where('Id', $recepcionado->IdConsumible)
             ->update(['Stock' => $consumible->Stock += $recepcionado->Cantidad * $consumible->Equivalencia]);
@@ -153,25 +153,9 @@ class I_recepcionpedidosController extends Controller
 
         $recepcion->Fecha = Carbon::now();
 
-        //Pasar albarán de recepcionados a través de input file
-
-        $archivo = request()->file('Albaran');
-
-        if ($archivo) {
-        
-        $nombre = date('d-m-Y', strtotime(Carbon::now())) . 'albaran.pdf';
-
-        $ruta = public_path('documentos/' . $nombre);
-        $recepcion->Albaran = '/inventario/public/documentos/' . $nombre;
-        
-        if ($archivo) {
-            copy($archivo, $ruta);
-        }
-
         $recepcion->Observaciones = $validados['Observaciones'];
 
         $recepcion->save();
-    }
 
         foreach ($recepcionados as $recepcionado) {
             DB::table('i_detallespedidos')
@@ -196,5 +180,5 @@ class I_recepcionpedidosController extends Controller
 
         return redirect()->route('pedidos' ,$pedido->IdPedido)->with('success', 'Recepción realizada con éxito.');
 
-    }  
+    }
 }

@@ -221,9 +221,10 @@ Route::get('/consumibles/{dato?}/{orden?}', [I_consumiblesController::class, 'in
 
 ///////////////////////////////////////////////////PEDIDOS////////////////////////////////////////////////////////////////////////////
 
+Route::get('/pedidos/{id}', [I_pedidosController::class, 'show']);
 Route::get('/pedidos/{dato?}/{orden?}', [I_pedidosController::class, 'index'])
     ->name('pedidos');
-Route::get('/pedido', [I_pedidosController::class, 'index2'])
+Route::get('/pedido/{dato?}/{orden?}', [I_pedidosController::class, 'index2'])
     ->name('pedidos');
 Route::get('/pedidos/proveedor', [I_pedidosController::class, 'proveedor']);
 Route::get('/pedidos/create', [I_pedidosController::class, 'create']);

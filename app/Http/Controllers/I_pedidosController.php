@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Documento;
 use App\Models\I_consumible;
 use App\Models\I_detallespedido;
 use App\Models\I_pedido;
@@ -14,18 +15,26 @@ use Carbon\Carbon;
 class I_pedidosController extends Controller
 {
 
-    public function index(){
+    public function index($dato = 'Fecha', $orden = 'desc'){
 
-        $pedidos = I_pedido::where('Finalizado', 0)->get();
+        if ($orden == 'desc') {
+            $pedidos = I_pedido::where('Finalizado', 0)->orderByDesc($dato)->get();
+        } else {
+            $pedidos = I_pedido::where('Finalizado', 0)->orderBy($dato)->get();
+        }
 
         return view('i_pedidos.index', [
             'pedidos' => $pedidos,
         ]);
     }
 
-    public function index2(){
+    public function index2($dato = 'Fecha', $orden = 'desc'){
 
-        $pedidos = I_pedido::all();
+        if ($orden == 'desc') {
+            $pedidos = I_pedido::all()->sortByDesc($dato);
+        } else {
+            $pedidos = I_pedido::all()->sortBy($dato);
+        }
 
         return view('i_pedidos.index2', [
             'pedidos' => $pedidos,
@@ -165,9 +174,11 @@ class I_pedidosController extends Controller
     public function show($id){
 
         $pedido = I_pedido::find($id);
+        $documentos = Documento::where('Tabla', 'Pedido')->where('IdRelacionado', $id)->OrderByDesc('created_at')->get();
 
         return view('i_pedidos.show', [
             'pedido' => $pedido,
+            'documentos' => $documentos,
         ]);
     }
 
