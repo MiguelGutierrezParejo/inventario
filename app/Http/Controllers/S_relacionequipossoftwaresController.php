@@ -46,7 +46,7 @@ class S_relacionequipossoftwaresController extends Controller
         $relacion->IdEquipo = $validados['Equipo'];
         $relacion->IdSoftware = $validados['IdSoftware'];
         $relacion->FechaAlta = $validados['FechaAlta'];
-        $relacion->FechaBaja = $validados['FechaBaja']; 
+        $relacion->FechaBaja = $validados['FechaBaja'];
         $relacion->Observaciones = $validados['Observaciones'];
         $relacion->save();
 
@@ -63,14 +63,11 @@ class S_relacionequipossoftwaresController extends Controller
     private function validar()
     {
         $validados = request()->validate([
-            'Equipo' => 'required',
-            'IdSoftware' => 'required',
-            'FechaAlta' => 'required',
-   /*         'FechaBaja' => 'required',
-            'Observaciones' => 'required',
-     */
-    'FechaBaja' => '',
-    'Observaciones' => '',
+            'Equipo' => 'nullable',
+            'IdSoftware' => 'nullable',
+            'FechaAlta' => 'required|date_format:Y-m-d',
+            'FechaBaja' => 'nullable|date_format:Y-m-d',
+            'Observaciones' => 'nullable|max:255',
         ]);
 
         return $validados;
@@ -79,9 +76,9 @@ class S_relacionequipossoftwaresController extends Controller
     public function destroy($id)
     {
         $relacion = S_relacionequipossoftware::findOrFail($id);
-        
+
         $relacion->delete();
-        
+
         DB::select('DELETE FROM s_relacionequipossoftwares WHERE Id = ?', [$relacion->Id]);
 
         return redirect()->back()
@@ -112,10 +109,10 @@ class S_relacionequipossoftwaresController extends Controller
             if ($sof->Cantidad > $sof->relaciones->count() + $sof->relacionesequipos->count()){
                 array_push($noterminados, $sof->Id);
             }
-        }  
+        }
         $softwaresinestarnoterminado = $softwaresinestar->whereIn('Id', $noterminados);
         */
-        
+
         return view('s_relacionequipossoftware.createdesdeequipo', [
             'equipo' => $equipo,
             'relacionequipossoftware' => $relacionequipossoftware,
@@ -123,5 +120,34 @@ class S_relacionequipossoftwaresController extends Controller
         ]);
     }
 
-    
+    public function edit($id)
+    {
+        $relacion = S_relacionequipossoftware::findOrFail($id);
+
+        return view('s_relacionequipossoftware.edit', [
+            'relacion' => $relacion,
+        ]);
+    }
+
+    public function update($id)
+    {
+        $validados = $this->validar();
+
+        $relacion = S_relacionequipossoftware::findOrFail($id);
+
+        $FechaAlta = new DateTime($validados['FechaAlta']);
+        $FechaBaja = null;
+        if ($validados['FechaBaja']) {
+            $FechaBaja = new DateTime($validados['FechaBaja']);
+        }
+
+        $Observaciones = $validados['Observaciones'];
+
+        DB::select('UPDATE s_relacionequipossoftwares SET FechaAlta = ?,
+                                               FechaBaja = ?, Observaciones = ?
+                                               WHERE id = ?', [$FechaAlta, $FechaBaja, $Observaciones, $id]);
+
+        return redirect('equipos/' . $relacion->IdEquipo)->with('success', 'Asignación actualizada con éxito.');
+    }
+
 }

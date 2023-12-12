@@ -303,10 +303,13 @@ Route::delete('/relacionusuariossoftwares/{id}', [S_relacionusuariossoftwaresCon
 
 ///////////////////////////////////////////////////RELACIÓN DE EQUIPOS////////////////////////////////////////////////////////////////
 
+Route::put('/relacionequipossoftwares/{id}', [S_relacionequipossoftwaresController::class, 'update'])
+    ->name('relacionequipossoftwares.update');
 Route::get('/relacionequipossoftwares/create/{id}', [S_relacionequipossoftwaresController::class, 'create']);
 Route::get('/relacionequipossoftwares/createdesdeequipo/{id}', [S_relacionequipossoftwaresController::class, 'createdesdeequipo']);
 Route::post('/relacionequipossoftwares/{id}/{Origen}', [S_relacionequipossoftwaresController::class, 'store'])
     ->name('relacionequipossoftwares.store');
+Route::get('/relacionequipossoftwares/edit/{id}', [S_relacionequipossoftwaresController::class, 'edit']);
 Route::delete('/relacionequipossoftwares/{id}', [S_relacionequipossoftwaresController::class, 'destroy']);
 
 ///////////////////////////////////////////////////RELACIÓN CONSUMIBLES///////////////////////////////////////////////////////////////
