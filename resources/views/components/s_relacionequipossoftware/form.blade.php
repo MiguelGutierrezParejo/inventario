@@ -5,15 +5,15 @@
 <div class="mb-6">
     <label for="Equipo"
         class="text-sm font-medium text-gray-900 block mb-2 @error('Equipo') text-red-500 @enderror">
-        Equipo 
+        Equipo
     </label>
-        
+
     <select type="text" class="border border-slate-300 px-6 py-2" name="Equipo" id="Equipo" value="{{ old('$relacionequipossoftware->usuario->Nombre', $relacionequipossoftware->IdUsuario) }}">
-                                    @if ($relacionequipossoftware->usuario) 
+                                    @if ($relacionequipossoftware->usuario)
                                         <option selected value="{{$relacionequipossoftware->IdEquipo}}">{{$relacionequipossoftware->equipo->NombreOrdenador}}</option>
                                     @endif
                                     <option></option>
-                                    
+
                                     @foreach ($equipos as $equipo)
                                         <option value="{{ old('$relacionequipossoftware->IdEquipo', $equipo->Id) }}">{{ $equipo->NombreOrdenador }}</option>
                                     @endforeach
@@ -25,11 +25,7 @@
     @enderror
 </div>
 <div class="mb-6">
-    <label for="IdSoftware"
-        class="text-sm font-medium text-gray-900 block mb-2 @error('IdSoftware') text-red-500 @enderror">
-        Software
-    </label>
-    <input type="text" name="IdSoftware" id="IdSoftware"
+    <input type="hidden" name="IdSoftware" id="IdSoftware"
         class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 @error('IdSoftware') border-red-500 @enderror"
         value="{{ old('IdSoftware', $software->Id) }}" readonly>
     @error('IdSoftware')

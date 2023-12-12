@@ -26,27 +26,27 @@ class S_softwaresController extends Controller
         return view('s_softwares.index', [
             'softwares' => $softwares,
         ]);
-
     }
 
     public function show($id){
 
         $software = S_software::findOrFail($id);
-
+        $relaciones = $software->relaciones->filter(function ($relacion) {
+            return $relacion->FechaBaja === null;
+        });
         $documentos = Documento::where('Tabla', 'Software')->where('IdRelacionado', $id)->OrderByDesc('created_at')->get();
 
         return view('s_softwares.show', [
             'software' => $software,
+            'relaciones' => $relaciones,
             'documentos' => $documentos
         ]);
-
     }
 
     public function edit($id)
     {
         $software = S_software::findOrFail($id);
         $proveedores = I_proveedor::all()->sortBy("Nombre")->whereNull("FechaBaja");
-        
 
         return view('s_softwares.edit', [
             'software' => $software,
@@ -73,13 +73,10 @@ class S_softwaresController extends Controller
          'Tipo' => $validados['Tipo'], 'FechaAlta' => new DateTime($validados['FechaAlta']), 'FechaBaja' => $FechaBaja, 'Observaciones' => $validados['Observaciones'], 'PrecioAdquisicion' => $validados['PrecioAdquisicion']]);
 
         return redirect()->route('softwares' ,$software->Id)->with('success', 'Software editado con éxito.');
-
     }
 
-    
     private function validar()
     {
-
         $validados = request()->validate([
             'Proveedor' => 'required',
             'Nombre' => 'required',
@@ -90,7 +87,6 @@ class S_softwaresController extends Controller
             'Observaciones' => 'nullable|max:255',
             'PrecioAdquisicion' => 'nullable',
         ]);
-
 
         return $validados;
     }
@@ -107,7 +103,6 @@ class S_softwaresController extends Controller
         ]);
     }
 
-    
     public function store()
     {
         $validados = $this->validar();
@@ -121,7 +116,6 @@ class S_softwaresController extends Controller
         $software->Tipo = $validados['Tipo'];
         $software->FechaAlta = new DateTime($validados['FechaAlta']);
 
-
         if ($validados['FechaBaja']) {
             $software->FechaBaja = new DateTime($validados['FechaBaja']);
             }
@@ -132,8 +126,4 @@ class S_softwaresController extends Controller
 
         return redirect('/softwares')->with('success', 'Software creado con éxito.');
     }
-
-
-
-    
 }

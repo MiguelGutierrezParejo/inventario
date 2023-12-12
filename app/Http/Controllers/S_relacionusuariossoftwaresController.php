@@ -41,7 +41,7 @@ class S_relacionusuariossoftwaresController extends Controller
         $validados = $this->validar();
 
         $relacion = new S_relacionusuariossoftware();
-        $relacion->IdUsuario = $validados['Usuario'];
+        $relacion->IdUsuario = $validados['IdUsuario'];
         $relacion->IdSoftware = $validados['IdSoftware'];
         $relacion->FechaAlta = now()->format('Y-m-d');
         $relacion->save();
@@ -50,7 +50,7 @@ class S_relacionusuariossoftwaresController extends Controller
         $id = $validados['IdSoftware'];
 
         if ($Origen == 'user') {
-            return redirect('usuarios/' . $validados['Usuario'])->with('success', 'Software asignado con éxito.');
+            return redirect('usuarios/' . $validados['IdUsuario'])->with('success', 'Software asignado con éxito.');
         } else if ($Origen == 'soft') {
             return redirect('softwares/' . $id)->with('success', 'Software asignado con éxito.');
         }
@@ -75,7 +75,7 @@ class S_relacionusuariossoftwaresController extends Controller
         setcookie("Nombreusuario", request('Usuario'), time() + 1);
 
         $validados = request()->validate([
-            'Usuario' => 'exists:usuarios,Id',
+            'IdUsuario' => 'exists:usuarios,Id',
             'IdSoftware' => 'nullable',
             'FechaAlta' => 'nullable',
             'FechaBaja' => 'nullable',
