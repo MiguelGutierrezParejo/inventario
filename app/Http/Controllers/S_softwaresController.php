@@ -31,14 +31,18 @@ class S_softwaresController extends Controller
     public function show($id){
 
         $software = S_software::findOrFail($id);
-        $relaciones = $software->relaciones->filter(function ($relacion) {
+        $relacionesusuarios = $software->relaciones->filter(function ($relacion) {
+            return $relacion->FechaBaja === null;
+        });
+        $relacionesequipos = $software->relacionesequipos->filter(function ($relacion) {
             return $relacion->FechaBaja === null;
         });
         $documentos = Documento::where('Tabla', 'Software')->where('IdRelacionado', $id)->OrderByDesc('created_at')->get();
 
         return view('s_softwares.show', [
             'software' => $software,
-            'relaciones' => $relaciones,
+            'relacionesusuarios' => $relacionesusuarios,
+            'relacionesequipos' => $relacionesequipos,
             'documentos' => $documentos
         ]);
     }

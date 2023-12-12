@@ -19,7 +19,7 @@
             <span class="font-thin">{{ $software->Cantidad }}</span>
         </h3>
         <h3 class="border-t mb-2 pt-3 font-semibold">Asignados:
-            <span class="font-thin">{{ $relaciones->count() + $software->relacionesequipos->count() }}</span>
+            <span class="font-thin">{{ $relacionesusuarios->count() + $relacionesequipos->count() }}</span>
         </h3>
 
         <h3 class="border-t mb-2 pt-3 font-semibold">Tipo:
@@ -54,9 +54,9 @@
 
     <div class="bg-white rounded-md max-w-4xl mx-auto p-4 space-y-4 shadow-lg">
         <div class="flex justify-between">
-            <strong class="text-2xl">Usuarios asignados ({{$relaciones->count()}})</strong>
+            <strong class="text-2xl">Usuarios asignados ({{$relacionesusuarios->count()}})</strong>
 
-            @if ($software->Cantidad > $relaciones->count() + $software->relacionesequipos->count())
+            @if ($software->Cantidad > $relacionesusuarios->count() + $software->relacionesequipos->count())
                 <a href="/inventario/public/relacionusuariossoftwares/create/{{$software->Id}}"
                 class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-semibold rounded-lg text-sm px-5 py-1">Asignar</a>
             @else
@@ -111,9 +111,9 @@
 
     <div class="bg-white rounded-md max-w-4xl mx-auto p-4 space-y-4 shadow-lg">
         <div class="flex justify-between">
-            <strong class="text-2xl">Equipos asignados ({{$software->relacionesequipos->count()}})</strong>
+            <strong class="text-2xl">Equipos asignados ({{$relacionesequipos->count()}})</strong>
 
-            @if ($software->Cantidad > $relaciones->count() + $software->relacionesequipos->count())
+            @if ($software->Cantidad > $relacionesusuarios->count() + $relacionesequipos->count())
                 <a href="/inventario/public/relacionequipossoftwares/create/{{$software->Id}}"
                 class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-semibold rounded-lg text-sm px-5 py-1">Asignar</a>
             @else
@@ -133,28 +133,30 @@
             </thead>
             <tbody>
                 @foreach ($software->relacionesequipos as $relacionequipo)
-                    <tr class="border border-black">
-                        <td class="text-left px-2 border border-black">
-                            <a href="/inventario/public/equipos/{{$relacionequipo->equipo->Id}}">{{$relacionequipo->equipo->NombreOrdenador}}</a>
-                        </td>
-                        <td class="text-left px-2 border border-black">
-                            <a href="/inventario/public/usuarios/{{$relacionequipo->equipo->relaciones->where('FechaBaja', null)->first()->usuario->Id}}">
-                            {{$relacionequipo->equipo->relaciones->where('FechaBaja', null)->first()->usuario->Nombre }}
-                            </a>
-                        </td>
-                        <td class="flex justify-center">
-                            <form action="/inventario/public/relacionequipossoftwares/{{ $relacionequipo->Id }}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button onclick="return confirm('¿Está seguro de borrar esta asignación?')" type="submit">
-                                    <svg class="h-8 w-8 text-red-500"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                                    </svg>
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
+                    @if ($relacionequipo->FechaBaja === null)
+                        <tr class="border border-black">
+                            <td class="text-left px-2 border border-black">
+                                <a href="/inventario/public/equipos/{{$relacionequipo->equipo->Id}}">{{$relacionequipo->equipo->NombreOrdenador}}</a>
+                            </td>
+                            <td class="text-left px-2 border border-black">
+                                <a href="/inventario/public/usuarios/{{$relacionequipo->equipo->relaciones->where('FechaBaja', null)->first()->usuario->Id}}">
+                                {{$relacionequipo->equipo->relaciones->where('FechaBaja', null)->first()->usuario->Nombre }}
+                                </a>
+                            </td>
+                            <td class="flex justify-center">
+                                <form action="/inventario/public/relacionequipossoftwares/{{ $relacionequipo->Id }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button onclick="return confirm('¿Está seguro de borrar esta asignación?')" type="submit">
+                                        <svg class="h-8 w-8 text-red-500"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                        </svg>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endif
                 @endforeach
             </tbody>
         </table>
