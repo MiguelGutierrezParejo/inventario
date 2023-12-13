@@ -251,6 +251,8 @@ Route::post('/recepcion/recepciontodos', [I_recepcionpedidosController::class, '
 
 Route::get('/softwares', [S_softwaresController::class, 'index'])
     ->name('softwares');
+Route::get('/softwaresall', [S_softwaresController::class, 'index2'])
+    ->name('softwares');
 Route::get('/softwares/create', [S_softwaresController::class, 'create']);
 Route::post('/softwares', [S_softwaresController::class, 'store']);
 Route::get('/softwares/{Id}', [S_softwaresController::class, 'show']);

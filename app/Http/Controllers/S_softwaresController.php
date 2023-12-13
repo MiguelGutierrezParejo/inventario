@@ -14,9 +14,18 @@ class S_softwaresController extends Controller
 
     public function index(){
 
-        $softwares = S_software::all()->sortBy('Nombre');
+        $softwares = S_software::all()->where('FechaBaja', null)->sortBy('Nombre');
 
         return view('s_softwares.index', [
+            'softwares' => $softwares,
+        ]);
+    }
+
+    public function index2(){
+
+        $softwares = S_software::all()->sortBy('Nombre');
+
+        return view('s_softwares.index2', [
             'softwares' => $softwares,
         ]);
     }

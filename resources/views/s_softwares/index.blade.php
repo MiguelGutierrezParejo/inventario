@@ -4,6 +4,10 @@
         <div>
             <div class="p-2 text-right">
                 <p class="text-left">**Aparecen {{ count($softwares) }} instancias**</p>
+                <a href="/inventario/public/softwaresall" style="background-color: #0053D0"
+                    class="text-white font-semibold rounded-lg text-sm px-5 py-1 text-center">Mostrar Todo
+                </a>
+                &nbsp; | &nbsp;
                 <a href="/inventario/public/softwares/create" style="background-color: #7b241c"
                     class="text-white font-semibold rounded-lg text-sm px-5 py-1 text-center">Nuevo software
                 </a>
@@ -12,22 +16,22 @@
                 <thead class="bg-gray-100">
                     <tr>
                         <th class="w-4/12 border border-slate-300 px-6 py-2 font-semibold">
-                            <a href="">Nombre</a>
+                            Nombre
                         </th>
                         <th class="w-2/12 border border-slate-300 px-6 py-2 font-semibold">
-                            <a href="">Proveedor</a>
+                            Proveedor
                         </th>
                         <th class="w-1/12 border border-slate-300 px-6 py-2 font-semibold">
-                            <a href="">Cantidad</a>
+                            Cantidad
                         </th>
                         <th class="w-1/12 border border-slate-300 px-6 py-2 font-semibold">
-                            <a href="">Asignados</a>
+                            Asignados
                         </th>
                         <th class="w-1/12 border border-slate-300 px-6 py-2 font-semibold">
-                            <a href="">Tipo</a>
+                            Tipo
                         </th>
                         <th class="border border-slate-300 px-6 py-2 font-semibold">
-                            <a href="">Observaciones</a>
+                            Observaciones
                         </th>
                     </tr>
                 </thead>
