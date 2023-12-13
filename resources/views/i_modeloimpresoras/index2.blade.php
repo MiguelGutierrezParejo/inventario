@@ -52,34 +52,29 @@
                     </tr>
                 </thead>
                 <tbody class="bg-white">
-
-                        <tr class="whitespace-nowrap border border-slate-400 text-center  bg-gray-50 ">
-                            <form id="form" action="{{ $enlace }}" method="GET">
-                                <td class="border">
-                                    <input type="text" class=" px-6 py-2" name="Id" id="Id" value="{{ request()->query('Id') }}">
-                                </td>
-                                <td class="border">
-                                    <input type="text" class=" px-6 py-2" name="Marca" id="Marca" value="{{ request()->query('Marca') }}">
-                                </td>
-                                <td class="border border-slate-300">
-                                    <input type="text" class="border border-slate-300 px-6 py-2" name="Modelo" id="Modelo" value="{{ request()->query('Modelo') }}">
-                                </td>
-                                <td class="border border-slate-300 "></td>
-                                <td class="border border-slate-300"></td>
-                                <td class="border border-slate-300"></td>
-                                <td class="border border-slate-300 hidden">
-                                    <div class="hidden"><button type="submit"></button></div>
-                                </td>
-                            </form>
-                        </tr>
-
-
+                    <tr class="whitespace-nowrap border border-slate-400 text-center  bg-gray-50 ">
+                        <form id="form" action="{{ $enlace }}" method="GET">
+                            <td class="border">
+                                <input type="text" class=" px-6 py-2" name="Id" id="Id" style="width: 150px" value="{{ request()->query('Id') }}">
+                            </td>
+                            <td class="border">
+                                <input type="text" class=" px-6 py-2" name="Marca" id="Marca" style="width: 150px" value="{{ request()->query('Marca') }}">
+                            </td>
+                            <td class="border border-slate-300">
+                                <input type="text" class="border border-slate-300 px-6 py-2" name="Modelo" id="Modelo" value="{{ request()->query('Modelo') }}">
+                            </td>
+                            <td class="border border-slate-300"></td>
+                            <td class="border border-slate-300"></td>
+                            <td class="border border-slate-300"></td>
+                            <td class="border border-slate-300 hidden">
+                                <div class="hidden"><button type="submit"></button></div>
+                            </td>
+                        </form>
+                    </tr>
                     @foreach ($modeloimpresoras as $modeloimpresora)
-
                         <tr class="whitespace-nowrap border border-slate-400">
                             <td class="border border-slate-300 px-6 py-4">
                                 <div class="text-sm text-gray-900">
-
                                     <a href="/inventario/public/modeloimpresoras/{{ $modeloimpresora->Id }}">{{ $modeloimpresora->Id }}</a>
                                 </div>
                             </td>
@@ -109,11 +104,9 @@
                                 </div>
                             </td>
                         </tr>
-
                     @endforeach
                 </tbody>
             </table>
-
         </div>
     </div>
 </x-layout>

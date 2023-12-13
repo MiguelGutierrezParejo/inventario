@@ -72,11 +72,11 @@
                     <tr class="whitespace-nowrap border border-slate-400 text-center  bg-gray-50 ">
                         <form id="form" action="{{ $enlace }}" method="GET">
                             <td class="border">
-                                <input type="text" class=" px-6 py-2" name="Id" id="Id"
+                                <input type="text" class=" px-6 py-2" name="Id" id="Id" style="width: 150px"
                                     value="{{ request()->query('Id') }}">
                             </td>
                             <td class="border">
-                                <input type="text" class=" px-6 py-2" name="Marca" id="Marca"
+                                <input type="text" class=" px-6 py-2" name="Marca" id="Marca" style="width: 150px"
                                     value="{{ request()->query('Marca') }}">
                             </td>
                             <td class="border border-slate-300">
@@ -89,8 +89,6 @@
                                 <div class="hidden"><button type="submit"></button></div>
                         </form>
                     </tr>
-
-
                     @foreach ($modeloimpresoras as $modeloimpresora)
                         <tr class="whitespace-nowrap border border-slate-400">
                             <td class="border border-slate-300 px-6 py-4">
@@ -122,7 +120,6 @@
                     @endforeach
                 </tbody>
             </table>
-
         </div>
     </div>
 </x-layout>
