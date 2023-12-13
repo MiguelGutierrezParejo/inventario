@@ -27,6 +27,12 @@
         <h3 class="border-t mb-2 pt-3 font-semibold">Nombre:
             <span class="font-thin">{{ $modelo->Modelo }}</span>
         </h3>
+        <h3 class="border-t mb-2 pt-3 font-semibold">Fecha de alta:
+            <span class="font-thin">{{ $modelo->FechaAlta }}</span>
+        </h3>
+        <h3 class="border-t mb-2 pt-3 font-semibold">Fecha de baja:
+            <span class="font-thin">{{ $modelo->FechaBaja }}</span>
+        </h3>
         <h3 class="border-t mb-2 pt-3 font-semibold">Observaciones:
             <span class="font-thin">{{ $modelo->Observaciones }}</span>
         </h3>

@@ -396,7 +396,7 @@ class EquiposController extends Controller
     {
         $equipo = new Equipo();
         $tipos = Tipoequipo::all();
-        $modelos = Modelo::all()->sortby("Modelo");
+        $modelos = Modelo::all()->where('FechaBaja', null)->sortby("Modelo");
         $contrato = Contrato::where('Estado', 1)->get();
 
         return view('equipos.create', [
@@ -452,7 +452,7 @@ class EquiposController extends Controller
     {
         $equipo = Equipo::findOrFail($id);
         $tipos = Tipoequipo::all()->sortby("Denominacion");
-        $modelos = Modelo::all()->sortby("Modelo");
+        $modelos = Modelo::all()->where('FechaBaja', null)->sortby("Modelo");
         $contrato = Contrato::where('Estado', 1)->get();
 
         return view('equipos.edit', [

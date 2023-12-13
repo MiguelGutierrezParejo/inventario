@@ -15,7 +15,46 @@
         </p>
     @enderror
 </div>
-
+<div class="mb-6">
+    <label for="FechaAlta"
+        class="text-sm font-medium text-gray-900 block mb-2 @error('FechaAlta') text-red-500 @enderror">
+        Fecha de alta
+    </label>
+    @if ($modelo->FechaAlta)
+        <input type="date" name="FechaAlta" id="FechaAlta"
+            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/3 p-2.5 @error('FechaAlta') border-red-500 @enderror"
+            value="{{ old('FechaAlta', $modelo->FechaAlta->format('Y-m-d')) }}">
+    @else
+        <input type="date" name="FechaAlta" id="FechaAlta"
+            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/3 p-2.5 @error('FechaAlta') border-red-500 @enderror"
+            value="{{ old('FechaAlta', $modelo->FechaAlta) }}">
+    @endif
+    @error('FechaAlta')
+        <p class="text-red-500 text-sm mt-1">
+            {{ $message }}
+        </p>
+    @enderror
+</div>
+<div class="mb-6">
+    <label for="FechaBaja"
+        class="text-sm font-medium text-gray-900 block mb-2 @error('FechaBaja') text-red-500 @enderror">
+        Fecha de baja
+    </label>
+    @if ($modelo->FechaBaja)
+        <input type="date" name="FechaBaja" id="FechaBaja"
+            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/3 p-2.5 @error('FechaBaja') border-red-500 @enderror"
+            value="{{ old('FechaBaja', $modelo->FechaBaja->format('Y-m-d')) }}">
+    @else
+        <input type="date" name="FechaBaja" id="FechaBaja"
+            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/3 p-2.5 @error('FechaBaja') border-red-500 @enderror"
+            value="{{ old('FechaBaja', $modelo->FechaBaja) }}">
+    @endif
+    @error('FechaBaja')
+        <p class="text-red-500 text-sm mt-1">
+            {{ $message }}
+        </p>
+    @enderror
+</div>
 <div class="mb-6">
     <label for="Observaciones"
         class="text-sm font-medium text-gray-900 block mb-2 @error('Observaciones') text-red-500 @enderror">

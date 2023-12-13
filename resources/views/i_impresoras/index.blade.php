@@ -23,10 +23,10 @@
                 </a>
                 <p class="text-left">**Aparecen {{ count($impresoras) }} instancias de {{ $total }}**</p>
             </div>
-            <table width="100%" class="border-collapse border border-slate-400 text-left"  >
+            <table width="100%" class="border-collapse border border-slate-400 text-left">
                 <thead class="bg-gray-100">
                     @php
-                        $link = e("Id=" . request('Id') . "&NInventario=" . request('NInventario') . "&Modelo=" . request('Modelo') 
+                        $link = e("Id=" . request('Id') . "&NInventario=" . request('NInventario') . "&Modelo=" . request('Modelo')
                         . "&Nombre=" . request('Nombre') . "&NumSerie" . request('NumSerie') . "&PrecioAdquisicion=" . request('PrecioAdquisicion'));
 
                         $enlace = e("/inventario/public/impresorasindex/$tipo");
@@ -43,7 +43,7 @@
                             </a>
                         </th>
                         <th class="border border-slate-300 px-6 py-2 font-semibold">
-                        <a href="{!! $enlace !!}?orden=Nombre&dir={{request('dir') == 'desc' ? 'asc' : 'desc' }}&{!! $link !!}">Nombre
+                        <a href="{!! $enlace !!}?orden=Nombre&dir={{request('dir') == 'desc' ? 'asc' : 'desc' }}&{!! $link !!}">Usuario
                                 @if (request('orden') == 'Nombre') @if (request('dir', 'asc') == 'asc') &darr; @else &uarr; @endif @endif
                             </a>
                         </th>
@@ -58,36 +58,35 @@
                             </a>
                         </th>
                         <th class="border border-slate-300 px-6 py-2 font-semibold">
-                            <a href=""> Observaciones</a>
+                            Observaciones
                         </th>
                     </tr>
                 </thead>
                 <tbody class="bg-white">
-
-                        <tr class="border border-slate-400 text-center  bg-gray-50 ">
-                            <form id="form" action="{{ $enlace }}" method="GET">
-                                <td class="border">
-                                    <input type="text" style="width:150px;" class="border border-slate-300 px-6 py-2" name="NInventario" id="NInventario" 
-                                    value="{{ request()->query('NInventario') }}">
-                                </td>
-                                <td class="border">
-                                    <input type="text" style="width:100px;" class="border border-slate-300 px-6 py-2" name="Id" id="Id" value="{{ request()->query('Id') }}">
-                                </td>
-                                <td class="border">
-                                    <input type="text" class="border border-slate-300 px-6 py-2" name="Nombre" id="Nombre" value="{{ request()->query('Nombre') }}">
-                                </td>
-                                <td class="border border-slate-300">
-                                    <input type="text" class="border border-slate-300 px-6 py-2" name="Modelo" id="Modelo" value="{{ request()->query('Modelo') }}">
-                                </td>                                 
-                                <td class="border border-slate-300">
-                                    <input type="text" style="width:150px;" class="border border-slate-300 px-6 py-2" name="NumSerie" id="NumSerie" 
-                                    value="{{ request()->query('NumSerie') }}">
-                                </td>                              
-                                <td class="border border-slate-300 hidden ">
-                                    <div class="hidden"><button type="submit"></button></div>
-                                <td class="border border-slate-300 ">   
-                            </form>
-                        </tr>
+                    <tr class="border border-slate-400 text-center bg-gray-50">
+                        <form id="form" action="{{ $enlace }}" method="GET">
+                            <td class="border">
+                                <input type="text" style="width:150px;" class="border border-slate-300 px-6 py-2" name="NInventario" id="NInventario"
+                                value="{{ request()->query('NInventario') }}">
+                            </td>
+                            <td class="border">
+                                <input type="text" style="width:100px;" class="border border-slate-300 px-6 py-2" name="Id" id="Id" value="{{ request()->query('Id') }}">
+                            </td>
+                            <td class="border">
+                                <input type="text" class="border border-slate-300 px-6 py-2" name="Nombre" id="Nombre" value="{{ request()->query('Nombre') }}">
+                            </td>
+                            <td class="border border-slate-300">
+                                <input type="text" class="border border-slate-300 px-6 py-2" name="Modelo" id="Modelo" value="{{ request()->query('Modelo') }}">
+                            </td>
+                            <td class="border border-slate-300">
+                                <input type="text" style="width:150px;" class="border border-slate-300 px-6 py-2" name="NumSerie" id="NumSerie"
+                                value="{{ request()->query('NumSerie') }}">
+                            </td>
+                            <td class="border border-slate-300 hidden ">
+                                <div class="hidden"><button type="submit"></button></div>
+                            <td class="border border-slate-300 ">
+                        </form>
+                    </tr>
                     @foreach ($impresoras as $impresora)
                         <tr class=" border border-slate-400">
                             <td class="border border-slate-300 px-6 py-4">
@@ -117,14 +116,13 @@
                             </td>
                             <td class="border border-slate-300 px-6 py-4">
                                 <div class="text-sm text-gray-900">
-                                    {{ $impresora->Observaciones }} 
+                                    {{ $impresora->Observaciones }}
                                 </div>
                             </td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
-            
         </div>
     </div>
 </x-layout>

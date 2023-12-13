@@ -288,6 +288,8 @@ Route::get('/modelos/create', [ModelosController::class, 'create'])->name('model
 Route::post('/modelos', [ModelosController::class, 'store'])->name('modelos.store');
 Route::get('/modelos', [ModelosController::class, 'index'])
     ->name('modelos');
+Route::get('/modelosall', [ModelosController::class, 'index2'])
+    ->name('modelos');
 Route::get('/modelos/{id}', [ModelosController::class, 'show']);
 Route::get('/modelos/edit/{id}', [ModelosController::class, 'edit']);
 Route::put('/modelos/{id}', [ModelosController::class, 'update'])->name('modelos.update');
