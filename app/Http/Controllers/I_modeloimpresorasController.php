@@ -23,6 +23,40 @@ class I_modeloimpresorasController extends Controller
             ->where('Id', 'LIKE', '%'.request('Id').'%')
             ->where('Marca', 'LIKE', '%'.request('Marca').'%')
             ->where('Modelo', 'LIKE', '%'.request('Modelo').'%')
+            ->whereNull('i_modeloimpresoras.FechaBaja')
+            ->orderByDesc($orden)
+            ->get();
+        } else {
+            $modeloimpresoras = DB::table('i_modeloimpresoras')
+            ->select('i_modeloimpresoras.*')
+            ->where('Id', 'LIKE', '%'.request('Id').'%')
+            ->where('Marca', 'LIKE', '%'.request('Marca').'%')
+            ->where('Modelo', 'LIKE', '%'.request('Modelo').'%')
+            ->whereNull('i_modeloimpresoras.FechaBaja')
+            ->orderBy($orden)
+            ->get();
+        }
+
+        $total = I_modeloimpresora::all()->count();
+
+        return view('i_modeloimpresoras.index', [
+            'modeloimpresoras' => $modeloimpresoras,
+            'total' => $total,
+        ]);
+    }
+
+    public function index2(){
+
+        $ordenes = ['Id', 'Marca', 'Modelo'];
+        $orden = request()->query('orden') ?: 'Id';
+        abort_unless(in_array($orden, $ordenes), 404);
+
+        if (request('dir') == 'desc') {
+            $modeloimpresoras = DB::table('i_modeloimpresoras')
+            ->select('i_modeloimpresoras.*')
+            ->where('Id', 'LIKE', '%'.request('Id').'%')
+            ->where('Marca', 'LIKE', '%'.request('Marca').'%')
+            ->where('Modelo', 'LIKE', '%'.request('Modelo').'%')
             ->orderByDesc($orden)
             ->get();
         } else {
@@ -37,7 +71,7 @@ class I_modeloimpresorasController extends Controller
 
         $total = I_modeloimpresora::all()->count();
 
-        return view('i_modeloimpresoras.index', [
+        return view('i_modeloimpresoras.index2', [
             'modeloimpresoras' => $modeloimpresoras,
             'total' => $total,
         ]);

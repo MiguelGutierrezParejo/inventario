@@ -30,6 +30,12 @@
         <h3 class="border-t mb-2 pt-3 font-semibold">Modelo:
             <span class="font-thin">{{ $modelo->Modelo }}</span>
         </h3>
+        <h3 class="border-t mb-2 pt-3 font-semibold">Fecha de Alta:
+            <span class="font-thin">{{ $modelo->FechaAlta }}</span>
+        </h3>
+        <h3 class="border-t mb-2 pt-3 font-semibold">Fecha de Baja:
+            <span class="font-thin">{{ $modelo->FechaBaja }}</span>
+        </h3>
         <h3 class="border-t mb-2 pt-3 font-semibold">Observaciones:
             <span class="font-thin">{{ $modelo->Observaciones }}</span>
         </h3>

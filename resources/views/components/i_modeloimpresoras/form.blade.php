@@ -1,9 +1,9 @@
 @csrf
 
 
-@if ($modeloimpresora->Id == null) 
+@if ($modeloimpresora->Id == null)
     <h1 class="mb-4 text-2xl font-semibold">Crear modelo</h1>
-@else 
+@else
     <h1 class="mb-4 text-2xl font-semibold">Editar modelo</h1>
 @endif
 
@@ -13,7 +13,7 @@
         Marca
     </label>
     <input type="text" name="Marca" id="Marca"
-        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 @error('Marca') border-red-500 @enderror"
+        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 @error('Marca') border-red-500 @enderror"
         value="{{ old('Marca', $modeloimpresora->Marca) }}">
     @error('Marca')
         <p class="text-red-500 text-sm mt-1">
@@ -27,10 +27,52 @@
         class="text-sm font-medium text-gray-900 block mb-2 @error('Modelo') text-red-500 @enderror">
         Modelo
     </label>
-    <input type="text" name="Modelo" id="Modelo"
-        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 @error('Modelo') border-red-500 @enderror"
+    <input type="text" name="Modelo" id="Modelo" style="width: 250px"
+        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 @error('Modelo') border-red-500 @enderror"
         value="{{ old('Modelo', $modeloimpresora->Modelo) }}">
     @error('Modelo')
+        <p class="text-red-500 text-sm mt-1">
+            {{ $message }}
+        </p>
+    @enderror
+</div>
+
+<div class="mb-6">
+    <label for="FechaAlta"
+        class="text-sm font-medium text-gray-900 block mb-2 @error('FechaAlta') text-red-500 @enderror">
+        Fecha Alta
+    </label>
+    @if ($modeloimpresora->FechaAlta)
+    <input type="date" name="FechaAlta" id="FechaAlta"
+        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/3 p-2.5 @error('FechaAlta') border-red-500 @enderror"
+        value="{{ old('FechaAlta', $modeloimpresora->FechaAlta->format('Y-m-d')) }}">
+    @else
+        <input type="date" name="FechaAlta" id="FechaAlta"
+            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/3 p-2.5 @error('FechaAlta') border-red-500 @enderror"
+            value="{{ old('FechaAlta', $modeloimpresora->FechaAlta) }}">
+    @endif
+    @error('FechaAlta')
+        <p class="text-red-500 text-sm mt-1">
+            {{ $message }}
+        </p>
+    @enderror
+</div>
+
+<div class="mb-6">
+    <label for="FechaBaja"
+        class="text-sm font-medium text-gray-900 block mb-2 @error('FechaBaja') text-red-500 @enderror">
+        Fecha Baja
+    </label>
+    @if ($modeloimpresora->FechaBaja)
+    <input type="date" name="FechaBaja" id="FechaBaja"
+        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/3 p-2.5 @error('FechaBaja') border-red-500 @enderror"
+        value="{{ old('FechaBaja', date('d-m-Y', strtotime($modeloimpresora->FechaBaja))) }}">
+    @else
+        <input type="date" name="FechaBaja" id="FechaBaja"
+            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/3 p-2.5 @error('FechaBaja') border-red-500 @enderror"
+            value="{{ old('FechaBaja', $modeloimpresora->FechaBaja) }}">
+    @endif
+    @error('FechaBaja')
         <p class="text-red-500 text-sm mt-1">
             {{ $message }}
         </p>

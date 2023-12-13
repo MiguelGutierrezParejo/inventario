@@ -125,7 +125,7 @@ class I_impresorasController extends Controller
     public function create()
     {
         $impresora = new I_impresora();
-        $modelos = I_modeloimpresora::all();
+        $modelos = I_modeloimpresora::where('FechaBaja', null)->orderBy("Marca")->orderBy("Modelo")->get();
         $usuarios = Usuario::all();
 
         return view('i_impresoras.create', [
@@ -189,7 +189,7 @@ class I_impresorasController extends Controller
     public function edit($id)
     {
         $impresora = I_impresora::findOrFail($id);
-        $modelos = I_modeloimpresora::all()->sortBy("Modelo");
+        $modelos = I_modeloimpresora::where('FechaBaja', null)->orderBy("Marca")->orderBy("Modelo")->get();
         $usuarios = Usuario::all()->sortBy("Nombre");
 
         return view('i_impresoras.edit', [

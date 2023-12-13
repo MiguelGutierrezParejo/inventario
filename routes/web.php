@@ -188,6 +188,7 @@ Route::put('/modeloimpresoras/{Id}', [I_modeloimpresorasController::class, 'upda
     ->name('modeloimpresoras.update');
 Route::get('/modeloimpresoras', [I_modeloimpresorasController::class, 'index'])
     ->name('modelosimpresoras');
+Route::get('/modeloimpresorasall', [I_modeloimpresorasController::class, 'index2']);
 Route::get('/modeloimpresoras/{id}', [I_modeloimpresorasController::class, 'show']);
 Route::get('/modeloimpresoras/{id}/consumibles',[I_modeloimpresorasController::class, 'formularioconsum'])->name('modeloimpresoras.formularioconsum');
 Route::post('/modeloimpresoras/{id}',[I_modeloimpresorasController::class, 'agregarconsum'])->name('modeloimpresoras.agregarconsum');
