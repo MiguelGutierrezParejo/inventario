@@ -15,7 +15,7 @@
             <table width="100%" class="table-fixed border-collapse border border-slate-400 text-left">
                 <thead class="bg-gray-100">
                     <tr>
-                        <th class="w-4/12 border border-slate-300 px-6 py-2 font-semibold">
+                        <th class="w-3/12 border border-slate-300 px-6 py-2 font-semibold">
                             Nombre
                         </th>
                         <th class="w-2/12 border border-slate-300 px-6 py-2 font-semibold">
@@ -30,6 +30,9 @@
                         <th class="w-1/12 border border-slate-300 px-6 py-2 font-semibold">
                             Tipo
                         </th>
+                        <th class="w-1/12 border border-slate-300 px-6 py-2 font-semibold">
+                            Fecha de Baja
+                        </th>
                         <th class="border border-slate-300 px-6 py-2 font-semibold">
                             Observaciones
                         </th>
@@ -40,8 +43,7 @@
                         <tr class="border border-slate-400">
                             <td class="border border-slate-300 px-6 py-4">
                                 <div class="text-sm text-gray-900">
-                                    <a
-                                        href="/inventario/public/softwares/{{ $software->Id }}">{{ $software->Nombre }}</a>
+                                    <a href="/inventario/public/softwares/{{ $software->Id }}">{{ $software->Nombre }}</a>
                                 </div>
                             </td>
                             <td class="border border-slate-300 px-6 py-4">
@@ -51,8 +53,7 @@
                             </td>
                             <td class="border border-slate-300 px-6 py-4">
                                 <div class="text-sm text-gray-900">
-                                    <a
-                                        href="/inventario/public/softwares/{{ $software->Id }}">{{ $software->Cantidad }}</a>
+                                    <a href="/inventario/public/softwares/{{ $software->Id }}">{{ $software->Cantidad }}</a>
                                 </div>
                             </td>
                             <td class="border border-slate-300 px-6 py-4">
@@ -77,8 +78,12 @@
                             </td>
                             <td class="border border-slate-300 px-6 py-4">
                                 <div class="text-sm text-gray-900">
-                                    <a
-                                        href="/inventario/public/softwares/{{ $software->Id }}">{{ $software->Observaciones }}</a>
+                                    <a href="/inventario/public/softwares/{{ $software->Id }}">{{ optional($software->FechaBaja)->format('d-m-Y') }}</a>
+                                </div>
+                            </td>
+                            <td class="border border-slate-300 px-6 py-4">
+                                <div class="text-sm text-gray-900">
+                                    <a href="/inventario/public/softwares/{{ $software->Id }}">{{ $software->Observaciones }}</a>
                                 </div>
                             </td>
                         </tr>
