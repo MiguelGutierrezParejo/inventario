@@ -10,15 +10,15 @@
 <div class="mt-6 mb-6">
     <label for="Usuario"
         class="text-sm font-medium text-gray-900 block mb-2 @error('Usuario') text-red-500 @enderror">
-        Empleado 
+        Empleado
     </label>
-        
+
     <select type="text" class="border border-slate-300 px-6 py-2" name="Usuario" id="Usuario" value="{{ old('$rel->usuario->Nombre', $rel->IdUsuario) }}">
-                                    @if ($rel->usuario) 
+                                    @if ($rel->usuario)
                                         <option selected value="{{$rel->IdUsuario}}">{{$rel->usuario->Nombre}}</option>
                                     @endif
                                     <option></option>
-                                    
+
                                     @foreach ($emp as $em)
                                         <option value="{{ old('$rel->IdUsuario', $em->Id) }}">{{ $em->Nombre }}</option>
                                     @endforeach
@@ -36,11 +36,11 @@
     </label>
     @if ($rel->FechaAlta)
     <input type="date" name="FechaAlta" id="FechaAlta"
-        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 @error('FechaAlta') border-red-500 @enderror"
+        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 @error('FechaAlta') border-red-500 @enderror"
         value="{{ old('FechaAlta', $rel->FechaAlta->format('Y-m-d')) }}">
-    @else 
+    @else
         <input type="date" name="FechaAlta" id="FechaAlta"
-            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 @error('FechaAlta') border-red-500 @enderror"
+            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 @error('FechaAlta') border-red-500 @enderror"
             value="{{ old('FechaAlta', $rel->FechaAlta) }}">
     @endif
     @error('FechaAlta')
@@ -52,15 +52,15 @@
 <div class="mb-6">
     <label for="FechaBaja"
         class="text-sm font-medium text-gray-900 block mb-2 @error('FechaBaja') text-red-500 @enderror">
-        Fecha de baja 
+        Fecha de baja
     </label>
-    @if ($rel->FechaBaja) 
+    @if ($rel->FechaBaja)
         <input type="date" name="FechaBaja" id="FechaBaja"
-            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 @error('FechaBaja') border-red-500 @enderror"
+            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 @error('FechaBaja') border-red-500 @enderror"
             value="{{ old('FechaBaja', $rel->FechaBaja->format('Y-m-d')) }}">
-    @else 
+    @else
         <input type="date" name="FechaBaja" id="FechaBaja"
-            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 @error('FechaBaja') border-red-500 @enderror"
+            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 @error('FechaBaja') border-red-500 @enderror"
             value="{{ old('FechaBaja', $rel->FechaBaja) }}">
     @endif
     @error('FechaBaja')

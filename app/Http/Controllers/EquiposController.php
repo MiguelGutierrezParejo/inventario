@@ -396,7 +396,7 @@ class EquiposController extends Controller
     {
         $equipo = new Equipo();
         $tipos = Tipoequipo::all();
-        $modelos = Modelo::all();
+        $modelos = Modelo::all()->sortby("Modelo");
         $contrato = Contrato::where('Estado', 1)->get();
 
         return view('equipos.create', [
@@ -452,7 +452,7 @@ class EquiposController extends Controller
     {
         $equipo = Equipo::findOrFail($id);
         $tipos = Tipoequipo::all()->sortby("Denominacion");
-        $modelos = Modelo::all();
+        $modelos = Modelo::all()->sortby("Modelo");
         $contrato = Contrato::where('Estado', 1)->get();
 
         return view('equipos.edit', [
@@ -476,7 +476,17 @@ class EquiposController extends Controller
 
         DB::select('UPDATE equipos SET IdTipo = ?, IdContrato = ?, IdModelo = ?, NombreOrdenador = ?, NumSerie = ?, FechaAlta = ?, FechaBaja = ?, Observaciones = ?, PrecioAdquisicion = ?
                                    WHERE id = ?', [$validados['Tipo'], $validados['Contrato'], $validados['Modelo'], $validados['NombreOrdenador'], $validados['NumSerie'], $FechaAlta,
-                                 $FechaBaja, $validados['Observaciones'], $validados['PrecioAdquisicion'], $id]);
+                                   $FechaBaja, $validados['Observaciones'], $validados['PrecioAdquisicion'], $id]);
+
+        // Actualizar relaciones con usuarios si la fecha de baja ha cambiado
+        if ($FechaBaja && $equipo->FechaBaja != $FechaBaja) {
+            $equipo->relaciones()->update(['FechaBaja' => $FechaBaja]);
+        }
+
+        // Actualizar relaciones con software si la fecha de baja ha cambiado
+        if ($FechaBaja && $equipo->FechaBaja != $FechaBaja) {
+            $equipo->relacionesequipos()->update(['FechaBaja' => $FechaBaja]);
+        }
 
         return redirect('/equipos/'.$equipo->Id)->with('success', 'Equipo actualizado.');
     }

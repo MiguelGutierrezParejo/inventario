@@ -4,16 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Documento;
 use App\Models\I_proveedor;
-use App\Models\S_distribuidor;
 use App\Models\S_software;
-use Barryvdh\DomPDF\Facade\Pdf;
-use Carbon\Carbon;
 use DateTime;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
-use SimpleSoftwareIO\QrCode\Facades\QrCode;
-
 
 
 class S_softwaresController extends Controller
@@ -21,7 +14,7 @@ class S_softwaresController extends Controller
 
     public function index(){
 
-        $softwares = S_software::all()->where('FechaBaja', null)->sortBy('Nombre');
+        $softwares = S_software::all()->sortBy('Nombre');
 
         return view('s_softwares.index', [
             'softwares' => $softwares,
@@ -76,6 +69,16 @@ class S_softwaresController extends Controller
         ->update(['IdProveedor' => $idproveedor->Id, 'Nombre' => $validados['Nombre'], 'Cantidad' => $validados['Cantidad'],
          'Tipo' => $validados['Tipo'], 'FechaAlta' => new DateTime($validados['FechaAlta']), 'FechaBaja' => $FechaBaja, 'Observaciones' => $validados['Observaciones'], 'PrecioAdquisicion' => $validados['PrecioAdquisicion']]);
 
+        // Actualizar relaciones con usuarios si la fecha de baja ha cambiado
+        if ($FechaBaja && $software->FechaBaja != $FechaBaja) {
+            $software->relaciones()->update(['FechaBaja' => $FechaBaja]);
+        }
+
+        // Actualizar relaciones con equipos si la fecha de baja ha cambiado
+        if ($FechaBaja && $software->FechaBaja != $FechaBaja) {
+            $software->relacionesequipos()->update(['FechaBaja' => $FechaBaja]);
+        }
+
         return redirect()->route('softwares' ,$software->Id)->with('success', 'Software editado con éxito.');
     }
 
@@ -110,7 +113,6 @@ class S_softwaresController extends Controller
     public function store()
     {
         $validados = $this->validar();
-
         $software = new S_software();
         $idproveedor = I_proveedor::where('Nombre', $validados['Proveedor'])->first();
 
@@ -119,10 +121,9 @@ class S_softwaresController extends Controller
         $software->Cantidad = $validados['Cantidad'];
         $software->Tipo = $validados['Tipo'];
         $software->FechaAlta = new DateTime($validados['FechaAlta']);
-
         if ($validados['FechaBaja']) {
             $software->FechaBaja = new DateTime($validados['FechaBaja']);
-            }
+        }
         $software->Observaciones = $validados['Observaciones'];
         $software->PrecioAdquisicion = $validados['PrecioAdquisicion'];
 

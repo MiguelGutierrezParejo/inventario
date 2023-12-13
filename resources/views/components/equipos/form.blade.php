@@ -1,23 +1,23 @@
 @csrf
 @if ($equipo->Id == null)
-<h1 class="mb-4 text-2xl font-semibold">Crear equipo</h1>
+    <h1 class="mb-4 text-2xl font-semibold">Crear equipo</h1>
 @else
-<h1 class="mb-4 text-2xl font-semibold">Editar equipo</h1>
+    <h1 class="mb-4 text-2xl font-semibold">Editar equipo</h1>
 @endif
 
 <div class="mb-6">
-    <label for="Tipo"
-        class="text-sm font-medium text-gray-900 block mb-2 @error('Tipo') text-red-500 @enderror">
+    <label for="Tipo" class="text-sm font-medium text-gray-900 block mb-2 @error('Tipo') text-red-500 @enderror">
         Tipo
     </label>
-    <select type="text" class="border border-slate-300 px-6 py-2" name="Tipo" id="Tipo" value="{{ old('$equipo->tipo->Denominacion', $equipo->IdTipo) }}">
+    <select type="text" class="border border-slate-300 px-6 py-2" name="Tipo" id="Tipo"
+        value="{{ old('$equipo->tipo->Denominacion', $equipo->IdTipo) }}">
         @if ($equipo->tipo)
-            <option selected value="{{$equipo->IdTipo}}">{{$equipo->tipo->Denominacion}}</option>
+            <option selected value="{{ $equipo->IdTipo }}">{{ $equipo->tipo->Denominacion }}</option>
         @endif
         @if (session()->has('Tipo'))
             @php
-            $idTipo = session('Tipo');
-            $denominacion = DB::select("
+                $idTipo = session('Tipo');
+                $denominacion = DB::select("
                     SELECT tipoequipos.Denominacion
                     FROM tipoequipos
                     WHERE tipoequipos.Id = $idTipo");
@@ -41,8 +41,8 @@
         class="text-sm font-medium text-gray-900 block mb-2 @error('NombreOrdenador') text-red-500 @enderror">
         Nombre de equipo
     </label>
-    <input type="text" name="NombreOrdenador" id="NombreOrdenador"
-        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 @error('NombreOrdenador') border-red-500 @enderror"
+    <input type="text" name="NombreOrdenador" id="NombreOrdenador" style="width: 450px"
+        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5 @error('NombreOrdenador') border-red-500 @enderror"
         value="{{ old('NombreOrdenador', $equipo->NombreOrdenador) }}">
     @error('NombreOrdenador')
         <p class="text-red-500 text-sm mt-1">
@@ -51,18 +51,18 @@
     @enderror
 </div>
 <div class="mb-6">
-    <label for="Modelo"
-        class="text-sm font-medium text-gray-900 block mb-2 @error('Modelo') text-red-500 @enderror">
+    <label for="Modelo" class="text-sm font-medium text-gray-900 block mb-2 @error('Modelo') text-red-500 @enderror">
         Modelo
     </label>
-    <select type="text" class="border border-slate-300 px-6 py-2" name="Modelo" id="Modelo" value="{{ old('$equipo->modelo->Modelo', $equipo->IdModelo) }}">
+    <select type="text" class="border border-slate-300 px-6 py-2" name="Modelo" id="Modelo"
+        value="{{ old('$equipo->modelo->Modelo', $equipo->IdModelo) }}">
         @if ($equipo->modelo)
-            <option selected value="{{$equipo->IdModelo}}">{{$equipo->modelo->Modelo}}</option>
+            <option selected value="{{ $equipo->IdModelo }}">{{ $equipo->modelo->Modelo }}</option>
         @endif
         @if (session()->has('Modelo'))
-        @php
-            $idModelo = session('Modelo');
-            $nombreModelo = DB::select("
+            @php
+                $idModelo = session('Modelo');
+                $nombreModelo = DB::select("
                     SELECT modelos.Modelo
                     FROM modelos
                     WHERE modelos.Id = $idModelo");
@@ -86,8 +86,8 @@
         class="text-sm font-medium text-gray-900 block mb-2 @error('NumSerie') text-red-500 @enderror">
         Número de serie
     </label>
-    <input type="text" name="NumSerie" id="NumSerie"
-        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 @error('NumSerie') border-red-500 @enderror"
+    <input type="text" name="NumSerie" id="NumSerie" style="width: 200px"
+        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 @error('NumSerie') border-red-500 @enderror"
         value="{{ old('NumSerie', $equipo->NumSerie) }}">
     @error('NumSerie')
         <p class="text-red-500 text-sm mt-1">
@@ -100,20 +100,21 @@
         class="text-sm font-medium text-gray-900 block mb-2 @error('Contrato') text-red-500 @enderror">
         Contrato
     </label>
-    <select type="text" class="border border-slate-300 px-6 py-2" name="Contrato" id="Contrato" value="{{ old('$equipo->contrato->Nombre', $equipo->IdContrato) }}">
+    <select type="text" class="border border-slate-300 px-6 py-2" name="Contrato" id="Contrato"
+        value="{{ old('$equipo->contrato->Nombre', $equipo->IdContrato) }}">
         @if ($equipo->contrato)
-            <option selected value="{{$equipo->IdContrato}}">{{$equipo->contrato->Nombre}}</option>
+            <option selected value="{{ $equipo->IdContrato }}">{{ $equipo->contrato->Nombre }}</option>
         @endif
         @if (session()->has('Contrato'))
-        @php
-            $idContrato = session('Contrato');
-            $nombreContrato = DB::select("
+            @php
+                $idContrato = session('Contrato');
+                $nombreContrato = DB::select("
                     SELECT contratos.Nombre
                     FROM contratos
                     WHERE contratos.Id = $idContrato");
             @endphp
-        <option selected value="{{ session('Contrato') }}">{{ $nombreContrato[0]->Nombre }}</option>
-    @endif
+            <option selected value="{{ session('Contrato') }}">{{ $nombreContrato[0]->Nombre }}</option>
+        @endif
         <option></option>
 
         @foreach ($contrato as $con)
@@ -132,9 +133,9 @@
         Fecha de alta
     </label>
     @if ($equipo->FechaAlta)
-    <input type="date" name="FechaAlta" id="FechaAlta"
-        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/3 p-2.5 @error('FechaAlta') border-red-500 @enderror"
-        value="{{ old('FechaAlta', $equipo->FechaAlta->format('Y-m-d')) }}">
+        <input type="date" name="FechaAlta" id="FechaAlta"
+            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/3 p-2.5 @error('FechaAlta') border-red-500 @enderror"
+            value="{{ old('FechaAlta', $equipo->FechaAlta->format('Y-m-d')) }}">
     @else
         <input type="date" name="FechaAlta" id="FechaAlta"
             class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/3 p-2.5 @error('FechaAlta') border-red-500 @enderror"
@@ -154,11 +155,11 @@
     @if ($equipo->FechaBaja)
         <input type="date" name="FechaBaja" id="FechaBaja"
             class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/3 p-2.5 @error('FechaBaja') border-red-500 @enderror"
-            value="{{ old('FechaBaja', $equipo->FechaBaja->format('Y-m-d')) }}">
+            value="{{ old('FechaBaja', $equipo->FechaBaja->format('Y-m-d')) }}" onchange="mostrarAlerta()">
     @else
         <input type="date" name="FechaBaja" id="FechaBaja"
             class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/3 p-2.5 @error('FechaBaja') border-red-500 @enderror"
-            value="{{ old('FechaBaja', $equipo->FechaBaja) }}">
+            value="{{ old('FechaBaja', $equipo->FechaBaja) }}" onchange="mostrarAlerta()">
     @endif
     @error('FechaBaja')
         <p class="text-red-500 text-sm mt-1">
@@ -198,6 +199,18 @@
 </div>
 
 <button type="submit"
-    class="text-white bg-green-700 hover:bg-green-700 focus:ring-4 focus:ring-green-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Aceptar</button>
-<a href="/inventario/public/equipos/{{ $equipo->Id }}"
-    style="border-color:#0053D0; background-color: #0053D0" class="text-white border-green-700 border-2 bg-green-700 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Volver</a>
+    class="text-white bg-green-700 hover:bg-green-700 focus:ring-4 focus:ring-green-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Aceptar
+</button>
+<a href="/inventario/public/equipos/{{ $equipo->Id }}" style="border-color:#0053D0; background-color: #0053D0"
+    class="text-white border-green-700 border-2 bg-green-700 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Volver
+</a>
+
+<script>
+    function mostrarAlerta() {
+        var fechaBaja = document.getElementById('FechaBaja').value;
+
+        if (fechaBaja) {
+            alert('Cuidado! Si das de baja este equipo, darás de baja todas las relaciones');
+        }
+    }
+</script>

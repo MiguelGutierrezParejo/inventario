@@ -63,11 +63,11 @@
     </label>
     @if ($mant->FechaAlta)
         <input type="date" name="FechaAlta" id="FechaAlta"
-        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 @error('FechaAlta') border-red-500 @enderror"
+        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 @error('FechaAlta') border-red-500 @enderror"
         value="{{ old('FechaAlta', $mant->FechaAlta)->format('Y-m-d') }}"/>
     @else
         <input type="date" name="FechaAlta" id="FechaAlta"
-        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 @error('FechaAlta') border-red-500 @enderror"
+        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 @error('FechaAlta') border-red-500 @enderror"
         value="{{ old('FechaAlta', $mant->FechaAlta) }}"/>
     @endif
     @error('mant')
@@ -83,11 +83,11 @@
     </label>
     @if ($mant->FechaBaja)
         <input type="date" name="FechaBaja" id="FechaBaja"
-        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 @error('FechaBaja') border-red-500 @enderror"
+        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 @error('FechaBaja') border-red-500 @enderror"
         value="{{ old('FechaBaja', $mant->FechaBaja)->format('Y-m-d') }}"/>
     @else
         <input type="date" name="FechaBaja" id="FechaBaja"
-        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 @error('FechaBaja') border-red-500 @enderror"
+        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 @error('FechaBaja') border-red-500 @enderror"
         value="{{ old('FechaBaja', $mant->FechaBaja) }}"/>
     @endif
     @error('mant')
